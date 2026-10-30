@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="A local checkout demo for Putting AI Code to the Test." />
+    <title>Small Hours — Checkout Lab</title>
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="masthead"><a class="wordmark" href="./" aria-label="Small Hours home"><span class="brand-mark" aria-hidden="true">s/h</span>small hours<span class="brand-dot">®</span></a><span class="header-note">EVERYDAY TOOLS. THOUGHTFULLY MADE.</span><span class="lab-tag">CHECKOUT LAB <span aria-hidden="true">↗</span></span></header>
+      <main>
+        <div class="page-heading"><div><p class="eyebrow">A FEW GOOD THINGS</p><h1>Your cart<span>.</span></h1></div><p>Small things.<br />A little more considered.</p></div>
+        <div class="checkout-layout">
+          <section class="cart-panel" aria-labelledby="cart-heading">
+            <div class="section-heading"><h2 id="cart-heading">The everyday collection</h2><span id="item-count">3 items</span></div>
+            <div id="cart-lines"></div>
+            <p id="cart-error" role="alert"></p>
+            <div class="cart-footer"><span aria-hidden="true">↳</span><p>Good things, in the right quantities.</p><button type="button" class="text-button" data-fixture="empty">Clear cart</button></div>
+          </section>
+          <aside class="order-panel" aria-labelledby="order-heading">
+            <p class="eyebrow">THE NUMBERS</p><h2 id="order-heading">Order summary</h2>
+            <form id="discount-form"><label for="discount-code">Have a discount code?</label><div class="code-field"><input id="discount-code" placeholder="e.g. SAVE10" autocomplete="off" spellcheck="false" /><button type="submit">Apply <span aria-hidden="true">→</span></button></div></form>
+            <div class="code-note"><p id="code-status" role="status"></p><button id="remove-code" class="text-button" type="button">Remove code</button></div>
+            <div id="summary" aria-live="polite"><dl class="breakdown"><div><dt>Subtotal</dt><dd data-testid="subtotal"></dd></div><div class="discount-row"><dt>Discount</dt><dd data-testid="discount"></dd></div><div><dt>Shipping</dt><dd data-testid="shipping"></dd></div></dl><div class="total-row"><span>Total <small>EUR</small></span><strong data-testid="total"></strong></div></div>
+            <p class="local-note"><span aria-hidden="true">◉</span> A local demo. No payment is collected.</p>
+          </aside>
+        </div>
+        <section class="fixture-strip" aria-label="Demo carts"><div><span class="fixture-dot" aria-hidden="true"></span><span>EXPLORE A BOUNDARY</span></div><button type="button" data-fixture="discount">€50 cart <span aria-hidden="true">↗</span></button><button type="button" data-fixture="shipping">€100 cart <span aria-hidden="true">↗</span></button><button type="button" data-fixture="cap">€200 cart <span aria-hidden="true">↗</span></button></section>
+      </main>
+      <footer><span>SMALL HOURS / CHECKOUT LAB</span><span>Putting AI Code to the Test</span><span>What would convince you to ship?</span></footer>
+    </div>
+  </body>
+</html>

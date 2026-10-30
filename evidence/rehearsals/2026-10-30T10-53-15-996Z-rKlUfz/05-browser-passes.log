@@ -1,0 +1,14 @@
+
+> putting-ai-code-to-the-test@1.0.0 test:e2e
+> node scripts/browser-test.mjs
+
+
+Running 5 tests using 1 worker
+
+  ✓  1 e2e/checkout.spec.ts:5:1 › AC-10: built UI shows the complete €100 cart breakdown after SAVE10 (398ms)
+  ✓  2 e2e/checkout.spec.ts:17:1 › AC-11: edits, code removal, empty cart and reload recalculate (312ms)
+  ✓  3 e2e/checkout.spec.ts:35:1 › AC-09: invalid quantity hides the summary instead of showing a stale total (156ms)
+  ✓  4 e2e/checkout.spec.ts:43:1 › AC-12d: the built UI shows the capped discount on a €200 cart (252ms)
+  ✓  5 e2e/checkout.spec.ts:53:1 › mobile: fixture controls and the total stay accessible without horizontal scrolling (180ms)
+
+  5 passed (3.0s)

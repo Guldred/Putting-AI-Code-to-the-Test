@@ -1,0 +1,53 @@
+{
+  "01": {
+    "title": "The Green Build",
+    "defaultStage": "start",
+    "stages": {
+      "start": { "overlays": ["uncapped", "shipping-before"], "tests": ["assumed"], "browser": false, "observation": "Five passing tests repeat a plausible pre-discount shipping assumption. Do not accept against the later clarified spec." },
+      "exposed": { "overlays": ["uncapped", "shipping-before"], "tests": ["assumed", "shipping-acceptance"], "browser": false, "observation": "AC-06 fails: expected €95, received €90. The missing requirement baseline is visible." }
+    }
+  },
+  "02": {
+    "title": "What Does Correct Mean?",
+    "defaultStage": "start",
+    "stages": {
+      "start": { "overlays": ["uncapped", "shipping-before"], "tests": ["assumed"], "browser": false, "observation": "Read initial-brief.md, then specification.md. Code and tests agree on the wrong shipping interpretation." },
+      "red": { "overlays": ["uncapped", "shipping-before"], "tests": ["assumed", "shipping-acceptance"], "browser": false, "observation": "The newly recorded shipping criterion fails. This is a requirement clarification, not proof of historical TDD." },
+      "fixed": { "overlays": ["uncapped"], "tests": ["checkout", "discount-v1"], "browser": false, "observation": "Correct the rule and the mistaken oracle. Shipping boundary cases pass; AC-03b remains unverified." }
+    }
+  },
+  "03": {
+    "title": "Tests Before Code",
+    "defaultStage": "start",
+    "stages": {
+      "start": { "overlays": ["uncapped"], "tests": ["checkout", "discount-v1"], "browser": false, "observation": "Passing v1 has no cap. Introduce CR-01 and write cap.test.ts before editing discount.ts." },
+      "red": { "overlays": ["uncapped"], "tests": ["checkout", "discount-v1", "cap"], "browser": false, "observation": "Real cap assertions fail against uncapped code: 2000 instead of 1500 and 1501 instead of 1500." },
+      "green": { "overlays": ["cap-green"], "tests": ["checkout", "discount-v1", "cap"], "browser": false, "observation": "The explicit cap branch makes the tests pass. Keep the suite unchanged for refactoring." },
+      "refactor": { "overlays": [], "tests": ["checkout", "discount-v1", "cap"], "browser": false, "observation": "Math.min expresses the cap; the same 27 tests pass. This still omits the exact €50 boundary." }
+    }
+  },
+  "04": {
+    "title": "Who Tests the Tests?",
+    "defaultStage": "start",
+    "stages": {
+      "start": { "overlays": [], "tests": ["checkout", "discount-v1", "cap"], "browser": false, "observation": "Calculation coverage is complete in its stated scope, but the <= 5000 behavioral mutation survives." },
+      "improved": { "overlays": [], "tests": ["checkout", "discount-v1", "cap", "discount-boundary"], "browser": false, "observation": "AC-03b tests exactly €50. Rerun mutation analysis and inspect the same behavioral mutant." }
+    }
+  },
+  "05": {
+    "title": "Independent Verification",
+    "defaultStage": "start",
+    "stages": {
+      "start": { "overlays": ["ui-total-bug"], "tests": ["checkout", "discount-v1", "cap", "discount-boundary"], "browser": true, "observation": "SEEDED TEACHING DEFECT: view.ts displays subtotal + shipping as total. Unit tests pass; the built-UI browser test fails." },
+      "fixed": { "overlays": [], "tests": ["checkout", "discount-v1", "cap", "discount-boundary"], "browser": true, "observation": "Render result.totalCents. Browser assertions for €100 SAVE10 and the capped cart pass. Independent review is still a separate activity." }
+    }
+  },
+  "06": {
+    "title": "The Release Decision",
+    "defaultStage": "start",
+    "stages": {
+      "start": { "overlays": ["ui-total-bug"], "tests": ["checkout", "discount-v1", "cap", "discount-boundary"], "browser": true, "observation": "Required browser checks fail. npm run release must exit nonzero and leave no checkout.tar.gz in this new release attempt." },
+      "ready": { "overlays": [], "tests": ["checkout", "discount-v1", "cap", "discount-boundary"], "browser": true, "observation": "Required local checks pass and packaging produces a static archive. Make an explicit scoped acceptance decision; this is not a GitHub merge policy." }
+    }
+  }
+}

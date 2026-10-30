@@ -1,0 +1,61 @@
+
+> putting-ai-code-to-the-test@1.0.0 test
+> vitest run
+
+
+ RUN  v4.0.18 /Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test
+
+ ✓ tests/checkout.test.ts (17 tests) 4ms
+ ❯ tests/cap.test.ts (4 tests | 2 failed) 20ms
+     × AC-12d: caps a €200 order at €15 10ms
+     ✓ AC-12a/b/c: subtotal 14999 gives discount 1500 1ms
+     ✓ AC-12a/b/c: subtotal 15000 gives discount 1500 1ms
+     × AC-12a/b/c: subtotal 15010 gives discount 1500 3ms
+ ✓ tests/discount.test.ts (6 tests) 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/cap.test.ts > CR-01 — maximum discount > AC-12d: caps a €200 order at €15
+AssertionError: expected 2000 to be 1500 // Object.is equality
+
+- Expected
++ Received
+
+- 1500
++ 2000
+
+ ❯ tests/cap.test.ts:7:48
+      5| describe('CR-01 — maximum discount', () => {
+      6|   it('AC-12d: caps a €200 order at €15', () => {
+      7|     expect(calculateDiscount(20000, 'SAVE10')).toBe(1500);
+       |                                                ^
+      8|     expect(calculateCheckout([{ unitPriceCents: 20000, quantity: 1 }],…
+      9|       subtotalCents: 20000, discountCents: 1500, shippingCents: 0, tot…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/cap.test.ts > CR-01 — maximum discount > AC-12a/b/c: subtotal 15010 gives discount 1500
+AssertionError: expected 1501 to be 1500 // Object.is equality
+
+- Expected
++ Received
+
+- 1500
++ 1501
+
+ ❯ tests/cap.test.ts:13:51
+     11|   });
+     12|   it.each([[14999, 1500], [15000, 1500], [15010, 1500]])('AC-12a/b/c: …
+     13|     expect(calculateDiscount(subtotal, 'SAVE10')).toBe(discount);
+       |                                                   ^
+     14|   });
+     15| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  2 failed | 25 passed (27)
+   Start at  11:46:06
+   Duration  1.05s (transform 38ms, setup 0ms, import 71ms, tests 26ms, environment 0ms)
+

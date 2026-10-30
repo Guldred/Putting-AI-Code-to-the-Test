@@ -1,0 +1,4 @@
+
+> putting-ai-code-to-the-test@1.0.0 typecheck
+> tsc --noEmit
+

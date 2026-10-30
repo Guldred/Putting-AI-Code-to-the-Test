@@ -1,0 +1,169 @@
+{
+  "status": "passed",
+  "startedAt": "2026-10-30T10:53:15.997Z",
+  "checks": [
+    {
+      "name": "01-green",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 1057
+    },
+    {
+      "name": "01-exposed",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "durationMs": 1298
+    },
+    {
+      "name": "02-start",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 1007
+    },
+    {
+      "name": "02-red",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "durationMs": 1443
+    },
+    {
+      "name": "02-fixed",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 1487
+    },
+    {
+      "name": "03-start",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 1570
+    },
+    {
+      "name": "03-red",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "durationMs": 1756
+    },
+    {
+      "name": "03-green",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 1656
+    },
+    {
+      "name": "03-refactor",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 1936
+    },
+    {
+      "name": "04-coverage-before",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 1866
+    },
+    {
+      "name": "04-mutation-before",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 5325
+    },
+    {
+      "name": "04-boundary-policy-blocked",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "durationMs": 166
+    },
+    {
+      "name": "04-mutation-after",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 6524
+    },
+    {
+      "name": "04-boundary-policy-passed",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 183
+    },
+    {
+      "name": "05-unit-green",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 2073
+    },
+    {
+      "name": "05-build-bug",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 837
+    },
+    {
+      "name": "05-browser-detects",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "durationMs": 14555
+    },
+    {
+      "name": "05-build-fixed",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 708
+    },
+    {
+      "name": "05-browser-passes",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 4103
+    },
+    {
+      "name": "06-release-blocked",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "durationMs": 24360
+    },
+    {
+      "name": "06-release-ready",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 20476
+    },
+    {
+      "name": "06-archive-contents",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 16
+    }
+  ],
+  "workspaces": {
+    "01-start": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.demo-runs/01-start-kwKn1Y",
+    "01-exposed": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.demo-runs/01-exposed-7FHlhE",
+    "02-start": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.demo-runs/02-start-hU7pfb",
+    "02-red": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.demo-runs/02-red-umUaV1",
+    "02-fixed": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.demo-runs/02-fixed-YbQMIy",
+    "03-start": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.demo-runs/03-start-PNlasD",
+    "03-red": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.demo-runs/03-red-T46ma4",
+    "03-green": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.demo-runs/03-green-t3W38I",
+    "03-refactor": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.demo-runs/03-refactor-A0iGEQ",
+    "04-start": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.demo-runs/04-start-6TiDdq",
+    "04-improved": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.demo-runs/04-improved-1q2q3s",
+    "05-start": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.demo-runs/05-start-D2L5fe",
+    "05-fixed": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.demo-runs/05-fixed-QL1d0t",
+    "06-start": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.demo-runs/06-start-IysIvH",
+    "06-ready": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.demo-runs/06-ready-yT97I9"
+  },
+  "assertions": [
+    "Opening another scene preserved edited source and a user note in an earlier run.",
+    "Shipping and cap failures contain the intended value mismatches; fixes pass.",
+    "The minimum-order mutant survives before AC-03b and is killed after it; the gate enforces that case.",
+    "Business tests pass with the seeded UI defect; a real built-UI assertion detects €105 instead of €95 and passes after the fix.",
+    "Seeded UI defect blocked release at the browser check; no archive exists.",
+    "Fixed release produced a static archive containing index.html and assets."
+  ],
+  "releaseArchive": {
+    "path": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.demo-runs/06-ready-yT97I9/artifacts/release-2026-10-30T10-54-31-030Z/checkout.tar.gz",
+    "sha256": "7dbd1446a967e775248b1de630345f652b97b847f43069f860040daece854937"
+  },
+  "finishedAt": "2026-10-30T10:54:51.092Z",
+  "durationMs": 95094
+}

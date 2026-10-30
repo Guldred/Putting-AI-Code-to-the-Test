@@ -1,0 +1,12 @@
+node_modules/
+.idea/
+.cache/
+.demo-runs/
+.stryker-tmp/
+dist/
+artifacts/
+coverage/
+reports/
+test-results/
+playwright-report/
+.DS_Store

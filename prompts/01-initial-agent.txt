@@ -1,0 +1,9 @@
+Build the smallest runnable local checkout from this brief:
+
+"Customers can change their shopping cart and apply SAVE10 for 10% off orders of at least €50. Shipping is €5, and orders over €100 ship free. Show the subtotal, discount, shipping and final total."
+
+Use TypeScript and the testing tools already installed in this workspace. No external services, accounts, payments or deployment. Keep the calculation readable and use integer cents. Add a few useful automated tests and run them. Preserve existing work.
+
+This is the scene-1 exercise. Use only the quoted initial brief as the business baseline; do not inspect later-scene solution files. State any unresolved product decisions instead of presenting assumptions as confirmed requirements. Report the exact commands, their actual results, the files changed and what remains unverified.
+
+The presenter must preserve this exact prompt and the actual unedited response if showing the run as agent evidence. A live agent may notice the ambiguity immediately; that is a valid outcome. Use the explicitly labeled prepared checkpoint if needed, and do not claim it was this run's output.
