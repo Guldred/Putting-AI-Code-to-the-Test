@@ -1,0 +1,419 @@
+{
+  "config": {
+    "argv": [
+      "/Users/christian.malak/.nvm/versions/node/v22.17.0/bin/node",
+      "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/node_modules/@playwright/test/cli.js",
+      "test"
+    ],
+    "configFile": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/playwright.config.ts",
+    "rootDir": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 15000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/e2e",
+        "snapshotDir": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/e2e",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 15000,
+        "use": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "chromium",
+          "baseURL": "http://127.0.0.1:4173",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "reports/browser/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run preview -- --port 4173 --strictPort",
+      "url": "http://127.0.0.1:4173",
+      "reuseExistingServer": false,
+      "timeout": 15000
+    }
+  },
+  "suites": [
+    {
+      "title": "checkout.spec.ts",
+      "file": "checkout.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "AC-10: built UI shows the complete €100 cart breakdown after SAVE10",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2820,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('total')\nExpected: \u001b[32m\"€\u001b[7m9\u001b[27m5.00\"\u001b[39m\nReceived: \u001b[31m\"€\u001b[7m10\u001b[27m5.00\"\u001b[39m\nTimeout:  2500ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" getByTestId('total') with timeout 2500ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('total')\u001b[22m\n\u001b[2m    9 × locator resolved to <strong data-testid=\"total\">€105.00</strong>\u001b[22m\n\u001b[2m      - unexpected value \"€105.00\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('total')\nExpected: \u001b[32m\"€\u001b[7m9\u001b[27m5.00\"\u001b[39m\nReceived: \u001b[31m\"€\u001b[7m10\u001b[27m5.00\"\u001b[39m\nTimeout:  2500ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" getByTestId('total') with timeout 2500ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('total')\u001b[22m\n\u001b[2m    9 × locator resolved to <strong data-testid=\"total\">€105.00</strong>\u001b[22m\n\u001b[2m      - unexpected value \"€105.00\"\u001b[22m\n\n    at /Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/e2e/checkout.spec.ts:12:43",
+                    "location": {
+                      "file": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/e2e/checkout.spec.ts",
+                      "column": 43,
+                      "line": 12
+                    },
+                    "snippet": "  10 |   await expect(page.getByTestId('discount')).toHaveText('−€10.00');\n  11 |   await expect(page.getByTestId('shipping')).toHaveText('€5.00');\n> 12 |   await expect(page.getByTestId('total')).toHaveText('€95.00');\n     |                                           ^\n  13 |   await expect(page.getByRole('status')).toHaveText('SAVE10 applied.');\n  14 |   await page.screenshot({ path: 'reports/browser/checkout-desktop.png', fullPage: true });\n  15 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/e2e/checkout.spec.ts",
+                        "column": 43,
+                        "line": 12
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('total')\nExpected: \u001b[32m\"€\u001b[7m9\u001b[27m5.00\"\u001b[39m\nReceived: \u001b[31m\"€\u001b[7m10\u001b[27m5.00\"\u001b[39m\nTimeout:  2500ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" getByTestId('total') with timeout 2500ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('total')\u001b[22m\n\u001b[2m    9 × locator resolved to <strong data-testid=\"total\">€105.00</strong>\u001b[22m\n\u001b[2m      - unexpected value \"€105.00\"\u001b[22m\n\n\n  10 |   await expect(page.getByTestId('discount')).toHaveText('−€10.00');\n  11 |   await expect(page.getByTestId('shipping')).toHaveText('€5.00');\n> 12 |   await expect(page.getByTestId('total')).toHaveText('€95.00');\n     |                                           ^\n  13 |   await expect(page.getByRole('status')).toHaveText('SAVE10 applied.');\n  14 |   await page.screenshot({ path: 'reports/browser/checkout-desktop.png', fullPage: true });\n  15 | });\n    at /Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/e2e/checkout.spec.ts:12:43"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-03T16:28:00.837Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/test-results/checkout-AC-10-built-UI-sh-d191d-cart-breakdown-after-SAVE10/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/test-results/checkout-AC-10-built-UI-sh-d191d-cart-breakdown-after-SAVE10/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/test-results/checkout-AC-10-built-UI-sh-d191d-cart-breakdown-after-SAVE10/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/e2e/checkout.spec.ts",
+                    "column": 43,
+                    "line": 12
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "25ab1bfc84c57e3e3a45-1a35df8ac1bcbfef90a6",
+          "file": "checkout.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "AC-11: edits, code removal, empty cart and reload recalculate",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2749,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('total')\nExpected: \u001b[32m\"€5\u001b[7m0\u001b[27m.00\"\u001b[39m\nReceived: \u001b[31m\"€5\u001b[7m5\u001b[27m.00\"\u001b[39m\nTimeout:  2500ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" getByTestId('total') with timeout 2500ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('total')\u001b[22m\n\u001b[2m    9 × locator resolved to <strong data-testid=\"total\">€55.00</strong>\u001b[22m\n\u001b[2m      - unexpected value \"€55.00\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('total')\nExpected: \u001b[32m\"€5\u001b[7m0\u001b[27m.00\"\u001b[39m\nReceived: \u001b[31m\"€5\u001b[7m5\u001b[27m.00\"\u001b[39m\nTimeout:  2500ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" getByTestId('total') with timeout 2500ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('total')\u001b[22m\n\u001b[2m    9 × locator resolved to <strong data-testid=\"total\">€55.00</strong>\u001b[22m\n\u001b[2m      - unexpected value \"€55.00\"\u001b[22m\n\n    at /Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/e2e/checkout.spec.ts:24:43",
+                    "location": {
+                      "file": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/e2e/checkout.spec.ts",
+                      "column": 43,
+                      "line": 24
+                    },
+                    "snippet": "  22 |   await page.getByRole('button', { name: 'Apply' }).click();\n  23 |   await expect(page.getByTestId('discount')).toHaveText('−€5.00');\n> 24 |   await expect(page.getByTestId('total')).toHaveText('€50.00');\n     |                                           ^\n  25 |   await page.getByRole('button', { name: 'Remove code' }).click();\n  26 |   await expect(page.getByTestId('total')).toHaveText('€55.00');\n  27 |   await page.getByRole('button', { name: 'Clear cart' }).click();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/e2e/checkout.spec.ts",
+                        "column": 43,
+                        "line": 24
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('total')\nExpected: \u001b[32m\"€5\u001b[7m0\u001b[27m.00\"\u001b[39m\nReceived: \u001b[31m\"€5\u001b[7m5\u001b[27m.00\"\u001b[39m\nTimeout:  2500ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" getByTestId('total') with timeout 2500ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('total')\u001b[22m\n\u001b[2m    9 × locator resolved to <strong data-testid=\"total\">€55.00</strong>\u001b[22m\n\u001b[2m      - unexpected value \"€55.00\"\u001b[22m\n\n\n  22 |   await page.getByRole('button', { name: 'Apply' }).click();\n  23 |   await expect(page.getByTestId('discount')).toHaveText('−€5.00');\n> 24 |   await expect(page.getByTestId('total')).toHaveText('€50.00');\n     |                                           ^\n  25 |   await page.getByRole('button', { name: 'Remove code' }).click();\n  26 |   await expect(page.getByTestId('total')).toHaveText('€55.00');\n  27 |   await page.getByRole('button', { name: 'Clear cart' }).click();\n    at /Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/e2e/checkout.spec.ts:24:43"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-03T16:28:04.383Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/test-results/checkout-AC-11-edits-code--fe771-cart-and-reload-recalculate/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/test-results/checkout-AC-11-edits-code--fe771-cart-and-reload-recalculate/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/test-results/checkout-AC-11-edits-code--fe771-cart-and-reload-recalculate/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/e2e/checkout.spec.ts",
+                    "column": 43,
+                    "line": 24
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "25ab1bfc84c57e3e3a45-06436dca4f1a78ab88e6",
+          "file": "checkout.spec.ts",
+          "line": 17,
+          "column": 1
+        },
+        {
+          "title": "AC-09: invalid quantity hides the summary instead of showing a stale total",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 193,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-03T16:28:07.823Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "25ab1bfc84c57e3e3a45-9a0894044a68d962bf82",
+          "file": "checkout.spec.ts",
+          "line": 35,
+          "column": 1
+        },
+        {
+          "title": "AC-12d: the built UI shows the capped discount on a €200 cart",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2735,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('total')\nExpected: \u001b[32m\"€\u001b[7m185\u001b[27m.00\"\u001b[39m\nReceived: \u001b[31m\"€\u001b[7m200\u001b[27m.00\"\u001b[39m\nTimeout:  2500ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" getByTestId('total') with timeout 2500ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('total')\u001b[22m\n\u001b[2m    9 × locator resolved to <strong data-testid=\"total\">€200.00</strong>\u001b[22m\n\u001b[2m      - unexpected value \"€200.00\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('total')\nExpected: \u001b[32m\"€\u001b[7m185\u001b[27m.00\"\u001b[39m\nReceived: \u001b[31m\"€\u001b[7m200\u001b[27m.00\"\u001b[39m\nTimeout:  2500ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" getByTestId('total') with timeout 2500ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('total')\u001b[22m\n\u001b[2m    9 × locator resolved to <strong data-testid=\"total\">€200.00</strong>\u001b[22m\n\u001b[2m      - unexpected value \"€200.00\"\u001b[22m\n\n    at /Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/e2e/checkout.spec.ts:50:43",
+                    "location": {
+                      "file": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/e2e/checkout.spec.ts",
+                      "column": 43,
+                      "line": 50
+                    },
+                    "snippet": "  48 |   await expect(page.getByTestId('discount')).toHaveText('−€15.00');\n  49 |   await expect(page.getByTestId('shipping')).toHaveText('€0.00');\n> 50 |   await expect(page.getByTestId('total')).toHaveText('€185.00');\n     |                                           ^\n  51 | });\n  52 |\n  53 | test('mobile: fixture controls and the total stay accessible without horizontal scrolling', async ({ page }) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/e2e/checkout.spec.ts",
+                        "column": 43,
+                        "line": 50
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('total')\nExpected: \u001b[32m\"€\u001b[7m185\u001b[27m.00\"\u001b[39m\nReceived: \u001b[31m\"€\u001b[7m200\u001b[27m.00\"\u001b[39m\nTimeout:  2500ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" getByTestId('total') with timeout 2500ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('total')\u001b[22m\n\u001b[2m    9 × locator resolved to <strong data-testid=\"total\">€200.00</strong>\u001b[22m\n\u001b[2m      - unexpected value \"€200.00\"\u001b[22m\n\n\n  48 |   await expect(page.getByTestId('discount')).toHaveText('−€15.00');\n  49 |   await expect(page.getByTestId('shipping')).toHaveText('€0.00');\n> 50 |   await expect(page.getByTestId('total')).toHaveText('€185.00');\n     |                                           ^\n  51 | });\n  52 |\n  53 | test('mobile: fixture controls and the total stay accessible without horizontal scrolling', async ({ page }) => {\n    at /Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/e2e/checkout.spec.ts:50:43"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-03T16:28:08.148Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/test-results/checkout-AC-12d-the-built--196e8-ped-discount-on-a-€200-cart/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/test-results/checkout-AC-12d-the-built--196e8-ped-discount-on-a-€200-cart/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/test-results/checkout-AC-12d-the-built--196e8-ped-discount-on-a-€200-cart/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-B3adqA/e2e/checkout.spec.ts",
+                    "column": 43,
+                    "line": 50
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "25ab1bfc84c57e3e3a45-09654d35d534807dffc8",
+          "file": "checkout.spec.ts",
+          "line": 43,
+          "column": 1
+        },
+        {
+          "title": "mobile: fixture controls and the total stay accessible without horizontal scrolling",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 219,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-03T16:28:11.472Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "25ab1bfc84c57e3e3a45-012e3e3c48233c54a49d",
+          "file": "checkout.spec.ts",
+          "line": 53,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-03T16:27:59.387Z",
+    "duration": 12475.393999999998,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 3,
+    "flaky": 0
+  }
+}

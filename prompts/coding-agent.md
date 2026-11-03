@@ -1,6 +1,6 @@
 # Coding-agent prompt — scene 3, phase A
 
-You are working in a newly generated scene-3 `start` workspace. Read `SCENE.md`, `docs/specification.md`, `docs/discount-cap-change.md`, the calculation source and existing tests. Preserve files outside this workspace. Do not read the repository's prepared solution checkpoints.
+You are working in a newly generated scene-3 `start` workspace. Read `SCENE.md`, `docs/specification.md`, `docs/discount-cap-change.md`, the calculation source and existing tests. Preserve files outside this workspace. Do not read the repository's prepared solution checkpoints. Dependencies are shared with other workspaces: do not install, add, remove or update packages.
 
 Implement CR-01 using a test-first sequence, but **stop after the first phase**:
 

@@ -22,9 +22,12 @@ export async function openScene(id, stage, { quiet = false } = {}) {
   }
   await mkdir(join(directory, 'tests'), { recursive: true });
   for (const test of checkpoint.tests) {
-    await cp(join(repository, 'checkpoints/unit', `${test}.test.ts`), join(directory, 'tests', `${test}.test.ts`));
+    // "target=source" places a variant (for example an edited oracle) under the approved file name.
+    const [target, source = target] = test.split('=');
+    await cp(join(repository, 'checkpoints/unit', `${source}.test.ts`), join(directory, 'tests', `${target}.test.ts`));
   }
   if (checkpoint.browser) await cp(join(repository, 'checkpoints/browser'), join(directory, 'e2e'), { recursive: true });
+  if (checkpoint.lock) await cp(join(repository, 'checkpoints/acceptance.lock.json'), join(directory, 'acceptance.lock.json'));
   // A directory symlink avoids reinstalls. All reports, builds and source edits remain local to this run.
   await symlink(join(repository, 'node_modules'), join(directory, 'node_modules'), 'dir');
   await writeFile(join(directory, 'checkpoint.json'), `${JSON.stringify({

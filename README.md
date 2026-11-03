@@ -1,6 +1,6 @@
 # Putting AI Code to the Test
 
-A small checkout and six reproducible scenes for a 90-minute technical presentation about accepting software produced by coding agents.
+A small checkout and seven reproducible scenes for a 90-minute online presentation (Microsoft Teams) about accepting software produced by coding agents.
 
 Learn how to challenge AI-generated code and decide whether it is ready to ship. The demo covers spec-driven development, TDD, mutation testing, independent reviews and quality gates. Prerequisites: basic programming and testing knowledge. **Audience members need no local setup.**
 
@@ -8,7 +8,7 @@ Learn how to challenge AI-generated code and decide whether it is ready to ship.
 
 - [Talk brief](docs/talk-brief.md) and [timed 90-minute outline](docs/90-minute-outline.md)
 - [English presenter script: commands, observations, questions and fallbacks](docs/presenter-script.md)
-- [Slide outline linked to demo scenes](docs/slide-outline.md) — final deck intentionally follows demo review
+- [Slide outline linked to demo scenes](docs/slide-outline.md), the [slide deck](https://claude.ai/artifact/NCdrVbdps2PhKMukZHdMJT) (private until shared) and [Teams polls and chat prompts](docs/teams-interaction.md)
 - [Deliberately ambiguous initial brief](docs/initial-brief.md), [clarified specification](docs/specification.md), [later cap requirement](docs/discount-cap-change.md)
 - [Acceptance criteria → actual verification evidence](docs/acceptance-evidence.md)
 - [Latest rehearsal](evidence/latest.md), [provenance](evidence/README.md), [scoped release decision](docs/release-decision.md)
@@ -37,7 +37,7 @@ Run from the repository root:
 npm run scene -- --list
 npm run scene -- 01
 npm run scene -- 03 red
-npm run scene -- 06 ready
+npm run scene -- 07 ready
 ```
 
 Each invocation creates a **new** `.demo-runs/<scene>-<stage>-<unique>` directory and prints its path and next commands. It does not change your current checkout, switch branches, stash, reset or overwrite any previous run. No Git commits are required. Existing IDE files are preserved.
@@ -59,10 +59,11 @@ npm test
 | 02 — What Does “Correct” Mean? | `start` | `red`, `fixed` | Record intended shipping semantics, then correct both implementation and oracle |
 | 03 — Tests Before Code | `start` | `red`, `green`, `refactor` | Real cap failure before implementation; same suite passes after implementation/refactoring |
 | 04 — Who Tests the Tests? | `start` | `improved` | Full scoped calculation coverage misses an exact-minimum behavioral mutant |
-| 05 — Independent Verification | `start` | `fixed` | Correct calculation, wrong rendered total; a built-UI browser assertion detects it |
-| 06 — The Release Decision | `start` | `ready` | Required checks block packaging; the fixed state produces an archive |
+| 05 — Green by Editing the Oracle | `start` | `restored`, `fixed` | A prepared agent change edits two expected values; every behavioral check stays green, the acceptance lock detects it |
+| 06 — Independent Verification | `start` | `fixed` | Correct calculation, wrong rendered total; a built-UI browser assertion and a performed fresh-context review detect it |
+| 07 — The Release Decision | `start` | `ready` | Required checks block packaging; the fixed state produces an archive |
 
-Tracked source checkpoints are prepared teaching examples. They are not represented as historical coding-agent transcripts. Scene 3 additionally has preserved original execution evidence showing red before the first cap implementation. The review finding example is **not** a performed independent review.
+Tracked source checkpoints are prepared teaching examples. They are not represented as historical coding-agent transcripts. Scene 3 additionally has preserved original execution evidence showing red before the first cap implementation. Scene 5's agent change is authored, not a recorded agent run. The scene 6 review in `evidence/agent-runs/` was actually performed; the separate review finding example in `docs/reviews/` is **not**.
 
 ## Checks and release
 
@@ -74,10 +75,13 @@ npm run test:mutation
 npm run mutation:inspect
 npm run build
 npm run test:e2e
+npm run acceptance:verify
 npm run release
 ```
 
-`test:e2e` tests the existing production build; build first. `release` always reruns required typecheck, unit tests, scoped mutation tests, the critical discount-boundary policy, build and browser checks. It only packages after those checks pass and source hashes remain unchanged. Each attempt writes its own `artifacts/release-*/release.json` and logs; a successful attempt adds `checkout.tar.gz` containing the static app.
+`test:e2e` tests the existing production build; build first. `release` always reruns required typecheck, unit tests, scoped mutation tests, the critical discount-boundary policy, build, browser checks and the acceptance lock. It only packages after those checks pass and source hashes remain unchanged. Each attempt writes its own `artifacts/release-*/release.json` and logs; a successful attempt adds `checkout.tar.gz` containing the static app.
+
+`acceptance:verify` compares the acceptance test files with the SHA-256 hashes in `acceptance.lock.json`. Added tests are reported but allowed; changed or removed approved tests fail. `npm run acceptance:approve -- --by "<name and role>"` rewrites the lock after a specification owner accepts new expectations. The lock is a tripwire, not access control: anyone who can edit the tests can also edit the lock. Real protection needs required human review of these paths in the repository.
 
 There is no skip-checks flag. A failed attempt exits nonzero and creates no release archive. `npm run build` is still a development command. This is **local packaging enforcement**, not an enforced GitHub merge policy, human review approval or a production checkout release.
 
@@ -99,11 +103,11 @@ Use [the reviewer prompt](prompts/independent-reviewer.md) in a separate context
 
 ```sh
 BASE_DIR="$(node scripts/scene.mjs 04 improved --path)"
-CANDIDATE_DIR="$(node scripts/scene.mjs 05 start --path)"
+CANDIDATE_DIR="$(node scripts/scene.mjs 06 start --path)"
 npm run review:bundle -- "$BASE_DIR" "$CANDIDATE_DIR"
 ```
 
-The bundle contains requirements, actual original/candidate source, tests/configuration, a diff and source hashes. Its runnable candidate shares installed dependencies. Creating it does not execute a review. Preserve any actual reviewer prompt/output unedited. The separate [prepared finding](docs/reviews/prepared-ui-finding.md) is an illustrative fallback with an explicit provenance label.
+The bundle contains requirements, actual original/candidate source, tests/configuration, a diff and source hashes. Its runnable candidate shares installed dependencies. Creating it does not execute a review. Preserve any actual reviewer prompt/output unedited. One [performed fresh-context review](evidence/agent-runs/2026-11-03-scene06-fresh-review/README.md) of the scene 6 defect is preserved with its exact prompt, output and transcript. The separate [prepared finding](docs/reviews/prepared-ui-finding.md) is an illustrative fallback with an explicit provenance label.
 
 The [saved review input diff](evidence/prepared-review/change.diff) and [provenance](evidence/prepared-review/README.md) came from an actual bundle creation, including the full added browser-test contents. They contain no reviewer output.
 
@@ -117,4 +121,4 @@ The [initial-agent prompt](prompts/01-initial-agent.txt) and [two-phase cap prom
 - `scripts/`: scene creation, evidence capture, rehearsal, local gate and review bundle.
 - `docs/`, `prompts/`, `evidence/`: English teaching materials, inputs and real execution artifacts.
 
-The shared template avoids six separately maintained applications. Changing canonical code does not silently change the tracked source checkpoints. If revising the narrative, review the template/overlay changes together and rerun the affected checks; `scripts/freeze-checkpoints.mjs` refuses to replace an existing template automatically.
+The shared template avoids seven separately maintained applications. Changing canonical code does not silently change the tracked source checkpoints. If revising the narrative, review the template/overlay changes together and rerun the affected checks; `scripts/freeze-checkpoints.mjs` refuses to replace an existing template automatically.

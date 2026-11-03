@@ -1,0 +1,61 @@
+
+> putting-ai-code-to-the-test@1.0.0 test
+> vitest run
+
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/03-red-1wHU6i[39m
+
+ [32m✓[39m tests/checkout.test.ts [2m([22m[2m17 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+ [31m❯[39m tests/cap.test.ts [2m([22m[2m4 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[32m 5[2mms[22m[39m
+[31m     [31m×[31m AC-12d: caps a €200 order at €15[39m[32m 4[2mms[22m[39m
+     [32m✓[39m AC-12a/b/c: subtotal 14999 gives discount 1500[32m 0[2mms[22m[39m
+     [32m✓[39m AC-12a/b/c: subtotal 15000 gives discount 1500[32m 0[2mms[22m[39m
+[31m     [31m×[31m AC-12a/b/c: subtotal 15010 gives discount 1500[39m[32m 0[2mms[22m[39m
+ [32m✓[39m tests/discount-v1.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 2[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 2 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m tests/cap.test.ts[2m > [22mCR-01 — maximum discount[2m > [22mAC-12d: caps a €200 order at €15
+[31m[1mAssertionError[22m: expected 2000 to be 1500 // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 1500[39m
+[31m+ 2000[39m
+
+[36m [2m❯[22m tests/cap.test.ts:[2m7:48[22m[39m
+    [90m  5| [39m[34mdescribe[39m([32m'CR-01 — maximum discount'[39m[33m,[39m () [33m=>[39m {
+    [90m  6| [39m  [34mit[39m([32m'AC-12d: caps a €200 order at €15'[39m[33m,[39m () [33m=>[39m {
+    [90m  7| [39m    [34mexpect[39m([34mcalculateDiscount[39m([34m20000[39m[33m,[39m [32m'SAVE10'[39m))[33m.[39m[34mtoBe[39m([34m1500[39m)[33m;[39m
+    [90m   | [39m                                               [31m^[39m
+    [90m  8| [39m    expect(calculateCheckout([{ unitPriceCents: 20000, quantity: 1 }],…
+    [90m  9| [39m      subtotalCents: 20000, discountCents: 1500, shippingCents: 0, tot…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m tests/cap.test.ts[2m > [22mCR-01 — maximum discount[2m > [22mAC-12a/b/c: subtotal 15010 gives discount 1500
+[31m[1mAssertionError[22m: expected 1501 to be 1500 // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 1500[39m
+[31m+ 1501[39m
+
+[36m [2m❯[22m tests/cap.test.ts:[2m13:51[22m[39m
+    [90m 11| [39m  })[33m;[39m
+    [90m 12| [39m  it.each([[14999, 1500], [15000, 1500], [15010, 1500]])('AC-12a/b/c: …
+    [90m 13| [39m    [34mexpect[39m([34mcalculateDiscount[39m(subtotal[33m,[39m [32m'SAVE10'[39m))[33m.[39m[34mtoBe[39m(discount)[33m;[39m
+    [90m   | [39m                                                  [31m^[39m
+    [90m 14| [39m  })[33m;[39m
+    [90m 15| [39m})[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m2 passed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m25 passed[39m[22m[90m (27)[39m
+[2m   Start at [22m 16:46:49
+[2m   Duration [22m 755ms[2m (transform 38ms, setup 0ms, import 64ms, tests 11ms, environment 0ms)[22m
+

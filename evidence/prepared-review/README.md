@@ -2,4 +2,6 @@
 
 These files were copied from an actually generated review bundle. The diff includes the newly added browser tests and the seeded display defect. Source hashes identify the actual baseline and candidate snapshots. The prompt is a prepared input, not proof that it was executed. No reviewer output is present.
 
-Recreate the runnable bundle from fresh `04/improved` and `05/start` checkpoints using `npm run review:bundle -- <baseline> <candidate>`. See the repository README for complete commands.
+This bundle predates the 2026-11-03 renumbering, when the UI-defect scene was `05/start`; it is now `06/start`. A performed review of a fresh bundle is preserved under `../agent-runs/2026-11-03-scene06-fresh-review/`.
+
+Recreate the runnable bundle from fresh `04/improved` and `06/start` checkpoints using `npm run review:bundle -- <baseline> <candidate>`. See the repository README for complete commands.

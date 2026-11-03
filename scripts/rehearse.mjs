@@ -40,7 +40,7 @@ function boundary(report) {
   return matches[0];
 }
 
-async function releaseAttempt(root, name, expectedExit) {
+async function releaseAttempt(root, name, expectedExit, blockedAt) {
   await run(root, name, ['npm', 'run', 'release'], expectedExit);
   const directories = await readdir(join(root, 'artifacts'));
   assert.equal(directories.length, 1, 'Each fresh checkpoint must have exactly one release attempt.');
@@ -51,12 +51,11 @@ async function releaseAttempt(root, name, expectedExit) {
     assert.equal(state.status, 'blocked');
     assert.equal(state.archive, null);
     assert(!entries.includes('checkout.tar.gz'), 'Blocked gate must not create a release archive.');
-    assert.equal(JSON.parse(await readFile(join(attempt, 'browser.json'), 'utf8')).exitCode, 1);
-    summary.assertions.push('Seeded UI defect blocked release at the browser check; no archive exists.');
+    assert.equal(JSON.parse(await readFile(join(attempt, `${blockedAt}.json`), 'utf8')).exitCode, 1);
   } else {
     assert.equal(state.status, 'packaged');
     assert(entries.includes('checkout.tar.gz'));
-    const listing = await run(root, '06-archive-contents', ['tar', '-tzf', state.archive.path]);
+    const listing = await run(root, '07-archive-contents', ['tar', '-tzf', state.archive.path]);
     assert(listing.includes('./index.html') && listing.includes('./assets/'));
     summary.assertions.push('Fixed release produced a static archive containing index.html and assets.');
   }
@@ -110,21 +109,35 @@ try {
   await run(improved, '04-boundary-policy-passed', [process.execPath, 'scripts/inspect-mutations.mjs', '--require-boundary-killed']);
   summary.assertions.push('The minimum-order mutant survives before AC-03b and is killed after it; the gate enforces that case.');
 
-  const uiBug = await scene('05', 'start');
-  await run(uiBug, '05-unit-green', ['npm', 'test']);
-  await run(uiBug, '05-build-bug', ['npm', 'run', 'build']);
-  const uiFailure = await run(uiBug, '05-browser-detects', ['npm', 'run', 'test:e2e'], 1);
+  const tampered = await scene('05', 'start');
+  await run(tampered, '05-unit-green', ['npm', 'test']);
+  const lockFailure = await run(tampered, '05-acceptance-verify', ['npm', 'run', 'acceptance:verify'], 1);
+  assert(lockFailure.includes('CHANGED   tests/cap.test.ts') && lockFailure.includes('CHANGED   tests/discount-v1.test.ts'));
+  const tamperedRelease = await releaseAttempt(tampered, '05-release-blocked', 1, 'acceptance-lock');
+  assert.deepEqual(tamperedRelease.steps.map(step => step.name), ['typecheck', 'unit', 'mutation', 'critical-boundary', 'build', 'browser']);
+  const regression = await run(await scene('05', 'restored'), '05-restored-red', ['npm', 'test'], 1);
+  assert(regression.includes('expected 500 to be 501') && regression.includes('expected 1499 to be 1500'));
+  const honest = await scene('05', 'fixed');
+  await run(honest, '05-fixed-green', ['npm', 'test']);
+  await run(honest, '05-acceptance-verified', ['npm', 'run', 'acceptance:verify']);
+  summary.assertions.push('Edited expected values kept every behavioral check green; only the acceptance lock blocked release. Restored tests expose the regression.');
+
+  const uiBug = await scene('06', 'start');
+  await run(uiBug, '06-unit-green', ['npm', 'test']);
+  await run(uiBug, '06-build-bug', ['npm', 'run', 'build']);
+  const uiFailure = await run(uiBug, '06-browser-detects', ['npm', 'run', 'test:e2e'], 1);
   assert(uiFailure.includes('€95.00') && uiFailure.includes('€105.00') && uiFailure.includes('toHaveText'));
-  await copyIfPresent(uiBug, 'reports/browser', '05-browser-before');
-  await copyIfPresent(uiBug, 'test-results', '05-browser-failure-artifacts');
-  const uiFixed = await scene('05', 'fixed');
-  await run(uiFixed, '05-build-fixed', ['npm', 'run', 'build']);
-  await run(uiFixed, '05-browser-passes', ['npm', 'run', 'test:e2e']);
-  await copyIfPresent(uiFixed, 'reports/browser', '05-browser-after');
+  await copyIfPresent(uiBug, 'reports/browser', '06-browser-before');
+  await copyIfPresent(uiBug, 'test-results', '06-browser-failure-artifacts');
+  const uiFixed = await scene('06', 'fixed');
+  await run(uiFixed, '06-build-fixed', ['npm', 'run', 'build']);
+  await run(uiFixed, '06-browser-passes', ['npm', 'run', 'test:e2e']);
+  await copyIfPresent(uiFixed, 'reports/browser', '06-browser-after');
   summary.assertions.push('Business tests pass with the seeded UI defect; a real built-UI assertion detects €105 instead of €95 and passes after the fix.');
 
-  await releaseAttempt(await scene('06', 'start'), '06-release-blocked', 1);
-  const release = await releaseAttempt(await scene('06', 'ready'), '06-release-ready', 0);
+  await releaseAttempt(await scene('07', 'start'), '07-release-blocked', 1, 'browser');
+  summary.assertions.push('Seeded UI defect blocked release at the browser check; no archive exists.');
+  const release = await releaseAttempt(await scene('07', 'ready'), '07-release-ready', 0);
   summary.releaseArchive = release.archive;
   summary.status = 'passed';
 } catch (error) {

@@ -10,3 +10,4 @@ reports/
 test-results/
 playwright-report/
 .DS_Store
+evidence/agent-runs/*/transcript.jsonl

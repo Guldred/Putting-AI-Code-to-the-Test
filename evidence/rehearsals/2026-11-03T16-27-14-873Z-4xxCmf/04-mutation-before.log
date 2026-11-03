@@ -1,0 +1,65 @@
+
+> putting-ai-code-to-the-test@1.0.0 test:mutation
+> stryker run
+
+17:27:29 (83364) INFO ProjectReader Found 1 of 25 file(s) to be mutated.
+17:27:29 (83364) INFO Instrumenter Instrumented 1 source file(s) with 12 mutant(s)
+17:27:29 (83364) INFO ConcurrencyTokenProvider Creating 1 test runner process(es).
+17:27:30 (83364) INFO DryRunExecutor Starting initial test run (vitest test runner with "perTest" coverage analysis). This may take a while.
+17:27:31 (83364) INFO DryRunExecutor Initial test run succeeded. Ran 27 tests in 0 seconds (net 7.119415999999887 ms, overhead 298.8805840000001 ms).
+
+All tests
+  cap.test.ts
+    ~ CR-01 — maximum discount AC-12d: caps a €200 order at €15 (covered 12)
+    ~ CR-01 — maximum discount AC-12a/b/c: subtotal 14999 gives discount 1500 (covered 12)
+    ~ CR-01 — maximum discount AC-12a/b/c: subtotal 15000 gives discount 1500 (covered 12)
+    ~ CR-01 — maximum discount AC-12a/b/c: subtotal 15010 gives discount 1500 (covered 12)
+  checkout.test.ts
+    ✓ checkout v1 — clarified shipping AC-01: an empty cart costs nothing, even with a code (killed 1)
+    ✓ checkout v1 — clarified shipping AC-02: adds quantity and shipping (killed 5)
+    ~ checkout v1 — clarified shipping AC-05/06/07: subtotal 9999 with  → discount 0, shipping 500, total 10499 (covered 7)
+    ~ checkout v1 — clarified shipping AC-05/06/07: subtotal 10000 with  → discount 0, shipping 0, total 10000 (covered 7)
+    ✓ checkout v1 — clarified shipping AC-05/06/07: subtotal 10000 with SAVE10 → discount 1000, shipping 500, total 9500 (killed 4)
+    ~ checkout v1 — clarified shipping AC-05/06/07: subtotal 11111 with SAVE10 → discount 1111, shipping 0, total 10000 (covered 12)
+    ~ checkout v1 — clarified shipping AC-05/06/07: subtotal 11110 with SAVE10 → discount 1111, shipping 500, total 10499 (covered 12)
+    ✘ checkout v1 — clarified shipping AC-09: rejects price -1 and quantity 1 (covered 0)
+    ✘ checkout v1 — clarified shipping AC-09: rejects price 100.5 and quantity 1 (covered 0)
+    ✘ checkout v1 — clarified shipping AC-09: rejects price NaN and quantity 1 (covered 0)
+    ✘ checkout v1 — clarified shipping AC-09: rejects price Infinity and quantity 1 (covered 0)
+    ✘ checkout v1 — clarified shipping AC-09: rejects price 9007199254740992 and quantity 1 (covered 0)
+    ✘ checkout v1 — clarified shipping AC-09: rejects price 100 and quantity -1 (covered 0)
+    ✘ checkout v1 — clarified shipping AC-09: rejects price 100 and quantity 1.5 (covered 0)
+    ✘ checkout v1 — clarified shipping AC-09: rejects price 100 and quantity 10 (covered 0)
+    ✘ checkout v1 — clarified shipping AC-09: rejects an unsafe aggregated subtotal (covered 0)
+    ~ checkout v1 — clarified shipping a zero-priced item still makes a non-empty cart (covered 7)
+  discount-v1.test.ts
+    ✓ SAVE10 v1 AC-03a: gives no discount just below the minimum (killed 1)
+    ~ SAVE10 v1 AC-03c: discounts an eligible order (covered 12)
+    ~ SAVE10 v1 AC-04: does not accept code (covered 7)
+    ~ SAVE10 v1 AC-04: does not accept code UNKNOWN (covered 7)
+    ~ SAVE10 v1 AC-04: does not accept code save10 (covered 7)
+    ~ SAVE10 v1 AC-08: rounds a half cent up (covered 12)
+
+[Survived] EqualityOperator
+src/discount.ts:3:28
+-     if (code !== 'SAVE10' || subtotalCents < 5_000) return 0;
++     if (code !== 'SAVE10' || subtotalCents <= 5_000) return 0;
+Tests ran:
+    checkout v1 — clarified shipping AC-01: an empty cart costs nothing, even with a code
+    checkout v1 — clarified shipping AC-05/06/07: subtotal 10000 with SAVE10 → discount 1000, shipping 500, total 9500
+    checkout v1 — clarified shipping AC-05/06/07: subtotal 11111 with SAVE10 → discount 1111, shipping 0, total 10000
+  and 8 more tests!
+
+
+Ran 3.33 tests per mutant on average.
+-------------|------------------|----------|-----------|------------|----------|----------|
+             | % Mutation score |          |           |            |          |          |
+File         |  total | covered | # killed | # timeout | # survived | # no cov | # errors |
+-------------|--------|---------|----------|-----------|------------|----------|----------|
+All files    |  91.67 |   91.67 |       11 |         0 |          1 |        0 |        0 |
+ discount.ts |  91.67 |   91.67 |       11 |         0 |          1 |        0 |        0 |
+-------------|--------|---------|----------|-----------|------------|----------|----------|
+17:27:32 (83364) INFO MutationTestReportHelper Final mutation score of 91.67 is greater than or equal to break threshold 80
+17:27:32 (83364) INFO JsonReporter Your report can be found at: file:///Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/04-start-YrhGWe/reports/mutation/mutation.json
+17:27:32 (83364) INFO HtmlReporter Your report can be found at: file:///Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/04-start-YrhGWe/reports/mutation/index.html
+17:27:32 (83364) INFO MutationTestExecutor Done in 3 seconds.

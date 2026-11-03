@@ -7,9 +7,10 @@
 | Unit tests | Selected input/output observations in a small deterministic calculation | Untested boundaries, UI wiring, browser behavior, validity of an assumed rule | Wrong pre-discount shipping and a matching test can both be green |
 | Code coverage | Which instrumented statements/branches/functions/lines executed in the selected scope | Whether outputs were asserted correctly or all meaningful cases were exercised | Executing the discount comparison on each side does not test equality |
 | Mutation testing | Whether selected tests detect generated local changes | All plausible defects, correct requirements, production readiness | Changing `< 5000` to `<= 5000` survives without an exact-minimum case |
-| Browser verification | Selected flows in a real browser against the built UI, including DOM wiring | All browsers, accessibility, production infrastructure or every interaction | Correct €95 calculation displayed as €100 is caught by a rendered-total assertion |
+| Protected acceptance oracle | Approved expected values cannot change silently; an edit becomes a visible, failing check | That the approved values are right, or protection against someone who can also rewrite the lock | An agent edits 501 → 500 and 1,500 → 1,499; `acceptance:verify` reports both files |
+| Browser verification | Selected flows in a real browser against the built UI, including DOM wiring | All browsers, accessibility, production infrastructure or every interaction | Correct €95 calculation displayed as €105 is caught by a rendered-total assertion |
 | Fresh-context review | Another reasoning pass grounded in specification and actual diff; identifiable findings | Guaranteed independence of assumptions, exhaustive defect discovery or proof | Reviewer follows the total from calculation into `view.ts` |
-| Enforced local gate | The packaging command reruns required checks and refuses an archive after failure | A remote merge policy, business approval, security assurance or prevention of manual bypass | `npm run release` exits nonzero on the seeded UI defect |
+| Enforced local gate | The packaging command reruns required checks and refuses an archive after failure | A remote merge policy, business approval, security assurance or prevention of manual bypass | `npm run release` exits nonzero on the edited oracles and on the seeded UI defect |
 
 ## Interpreting mutation results
 

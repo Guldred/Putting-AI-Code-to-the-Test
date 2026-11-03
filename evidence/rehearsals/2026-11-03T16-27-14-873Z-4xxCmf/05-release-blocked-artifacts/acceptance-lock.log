@@ -1,0 +1,7 @@
+Approved by: Specification owner (prepared demo baseline) (2026-11-03T16:26:07.295Z). Basis: docs/specification.md, docs/discount-cap-change.md
+  unchanged e2e/checkout.spec.ts
+  CHANGED   tests/cap.test.ts
+  unchanged tests/checkout.test.ts
+  unchanged tests/discount-boundary.test.ts
+  CHANGED   tests/discount-v1.test.ts
+ACCEPTANCE CHECK FAILED: Approved acceptance tests were modified or removed: tests/cap.test.ts, tests/discount-v1.test.ts. Restore them, or get the specification owner to approve the new expectations.
