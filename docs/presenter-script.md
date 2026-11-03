@@ -4,7 +4,9 @@ All spoken lines and presentation copy below are English. Stage directions, ques
 
 ## Roles in this session
 
-A coding agent is **the author**. You and the audience are **the people who accept or reject its work**. The agent appears in three moments: building the first checkout (scene 1, optional), test-first implementation of the cap (scene 3, live) and a fresh-context review (scene 6, preserved real run). Everything else is you running checks and reading their results. Agent setup is not explained here; other sessions cover it.
+A coding agent is **the author**. You and the audience are **the people who accept or reject its work**. The agent appears in three moments: building the first checkout (scene 1, optional), test-first implementation of the cap (scene 3, live) and a fresh-context review (scene 6, preserved real run). Everything else is you running checks and reading their results. Agent setup is not part of the talk.
+
+The central question: **why spec-driven, and how do we accept agent-written code safely without reviewing it line by line?** Participants chose this one session, so it explains vibe coding and spec-driven development itself. Every scene closes with the same two sentences: what evidence we now have, and what a human no longer has to read because of it (the “Instead of reading” cue at the end of each scene).
 
 ## Before the audience arrives
 
@@ -33,27 +35,47 @@ Dev servers use 5173; browser tests claim their own preview server on 4173. Stop
 
 Live agent runs have an observation budget (stated per scene). Preserve the exact prompt and unedited output/tool transcript under `evidence/agent-runs/`. If unfinished, say so and move to a labeled prepared next state. A prepared example is not the live run's output.
 
-## Opening — 00:00–05:00
+## Opening — 00:00–04:00
 
-**00:00–02:00 — State the purpose.**
+**00:00–01:30 — State the problem.**
 
-“We are going to decide whether to accept code written by a coding agent, several times. Our topic is the evidence for that decision: an intended behavior, observations that could contradict the implementation, another verification perspective and a gate that actually stops a release.”
+“Coding agents now write more code than any of us can read carefully. So the real question is not whether the agent is good. It is: how do we decide to accept code we have not read line by line?”
 
-“The other sessions cover repository preparation, agent configuration and general workflows. Here, the repository is ready. You need no local setup; please spend your attention on what each result does and does not tell us.”
+“You need no local setup; please spend your attention on what each result does and does not tell us.”
 
-**02:00–04:00 — Establish the voting pattern.**
+**01:30–03:00 — Establish the voting pattern.**
 
 Launch poll **P0** (warm-up). Show three choices: **Accept / Reject / Need more evidence**; explain that the same poll returns at every decision point.
 
-Ask in chat: “What would you want to observe before accepting code from a coding agent?” Read two answers. Follow with: “Which observation could make you change your mind?”
-
-**04:00–05:00 — Introduce the recurring feature and provenance.**
+**03:00–04:00 — Introduce the recurring feature and provenance.**
 
 “The feature is a cart with SAVE10, shipping and a visible total. The €100 cart will keep coming back. Some checkpoints contain deliberately seeded defects. They are labeled teaching examples, not a claim about a particular agent's raw output. Test, browser and review reports are actual executions.”
 
-## Scene 1 — The Green Build — 05:00–14:00
+## Vibe coding or spec-driven? — 04:00–10:00
 
-**05:00–06:00 — Optional: let an agent start building.**
+**04:00–05:00 — Where are you today?**
+
+Launch poll **P-how**: “How do you accept agent-written code today?” Leave the result visible while you continue.
+
+**05:00–07:00 — Two ways to work with an agent.**
+
+“**Vibe coding** means: describe what you want, let the agent build, and accept the result when it runs and looks right. It is fast and great for prototypes. What does it trust? The prompt, the agent's summary and our impression.”
+
+“**Spec-driven development** means: first write down the intended behavior as a short specification with concrete acceptance criteria. The agent implements against that, and every check measures against it. What does it trust? A small, human-reviewed document and observations that could prove the code wrong.”
+
+Mention, do not demo: tools such as GitHub Spec Kit or Kiro structure this loop. Today we use plain files: `docs/specification.md`, a change request, tests and scripts.
+
+**07:00–09:00 — The loop and where safety comes from.**
+
+Show the loop: **spec → acceptance criteria → failing test → implementation → evidence → gate**. “Humans review the short parts: the spec, the acceptance criteria and every change to them. Machines check the long part, the code, against them. A gate makes sure nobody can skip a check.”
+
+**09:00–10:00 — The honest limit.**
+
+“This does not mean nobody ever reads code. We read where the evidence points: a failing check, a review finding, a changed test, or an area the checks do not cover, like security. Let's see what goes wrong without a spec first.”
+
+## Scene 1 — Vibe Coding: The Green Build — 10:00–19:00
+
+**10:00–11:00 — Optional: let an agent start building.**
 
 If you want a live agent run, start it now in a separate terminal and leave it running while you continue:
 
@@ -64,9 +86,9 @@ ln -s "$DEMO_ROOT/node_modules" "$AGENT_DIR/node_modules"
 cd "$AGENT_DIR"
 ```
 
-The workspace has the tool configuration but no source or tests. Send the prompt from `prompts/01-initial-agent.txt` unchanged. It forbids installing packages: `node_modules` is shared with every scene, so an install there could break the rest of the session. Return to it at 12:00. Otherwise skip this step; the prepared checkpoint below is the default.
+The workspace has the tool configuration but no source or tests. Send the prompt from `prompts/01-initial-agent.txt` unchanged. It forbids installing packages: `node_modules` is shared with every scene, so an install there could break the rest of the session. Return to it at 17:00. Otherwise skip this step; the prepared checkpoint below is the default.
 
-**06:00–08:00 — Open the plausible build.**
+**11:00–13:00 — Open the plausible build.**
 
 ```sh
 SCENE_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 01 start --path)"
@@ -78,7 +100,7 @@ Expected: five tests pass. Show `src/checkout.ts`, `tests/assumed.test.ts` and t
 
 “This code is small, the build is plausible, and the tests are green.” Launch poll **P1**.
 
-**08:00–10:00 — Show the feature and predict.**
+**13:00–15:00 — Show the feature and predict.**
 
 ```sh
 npm run dev -- --port 5173
@@ -86,23 +108,25 @@ npm run dev -- --port 5173
 
 Before clicking: chat prompt **C1** — “€100 cart, SAVE10. What total do you expect?” Collect answers for 30 seconds. Then choose the €100 cart, enter SAVE10, click Apply. Expected in this checkpoint: subtotal €100, discount €10, shipping €0, total €90. Stop the dev server with Ctrl+C.
 
-**10:00–12:00 — Reveal the gap.**
+**15:00–17:00 — Reveal the gap.**
 
 “The brief does not say whether free shipping depends on the amount before or after discount. It also says ‘over’, without settling equality. The code and the test both picked an interpretation. Their agreement did not make that interpretation a requirement.”
 
 Show the assumed test for subtotal 10,000 with SAVE10: it explicitly expects no shipping and total 9,000. This is a shared test oracle assumption, not an independent answer.
 
-**12:00–14:00 — Check the live agent and reassess.**
+**17:00–19:00 — Check the live agent and reassess.**
 
 If an agent run was started: show its summary. Did it state the shipping ambiguity, or present an assumption as fact? Both are useful outcomes. Save the prompt and output under `evidence/agent-runs/`. Do not wait for an unfinished run.
 
 Ask: “Accept, reject, or need more evidence? What is the next observation you want?” Aim for a requirement clarification, not merely more copies of the same test.
 
+**Instead of reading:** nothing yet. This is vibe coding: we accepted green tests and a plausible screen, and both repeated the agent's own assumption. Reading the code line by line would not have found it either, because the code does exactly what it was written to do.
+
 Fallback: `cat "$FALLBACK_DIR/01-green.log"`. If the browser cannot run, read the prepared source and calculation values; do not invent a screenshot. The separately runnable `01/exposed` state contains the later failing criterion, and the rehearsal's `01-exposed.log` shows its real failure.
 
-## Scene 2 — What Does Correct Mean? — 14:00–25:00
+## Scene 2 — Spec-Driven: What Does Correct Mean? — 19:00–30:00
 
-**14:00–16:00 — Make two interpretations concrete.**
+**19:00–21:00 — Make two interpretations concrete.**
 
 “For a €100 subtotal and €10 discount: using the subtotal for free shipping gives a €90 final total. Using merchandise after discount gives €90 merchandise plus €5 shipping, or €95. The initial brief does not choose.”
 
@@ -116,13 +140,13 @@ npm test
 
 Expected: the same five tests pass. Scene 2 does not rely on scene 1's running server or edits.
 
-**16:00–19:00 — Clarify with the audience.**
+**21:00–24:00 — Clarify with the audience.**
 
 Chat prompt **C2** (two minutes): “Choose an interpretation and write one boundary example that distinguishes it. What should happen at exactly €100?” Read two examples.
 
 Now open `docs/specification.md` and say: “For this demo, the accepted rule is: free shipping from €100 **after discount**, including equality. SAVE10 starts at exactly €50; half cents round up; an empty cart costs zero.” This is the new explicit acceptance baseline, not a fact retroactively present in the brief.
 
-**19:00–21:00 — Execute the distinguishing criterion.**
+**24:00–26:00 — Execute the distinguishing criterion.**
 
 ```sh
 cp "$DEMO_ROOT/checkpoints/unit/shipping-acceptance.test.ts" tests/shipping-acceptance.test.ts
@@ -131,7 +155,7 @@ npm test
 
 Expected: one new failure. Expected shipping 500 and total 9,500; received shipping 0 and total 9,000. The original five tests still pass. The criterion was derived from the clarified rule, not the implementation.
 
-**21:00–23:00 — Correct the implementation and the mistaken oracle.**
+**26:00–28:00 — Correct the implementation and the mistaken oracle.**
 
 ```sh
 FIXED_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 02 fixed --path)"
@@ -144,15 +168,17 @@ Expected: diff changes the shipping basis to merchandise after discount; 23 test
 
 “Changing the old expected value is justified here by an external requirement decision. Changing it merely to match code would remove the challenge. Remember this sentence; it comes back in scene 5.”
 
-**23:00–25:00 — State the limit.**
+**28:00–30:00 — State the limit.**
 
 “We have a clearer baseline and selected examples. We have not established that every criterion has a test. The exact €50 discount case is written down but remains unverified in this state.” Launch poll **P2**.
 
+**Instead of reading:** “The spec is about 45 lines. That is what a human reviews carefully. The acceptance criteria turn it into examples a machine can check, and the code is measured against them.” Point at the spec-driven loop on the slide: we are at step 2.
+
 Fallback: open `02/red` and `02/fixed` independently. Read `02-red.log` and `02-fixed.log` from the fallback directory. Do not call this clarification proof that all code was developed test-first.
 
-## Scene 3 — Tests Before Code, with a live agent — 25:00–37:00
+## Scene 3 — Tests Before Code, with a live agent — 30:00–41:00
 
-**25:00–27:00 — Introduce CR-01.**
+**30:00–32:00 — Introduce CR-01.**
 
 Open `docs/discount-cap-change.md`: maximum €15 discount, after rounding; shipping semantics stay the same. Chat prompt **C3**: “For €200 with SAVE10, which values change?” Expected discount €15, total €185, shipping €0.
 
@@ -165,7 +191,7 @@ cat src/discount.ts
 
 Expected: 23 tests pass and `discount.ts` has **no cap**. Confirm that fact before anyone writes a test.
 
-**27:00–30:00 — Phase A: the agent must show red first.**
+**32:00–35:00 — Phase A: the agent must show red first.**
 
 Start the coding agent in `$SCENE_DIR` and send **phase A** from `prompts/coding-agent.md` unchanged. While it works, say: “The prompt forbids touching production code in this phase. We want to *see* the test fail against the uncapped code.”
 
@@ -192,7 +218,7 @@ Expected: two failing cases, expected 1,500 versus received 2,000 at €200, and
 
 “We have now observed a requirement-related failure while the implementation still has no cap. This is the observation we would lose if the test were written only after the final implementation.”
 
-**30:00–33:00 — Phase B: green, then refactor.**
+**35:00–38:00 — Phase B: green, then refactor.**
 
 Send **phase B** unchanged. Observation budget: 2 minutes. Then verify yourself:
 
@@ -213,7 +239,7 @@ diff -u "$DEMO_ROOT/checkpoints/overlays/cap-green/src/discount.ts" "$DEMO_ROOT/
 
 Explicit cap branch first, then `Math.min(1_500, Math.round(subtotalCents / 10))`. The prepared `03/green` and `03/refactor` states each pass 27 tests.
 
-**33:00–37:00 — Separate process evidence from completeness.**
+**38:00–41:00 — Separate process evidence from completeness.**
 
 “The original preparation also executed red before the first cap implementation. These are the preserved original records; today's replay is not a substitute for that chronology.”
 
@@ -223,11 +249,13 @@ cat "$DEMO_ROOT/evidence/authoring/002-cap-red-before-implementation/execution.l
 
 The adjacent `execution.json` records source hashes and times. Launch poll **P3**. Ask: “What does this TDD cycle still leave unproven?” Expected: missing cases, intended rules, UI wiring, independence.
 
+**Instead of reading:** “I did not read the agent's implementation to trust it. I saw the test fail for the right reason and then pass, with the test files unchanged.”
+
 Never narrate an already-capped implementation as a new test-first cycle.
 
-## Scene 4 — Who Tests the Tests? — 37:00–49:00
+## Scene 4 — Who Tests the Tests? — 41:00–51:00
 
-**37:00–40:00 — Inspect actual coverage scope.**
+**41:00–43:00 — Inspect actual coverage scope.**
 
 ```sh
 SCENE_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 04 start --path)"
@@ -239,7 +267,7 @@ Expected: 27 tests pass; V8 reports 100% statements, branches, functions and lin
 
 Launch poll **P4a**: “100% coverage — is the €50 equality case tested?” (Yes / No / Can't tell.)
 
-**40:00–43:00 — Mutate only the discount policy.**
+**43:00–46:00 — Mutate only the discount policy.**
 
 ```sh
 npm run test:mutation
@@ -250,7 +278,7 @@ Expected: 12 generated mutants, 11 killed, one survived, score 91.67%. The survi
 
 “This report says our selected tests did not distinguish this local change. It does not yet tell us whether the changed program has different valid behavior.”
 
-**43:00–46:00 — Investigate a valid distinguishing input.**
+**46:00–49:00 — Investigate a valid distinguishing input.**
 
 Chat prompt **C4**: “Which input distinguishes `<` from `<=` here?” Give the room one minute. Show AC-03b: subtotal exactly 5,000 and SAVE10 must give a 500-cent discount. The mutant gives zero.
 
@@ -262,17 +290,19 @@ npm run mutation:inspect
 
 Run `npm run test:mutation` between `npm test` and `mutation:inspect` if time allows; otherwise show the saved after-report (`$FALLBACK_DIR/04-mutation-after.log`). Expected: 28 tests pass; the same boundary mutant is killed; all 12 generated mutants are killed in this scoped experiment.
 
-**46:00–49:00 — Explain the limit and vote.**
+**49:00–51:00 — Explain the limit and vote.**
 
 “A survivor may be equivalent, outside the input contract, or evidence of a weak test. We investigate before adding a test. We are not making 100% a universal target.”
 
 “Our later gate has a modest score floor and an explicit policy for this important boundary. A score alone would have passed the weak state.” Launch poll **P4b**.
 
+**Instead of reading:** “Mutation testing checks the tests for us. We do not have to read every test to know whether it would notice a broken comparison.”
+
 Fallback after a 60-second budget: show the actual before/after JSON and `04-mutation-before.log` / `04-mutation-after.log`. The original preparation reports also live under `evidence/authoring/006-*` and `007-*`.
 
-## Scene 5 — Green by Editing the Oracle — 49:00–57:00
+## Scene 5 — Green by Editing the Oracle — 51:00–58:00
 
-**49:00–51:00 — A convincing agent change.**
+**51:00–53:00 — A convincing agent change.**
 
 ```sh
 SCENE_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 05 start --path)"
@@ -284,13 +314,13 @@ Expected: 28 tests pass. Show only the **task** and **agent summary** from `AGEN
 
 Say clearly: “This change is a prepared teaching example, not a recorded agent run. The pattern is common in practice: a refactor turns a test red, and the expected value gets edited.” Launch poll **P5**.
 
-**51:00–53:00 — Read the diff, not the summary.**
+**53:00–55:00 — Read the diff, not the summary.**
 
 Scroll to the diff in `AGENT-CHANGE.md`. Ask in chat **C5**: “What did the two test edits change?” Point out: AC-08 now expects 500 instead of 501, and AC-12a 1,499 instead of 1,500. Open `docs/specification.md` (AC-08: “500.5 rounds up”, 501) and `docs/discount-cap-change.md` (AC-12a: 1,500).
 
 “The specification did not change. The oracle did. In scene 2 we changed an expected value because the requirement was decided. Here it changed to match the code.”
 
-**53:00–55:00 — A check that does not trust the test files.**
+**55:00–57:00 — A check that does not trust the test files.**
 
 ```sh
 npm run acceptance:verify
@@ -300,7 +330,7 @@ Expected: exit 1. `CHANGED tests/cap.test.ts`, `CHANGED tests/discount-v1.test.t
 
 Optional, about 20 seconds: `npm run release`. Expected: typecheck, unit, mutation, critical boundary, build and all browser tests **pass**; only the final `acceptance-lock` step blocks; no archive. “Every behavioral check we built so far would have let this through.”
 
-**55:00–57:00 — Restore the oracle and see the real regression.**
+**57:00–58:00 — Restore the oracle and see the real regression.**
 
 ```sh
 RESTORED_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 05 restored --path)"
@@ -312,11 +342,13 @@ Expected: 2 failed, 26 passed: expected 500 to be 501, and expected 1499 to be 1
 
 State the limit: “A local lock file is a tripwire, not access control. An agent could also rewrite the lock. Real protection makes these paths require human review in the repository, for example through CODEOWNERS and branch protection.” The prepared `05/fixed` state reverts the refactor: 28 tests pass and `acceptance:verify` succeeds.
 
+**Instead of reading:** “If the approved tests are protected, a human only reviews changes to them. That diff is a few lines, not the whole change.”
+
 Fallback: `$FALLBACK_DIR/05-acceptance-verify.log`, `05-release-blocked-artifacts/release.json` and `05-restored-red.log`.
 
-## Scene 6 — Independent Verification — 57:00–68:00
+## Scene 6 — Independent Verification — 58:00–68:00
 
-**57:00–59:00 — Optional bug hunt.**
+**58:00–59:00 — Optional bug hunt.**
 
 If a hosted copy of the `06/start` build exists, post its link in chat (**C6**): “Here is the build the agent delivered. Add any product to the cart, apply SAVE10, and post what looks wrong.” Give one minute. Otherwise skip to the next step.
 
@@ -370,11 +402,13 @@ npm run test:e2e
 
 Expected: render `result.totalCents`; all five browser tests pass. Launch poll **P6**. Distinguish a reproduced/fixed defect from independently approved software: the review requested changes on the defective version; the fix itself has not been re-reviewed.
 
+**Instead of reading:** “The browser test checks what the user sees. The fresh-context reviewer is a second reader that is not us; we read its findings, not every line, and verify each finding ourselves.”
+
 Fallback: `06-browser-detects.log`, its saved failure screenshot, and `06-browser-after/checkout-desktop.png`. The [prepared finding](reviews/prepared-ui-finding.md) remains a labeled illustration if the real review files are unavailable.
 
-## Scene 7 — The Release Decision — 68:00–79:00
+## Scene 7 — The Release Decision — 68:00–77:00
 
-**68:00–72:00 — Demonstrate refusal, not a recommendation to run checks.**
+**68:00–71:00 — Demonstrate refusal, not a recommendation to run checks.**
 
 ```sh
 SCENE_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 07 start --path)"
@@ -390,7 +424,7 @@ Expected: nonzero exit, failed required browser check, `status: blocked`, `archi
 
 “The packaging command owns the checks and stops before producing the artifact. A document saying ‘please run the tests’ would not establish this behavior.”
 
-**72:00–75:00 — Show the corrected release.**
+**71:00–73:00 — Show the corrected release.**
 
 ```sh
 READY_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 07 ready --path)"
@@ -406,23 +440,40 @@ Expected: exit 0, `status: packaged`, an actual archive hash, `index.html` and a
 
 “This is local packaging enforcement. We have not configured a GitHub merge policy. A person can still manually build files outside this command. The gate only enforces the checks we selected.”
 
-**75:00–77:00 — Give the audience an acceptance ledger.**
+**73:00–75:00 — Give the audience an acceptance ledger.**
 
-Open `docs/acceptance-evidence.md`. Chat prompt **C8** (two minutes): “Name your decision, its scope, one supporting observation and one remaining risk.” Read two answers.
+Open `docs/acceptance-evidence.md`. Chat prompt **C8** (90 seconds): “Name your decision, its scope, one supporting observation and one remaining risk.” Read two answers.
 
 Keep these statuses separate: rule clarified; selected units pass; boundary mutation detected; oracle edits detected; built-UI defect fixed; one independent review performed on the defective version; local package gated.
 
-**77:00–79:00 — Make a scoped decision.**
+**75:00–77:00 — Make a scoped decision.**
 
 Launch poll **P7**. Read the closing words from `docs/release-decision.md`:
 
 “For this local demo, I accept the corrected feature with the scope we stated. I can point to the rule, the examples, the observed failures, the fixes, one real independent review and the packaging decision. That review found the defect; nobody has independently reviewed the fix yet. For a release that requires it, my decision is still ‘need more evidence.’ Which observation would change your decision?”
 
+**Instead of reading:** “Nobody has to remember to run anything. The gate runs every check, and it cannot be skipped by a summary.”
+
 Fallback: `07-release-blocked.log`, `07-release-blocked-artifacts/release.json`, then `07-release-ready.log`, its JSON and saved real archive. Do not call a previous successful package the result of a failed current run.
 
-## Outlook — 79:00–82:00
+## Where human attention goes — 77:00–82:00
 
-One slide, no demo: further evidence layers that fit the same questions.
+**77:00–80:00 — The attention model.**
+
+Back to the opening question: how do we accept code we have not read line by line? Show the split:
+
+| Humans review | Machines check | Read code only when |
+| --- | --- | --- |
+| The spec and acceptance criteria | Unit and boundary tests, red before green | A check fails |
+| Every change to approved tests | Mutation testing of the tests | A finding points there |
+| Review findings and the scoped decision | Browser tests on the built app | A test or the spec changed |
+| | Fresh-context review, the gate | The area is not covered (security, money, data) |
+
+“Spec-driven is why this works: without a spec, every check only confirms what the code already does. With a spec, a short document carries the intent, and the evidence tells us where to look.” Return to poll P-how: would anyone answer differently now?
+
+**80:00–82:00 — Further evidence layers.**
+
+One slide, no demo:
 
 - **Static analysis and linting:** whole classes of mistakes before any test runs.
 - **Dependency and security scanning:** agents add packages quickly; check what they add.
@@ -437,10 +488,11 @@ Protect these eight minutes. Suggested prompts if needed:
 
 - “Where do your tests share an unconfirmed assumption with your implementation?”
 - “Which files in your repository should an agent never change without a human?”
+- “Where would you still read every line, and why?”
 - “What does your release command actually prevent?”
 - “What context would you remove from an independent review?”
 - “Which missing observation would you add to your own workflow first?”
 
-If five minutes behind: use the scene 3 fallback diffs instead of a live agent, show the saved mutation after-report, and skip the optional `release` run in scene 5. Keep the first red cap observation, the acceptance-lock failure, the visible release refusal, the polls and Q&A.
+If five minutes behind: use the scene 3 fallback diffs instead of a live agent, show the saved mutation after-report, and skip the optional `release` run in scene 5. Keep the vibe-versus-spec framing, the first red cap observation, the acceptance-lock failure, the visible release refusal, the attention model, the polls and Q&A.
 
 After the session, stop owned dev/preview processes. Keep generated workspaces and any real agent/reviewer transcripts containing work you want to preserve.

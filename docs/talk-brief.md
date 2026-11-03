@@ -6,15 +6,23 @@ Learn how to challenge AI-generated code and decide whether it is ready to ship.
 
 Prerequisites: basic programming and testing knowledge. No local setup required. The session runs online in Microsoft Teams. The presenter runs everything on one local machine; participants at their own PCs take part through Teams polls, chat predictions and discussion.
 
+## Central question
+
+**Why do we use a spec-driven approach, and how does it let us accept agent-written code safely without reviewing it line by line?**
+
+Coding agents write more code than anyone can read carefully. Vibe coding accepts the result by feel: it runs, the tests are green, it looks right. Spec-driven development makes the intended behavior an explicit, short, human-reviewed artifact. Humans review the specification and the acceptance criteria; layered automated evidence checks the code against them; a gate enforces the checks. Human attention goes to the spec, to changes of the acceptance tests, to findings and to the decision — and to code only where the evidence points.
+
 ## Promise
 
-By the end, participants can state what evidence they need to accept an agent-produced change, identify what passing tests leave unproven, challenge weak or edited test oracles, and distinguish a runnable check from an enforced release gate.
+By the end, participants can explain why spec-driven development is an alternative to vibe coding, name where human attention is still needed when they stop reading every line, state what evidence they need to accept an agent-produced change, identify what passing tests leave unproven, challenge weak or edited test oracles, and distinguish a runnable check from an enforced release gate.
 
-## Scope and coordination
+## Scope
 
-Other speakers cover repository preparation, agent configuration and general agentic engineering workflows. This session starts with an available repository and concentrates on acceptance evidence. Tool installation is presenter preparation, not a live tutorial.
+Participants choose one session in this slot, so the session is self-contained: it explains what vibe coding and spec-driven development are before showing how each evidence layer works. It starts with an available repository; tool installation and agent configuration are presenter preparation, not part of the talk. Spec-driven tools (for example GitHub Spec Kit or Kiro) are mentioned, not demonstrated; the demo shows the practice with plain files.
 
-The same small EUR checkout anchors seven decisions: a green build, a clarified shipping rule, a discount cap, a surviving boundary mutation, an agent change that edits expected values, a UI wiring defect and a blocked local release. A coding agent is the author throughout; the presenter and audience are the people accepting its work. The repeated question is **“Would you accept this change now? What evidence is still missing?”**
+This is not a claim that code is never read. Targeted reading stays necessary where the evidence points (a failing check, a review finding, a changed test) and for areas the checks do not cover, such as security-sensitive code.
+
+After a short framing (vibe coding versus spec-driven), the same small EUR checkout anchors seven decisions: a vibe-coded green build, a clarified shipping rule, a discount cap, a surviving boundary mutation, an agent change that edits expected values, a UI wiring defect and a blocked local release. A coding agent is the author throughout; the presenter and audience are the people accepting its work. The repeated question is **“Would you accept this change now? What evidence is still missing?”**
 
 ## Teaching contract
 

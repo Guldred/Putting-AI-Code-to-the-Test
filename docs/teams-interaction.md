@@ -11,6 +11,7 @@ Unless stated otherwise, every poll is single choice with the options **Accept**
 | ID | Scene | Question |
 | --- | --- | --- |
 | P0 | Opening | “A coding agent says: ‘Feature done, all tests pass.’ What do you do?” |
+| P-how | Framing | “How do you accept agent-written code today?” Options: **I read every line**, **I run it and look**, **Tests in CI decide**, **Spec plus automated checks**. Multiple choice; show it again in the closing attention model. |
 | P1 | 1 | “Five tests pass. Would you accept this change?” |
 | P2 | 2 | “Spec written, shipping fixed, 23 tests pass. Accept now?” |
 | P3 | 3 | “The cap was test-driven: red, then green. Accept now?” |
