@@ -2,28 +2,26 @@
 
 The session runs online in Microsoft Teams. Participants sit at their own PCs and take part through Teams polls and chat; nobody installs anything. See [Teams interaction](teams-interaction.md).
 
-Central question: **why spec-driven, and how do we accept agent-written code safely without reviewing it line by line?** Every scene ends with the same pair of answers: what evidence we now have, and what a human no longer has to read because of it.
+Central question: **why spec-driven, and how do we accept agent-written code safely without reviewing it line by line?** The talk starts with the rawest process (prompt → agent → ship). In each of six rounds something breaks live and the pipeline gains one station. Every round follows the same beats: ship it? → it breaks → what would have caught it? → new station → green again.
 
-| Time | Duration | Segment | Audience activity / decision |
-| --- | ---: | --- | --- |
-| 00:00–04:00 | 4 min | Opening: agents write more than we can read; the three voting choices | Warm-up poll P0 |
-| 04:00–10:00 | 6 min | Vibe coding or spec-driven? What each one trusts; the spec-driven loop; where human attention goes | Poll P-how: how do you accept agent code today? |
-| 10:00–19:00 | 9 min | Scene 1 — Vibe coding: the green build (optional live agent build) | Poll on passing tests; predict the €100 SAVE10 total in chat |
-| 19:00–30:00 | 11 min | Scene 2 — Spec-driven: what does “correct” mean? | Two-minute chat exercise: choose a shipping interpretation and write a boundary example |
-| 30:00–41:00 | 11 min | Scene 3 — Tests before code, with a live agent | Predict which values change; watch red → green; poll |
-| 41:00–51:00 | 10 min | Scene 4 — Who tests the tests? | Poll on coverage; propose the distinguishing input in chat |
-| 51:00–58:00 | 7 min | Scene 5 — Green by editing the oracle | Poll on the agent's summary; spot the edited expected values in the diff |
-| 58:00–68:00 | 10 min | Scene 6 — Independent verification | Optional bug hunt via link; propose reviewer inputs; judge a real review finding |
-| 68:00–77:00 | 9 min | Scene 7 — The release decision | Short ledger exercise in chat; final poll |
-| 77:00–82:00 | 5 min | Where human attention goes; further evidence layers | — |
-| 82:00–90:00 | 8 min | Questions and transfer to participants' own work | Reserved Q&A |
+| Time | Duration | Segment | Pipeline after the round | Technical scenes |
+| --- | ---: | --- | --- | --- |
+| 00:00–05:00 | 5 min | Opening: agents write more than we can read; poll P-how | prompt → agent → ship | — |
+| 05:00–19:00 | 14 min | Round 1 — Vibe coding, then a spec | + spec | `01`, `02` |
+| 19:00–30:00 | 11 min | Round 2 — A test must fail first (live agent) | + test first | `03` |
+| 30:00–40:00 | 10 min | Round 3 — Test the tests | + mutation | `04` |
+| 40:00–49:00 | 9 min | Round 4 — Lock the oracle | + test lock | `05` |
+| 49:00–60:00 | 11 min | Round 5 — Check what users see | + browser test and review | `06` |
+| 60:00–69:00 | 9 min | Round 6 — No check is optional | + gate | `07` |
+| 69:00–75:00 | 6 min | Wrap-up: where human attention goes; P-how again; scoped decision | — | — |
+| 75:00–90:00 | 15 min | Questions (10 min) plus buffer (5 min) | — | — |
 
-Total: **90 minutes**, including 8 minutes exclusively for Q&A.
+Total: **90 minutes**.
 
 ## Time controls
 
-Mutation execution has a 60-second live budget. Each live coding-agent phase in scene 3 has a 2-minute observation budget; the optional scene 1 agent build runs in the background and is checked once at 17:00. A live run may continue separately, but do not wait silently. Open preserved execution evidence or a labeled prepared state and continue from the next checkpoint. Never imply the fallback was the live run's output. The scene 6 review is shown from its preserved real run, not executed live (it took about 3 minutes).
+Each live coding-agent phase in round 2 has a 2-minute observation budget; the optional round 1 agent build runs in the background and is checked once at 12:00. Mutation runs have a 60-second budget. The round 5 review is shown from its preserved real run, not executed live. Never imply a fallback was a live run's output.
 
-If five minutes behind: use the prepared scene 3 diffs instead of a live agent (save 2 minutes), show the mutation after-report instead of rerunning it (save 1 minute), and skip the optional release run in scene 5 (save 1 minute) and the bug hunt in scene 6 (save 1 minute). Keep the framing block, the first red cap test, the acceptance-lock failure, the blocked packaging command, the attention model, the polls and Q&A.
+If five minutes behind: use the round 2 fallback diffs instead of the live agent, show the saved mutation after-report, skip the optional release run in round 4 and the bug hunt in round 5. Keep the six “ship it?” moments, the lock failure, the release refusal and the wrap-up.
 
-The fallback path still fits the session without network access for the demo itself, account access, external services or attendee setup. Initial dependency/browser installation happens before the session; see the README preflight.
+The fallback path needs no network access, account, external service or attendee setup. Dependency and browser installation happens before the session; see the README preflight.

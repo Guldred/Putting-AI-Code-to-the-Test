@@ -2,7 +2,7 @@
 
 A small checkout and seven reproducible scenes for a 90-minute online presentation (Microsoft Teams) about accepting software produced by coding agents.
 
-Central question: **why spec-driven development instead of vibe coding, and how do we accept agent-written code safely without reviewing it line by line?** A short framing block explains both approaches; the seven scenes then show, layer by layer, what evidence replaces line-by-line reading and where human attention is still needed.
+Central question: **why spec-driven development instead of vibe coding, and how do we accept agent-written code safely without reviewing it line by line?** The talk starts with the rawest process (prompt → agent → ship). In six rounds something breaks live and the pipeline gains one station: spec, test first, mutation testing, a test lock, browser test and review, and a release gate. The seven technical scenes below are the demo states behind those rounds.
 
 Learn how to challenge AI-generated code and decide whether it is ready to ship. The demo covers spec-driven development, TDD, mutation testing, independent reviews and quality gates. Prerequisites: basic programming and testing knowledge. **Audience members need no local setup.**
 

@@ -22,7 +22,7 @@ Participants choose one session in this slot, so the session is self-contained: 
 
 This is not a claim that code is never read. Targeted reading stays necessary where the evidence points (a failing check, a review finding, a changed test) and for areas the checks do not cover, such as security-sensitive code.
 
-After a short framing (vibe coding versus spec-driven), the same small EUR checkout anchors seven decisions: a vibe-coded green build, a clarified shipping rule, a discount cap, a surviving boundary mutation, an agent change that edits expected values, a UI wiring defect and a blocked local release. A coding agent is the author throughout; the presenter and audience are the people accepting its work. The repeated question is **“Would you accept this change now? What evidence is still missing?”**
+The talk is told as a pipeline that grows. It starts with the rawest process: prompt → agent → ship. In six rounds something goes wrong live with the same small EUR checkout, and the pipeline gains exactly one station that would have caught it: a spec (round 1, vibe coding versus spec-driven), test first, mutation testing, a test lock, browser test plus a fresh-context review, and a release gate. A coding agent is the author throughout; the presenter and audience accept its work. The repeated question is **“Ship it?”**, followed by **“What would have caught it?”**
 
 ## Teaching contract
 
@@ -36,6 +36,6 @@ After a short framing (vibe coding versus spec-driven), the same small EUR check
 
 ## Audience interaction
 
-Use three Teams poll choices at every checkpoint: **Accept**, **Reject**, **Need more evidence** (see [Teams interaction](teams-interaction.md)). Ask for the missing observation, not confidence in an agent or tool. Return to the €100 SAVE10 order throughout; use the €200 order only to introduce the cap, and the €50 order to expose the exact minimum.
+Every round opens with the Teams poll **“Ship it?”** (**Ship it**, **Don't ship**, **Need more evidence**; see [Teams interaction](teams-interaction.md)) at the moment things look green. Ask for the missing observation, not confidence in an agent or tool. Return to the €100 SAVE10 order throughout; use the €200 order only to introduce the cap, and the €50 order to expose the exact minimum.
 
 See the [90-minute schedule](90-minute-outline.md), [Teams interaction](teams-interaction.md), [presenter script](presenter-script.md), [evidence map](acceptance-evidence.md) and [slide outline](slide-outline.md).
