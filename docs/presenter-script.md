@@ -1,41 +1,45 @@
-# Presenter script
+# Presenter runbook
 
-All spoken lines and presentation copy below are English. The session runs online in Microsoft Teams; every participant sits at their own PC. [Teams interaction](teams-interaction.md) lists the polls and chat prompts; the [timed outline](90-minute-outline.md) protects the schedule.
+Step by step through the 90 minutes: which slide is up, what you type, what you say, what the audience does. All spoken lines and on-screen copy are English. The session runs online in Microsoft Teams; everyone sits at their own PC. [Teams interaction](teams-interaction.md) lists the polls (P-…) and chat prompts (C-…); the [timed outline](90-minute-outline.md) protects the schedule.
+
+Legend for each step: **Slide** = advance the deck · **Terminal** = type this · **Browser** = show this · **Claude Code** = agent session · **Teams** = poll or chat · **Say** = the sentence that carries the point.
 
 ## The idea
 
 **Central question:** why spec-driven, and how do we accept agent-written code safely without reviewing it line by line?
 
-**The story:** we start with the rawest process there is: prompt → agent → ship. In each of six rounds something goes wrong live. The audience sees the problem, and we add exactly one station to the pipeline that would have caught it. By the end the pipeline reads spec → test first → agent → mutation → test lock → browser + review → gate → ship.
+**The story:** five stages. We start with the rawest process (prompt → agent → ship). Each stage adds one layer, and each stage has the same two beats: *what it catches* and *what still slips through*. The thing that slips through is exactly the problem that opens the next stage. The [BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD) is the example framework for the human-facing parts (spec with a team of agents, Party Mode, independent code review); the hard checks (test first, mutants, lock, browser test, gate) come from this repository.
 
-**The slides:** one pipeline slide per round, same layout every time. The new station glides in (magic-move transition). Everything else happens in the terminal and the browser. Details live in the speaker notes and the backup slides after “Questions”.
+**The slides:** one stage slide per stage, same layout every time: a row of stations, a green card *what it catches*, a purple card *what still slips through*. Plus one slide for BMAD and Party Mode and one summary slide (“every layer has holes”). Everything else happens in the terminal, the browser and Claude Code.
 
-**The running gag:** the bottom-right corner of every pipeline slide counts “Code lines read by a human”. It stays at 0 until round 5, when it becomes 1: the line the review finding pointed to. The bottom-left corner says what we read instead.
+**The running gag:** the bottom-right corner of every stage slide counts “Code lines read by a human”. It stays at 0 until stage 4, when it becomes 1: the line the review finding pointed to.
 
-**Every round has the same five beats:**
-
-1. **Ship it?** A Teams poll at the moment things look green (30 seconds).
-2. **It breaks.** Live in terminal or browser.
-3. **What would have caught it?** Chat question; often the audience names the station.
-4. **New station.** Advance the slide; one sentence why.
-5. **Green again.** Apply the station live and rerun.
-
-A coding agent is the author throughout; you and the audience accept or reject its work. Agent setup is not part of the talk.
+**Every stage, same rhythm:** it looks green → poll “Ship it?” → it breaks, live → chat “What would have caught it?” → the new layer, live → the stage slide names what it caught and what still slips through.
 
 ## Before the audience arrives
 
-Install dependencies and Chromium on the presentation machine while online. Then run:
+### Once per machine (needs internet)
+
+```sh
+npm ci
+PLAYWRIGHT_BROWSERS_PATH="$PWD/node_modules/.cache/ms-playwright" npx playwright install chromium
+npx skills add bmad-code-org/BMAD-METHOD -a claude-code -y --copy -s bmad -s bmod-core-tools -s bmod-method -s bmad-party-mode -s bmad-agent-analyst -s bmad-agent-pm -s bmad-agent-po -s bmad-agent-architect -s bmad-agent-ux-designer -s bmad-agent-dev -s bmad-build -s bmad-code-review -s bmad-review
+```
+
+The BMAD skills land in `.claude/skills/` (gitignored; `skills-lock.json` records the versions). `uv` must be installed (`brew install uv`); BMAD's scripts run through it. Then, in Claude Code from the repository root, run `/bmad` and type `Set up BMad for this project with the defaults.` It creates `_bmad/` (gitignored). Check: `ls _bmad/scripts` lists `resolve_config.py`.
+
+Rehearse Party Mode once (stage 1, step 5 below) and keep the transcript: create `evidence/agent-runs/<date>-party-mode/` with the exact prompt and the unedited output. That is the fallback if the live party stalls.
+
+### Before every run
 
 ```sh
 npm run preflight
 npm run rehearse
 ```
 
-Check that `evidence/latest.md` says **passed**. Open the deck, the specification, a source editor and one browser tab. Terminal font at least 20 pt for a shared screen. Keep browser screenshots and raw logs available offline.
+Check that `evidence/latest.md` says **passed**. Then keep these open: the [deck](https://claude.ai/artifact/NCdrVbdps2PhKMukZHdMJT) in present mode, one terminal (font 20 pt or more), one browser tab, an editor with `docs/initial-brief.md` and `docs/specification.md`, and a second terminal for Claude Code. Teams: polls created in advance, share the whole **screen**, a co-moderator watches the chat.
 
-In Teams: create the polls from [teams-interaction.md](teams-interaction.md) in advance, share your whole **screen** so terminal, browser and deck switches stay visible, and ask a co-moderator to watch the chat.
-
-From the repository root, keep these shell variables for the entire session:
+In the main terminal, from the repository root:
 
 ```sh
 DEMO_ROOT="$PWD"
@@ -43,307 +47,242 @@ FALLBACK_DIR="$(node -p 'require("node:path").resolve("evidence", require("./evi
 node "$DEMO_ROOT/scripts/scene.mjs" --list
 ```
 
-Every `scene.mjs` call creates a fresh folder under `.demo-runs/`; previous folders are never touched. Expected failing commands must return a prompt, so use a normal interactive terminal. Dev servers use 5173; browser tests claim their own server on 4173. Stop a dev server with Ctrl+C before serving another checkpoint.
-
-Live agent runs have an observation budget. Preserve the exact prompt and unedited output under `evidence/agent-runs/`. If a run is unfinished, say so and continue from the labeled prepared state. A prepared example is never the live run's output.
+Every `scene.mjs` call creates a fresh folder under `.demo-runs/`; nothing you did earlier is touched. Dev servers use 5173; browser tests claim 4173. Stop a dev server with Ctrl+C before serving another checkpoint. If a live agent step goes over budget, say so and use the prepared state; never present a prepared example as a live result.
 
 ## Opening — 00:00–05:00
 
-Slides: **cover**, **problem**.
+1. **Slide `cover`.** Welcome. “No setup on your side. I run everything; you vote and you type in the chat.”
+2. **Slide `problem`.** **Say:** “Coding agents write more code than any of us can read carefully. So the question is not *is the agent good*. It is: how do we decide to accept code we have not read line by line?”
+3. **Teams P-how:** “How do you accept agent-written code today?” Leave the result visible.
+4. **Say:** “We start with the rawest process there is, and we improve it in five stages. Every stage catches something, and every stage leaves a hole. And in every stage I will ask you the same thing: ship it?”
 
-“Coding agents now write more code than any of us can read carefully. So the question is not whether the agent is good. It is: how do we decide to accept code we have not read line by line?”
+## Stage 0 — Vibe coding — 05:00–14:00
 
-Launch poll **P-how**: “How do you accept agent-written code today?” Leave the result visible.
+Scene `01`. Nothing on the slide yet; stay on `problem`.
 
-“We will start with the rawest process there is. Every time something goes wrong, we add one station. And in every round I will ask you the same thing: ship it?”
+1. **Terminal:**
+   ```sh
+   SCENE_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 01 start --path)"
+   cd "$SCENE_DIR"
+   npm test
+   ```
+   Five tests pass.
+2. **Editor:** `docs/initial-brief.md`, the four-line prompt. **Say:** “This is the whole brief. One prompt, one agent, a working checkout, five green tests. Vibe coding.”
+3. **Teams P1:** “Five tests pass. Ship it?” (30 s)
+4. **Teams C1:** “€100 cart, SAVE10. What total do you expect?” (30 s)
+5. **Terminal:** `npm run dev -- --port 5173` · **Browser:** open the printed URL, click **€100**, apply **SAVE10**. Subtotal €100, discount €10, shipping €0, total **€90**.
+6. Read two chat answers aloud; some expected **€95**. **Say:** “The brief does not say whether free shipping looks at the amount before or after the discount. The code picked one. The tests picked the same one, because the same agent wrote both. Reading the code line by line would not have found this: it does exactly what it was written to do.” Ctrl+C.
+7. **Teams chat:** “What would have caught it?” Someone will say: a decision, a spec.
+8. **Slide `s0`.** Read the two cards: fast and green; nobody decided what correct means.
+9. **Say:** “So who decides what correct means? Normally a team: analyst, product owner, UX, architect, developer. We can have that team even when it is just me and an agent.”
 
-Mention once: some states contain deliberately seeded defects; they are labeled teaching examples. Test, browser and review reports are real executions.
+Fallback: `$FALLBACK_DIR/01-exposed.log`.
 
-## Round 1 — Vibe coding, then a spec — 05:00–19:00
+## Stage 1 — Say what correct means (BMAD + Party Mode) — 14:00–30:00
 
-Slide **r0** (prompt → agent → ship).
+Scene `02`.
 
-**Optional live build (start at 05:00, check at 12:00).** In a second terminal:
+1. **Slide `bmad`.** Walk the six roles in one sentence each. **Say:** “BMAD is an agent framework for exactly this: each role is an agent with a job. Party Mode puts all of them in one room, in character, and lets them argue. You steer.”
+2. **Teams C2** (60 s): “Read the brief on screen. What is unclear or missing before we write the spec?” Keep the brief visible in the editor while the chat fills.
+3. **Claude Code** (second terminal, repository root): `claude`, then `/bmad-party-mode`.
+4. When the room greets you, type:
+   > Topic: docs/initial-brief.md. We are about to build this checkout. Before anyone writes code: what is unclear in this brief, what would each of you decide differently, and what must the spec say?
+5. Let two or three turns run (budget 4 minutes). Steer once, for example: `John, Sally: a €100 cart with SAVE10. Free shipping or €5? Decide.` Then: `Thanks, wrap up with the open questions.`
+6. **Say** while it runs: “Same model, six roles. It widens the view; it does not prove anything. The value is the questions nobody asked.”
+7. Compare with the chat: did the room find **exactly €100** and **before or after the discount**? Read the best chat answer aloud. Fallback: the preserved party transcript from the rehearsal, or backup slide `s2-two`.
+8. **Editor:** `docs/specification.md` (about 45 lines). **Say:** “This is what the PM and the PO turn the argument into: a short spec with numbered acceptance criteria. AC-06 decides it: free shipping uses the subtotal *after* the discount, and €100 is not over €100. Forty-five lines. This is what humans review.”
+9. **Terminal:**
+   ```sh
+   SCENE_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 02 start --path)"
+   cd "$SCENE_DIR"
+   cp "$DEMO_ROOT/checkpoints/unit/shipping-acceptance.test.ts" tests/shipping-acceptance.test.ts
+   npm test
+   ```
+   One failure: expected shipping 500 and total 9,500; received 0 and 9,000. **Say:** “The spec, written as a test, disagrees with the code. The code was plausible; it was not what we decided.”
+10. **Terminal:**
+    ```sh
+    FIXED_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 02 fixed --path)"
+    diff -u "$SCENE_DIR/src/checkout.ts" "$FIXED_DIR/src/checkout.ts"
+    cd "$FIXED_DIR"
+    npm test
+    ```
+    23 tests pass. **Say:** “We changed an old expected value because the requirement was decided. Remember that sentence for stage 3.”
+11. **Slide `s1`.** Read the cards: ambiguity caught before code; a spec on paper proves nothing.
+12. **Bridge.** **Editor:** `docs/discount-cap-change.md`: SAVE10 is capped at €15. **Teams C3** (30 s): “€200 cart with SAVE10: which values change?” (discount €15, total €185.) **Say:** “Imagine the agent comes back: cap done, tests green.” **Teams P2:** “Ship it?”
+13. **Say:** “The agent wrote the code and the test together. Has that test ever failed? A test that cannot fail proves nothing.”
 
-```sh
-AGENT_DIR="$(mktemp -d "$DEMO_ROOT/.demo-runs/01-agent-XXXXXX")"
-for f in package.json .npmrc tsconfig.json vite.config.ts vitest.config.ts; do cp "$DEMO_ROOT/checkpoints/base/$f" "$AGENT_DIR/"; done
-ln -s "$DEMO_ROOT/node_modules" "$AGENT_DIR/node_modules"
-cd "$AGENT_DIR"
-```
+Fallback: `$FALLBACK_DIR/02-red.log`, `02-fixed.log`.
 
-Send `prompts/01-initial-agent.txt` unchanged. It forbids package installs because `node_modules` is shared with every scene. Otherwise use the prepared checkpoint.
+## Stage 2 — A test must fail first — 30:00–41:00
 
-**It looks green.**
+Scene `03`, live agent. Observation budget 2 minutes per phase.
 
-```sh
-SCENE_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 01 start --path)"
-cd "$SCENE_DIR"
-npm test
-```
+1. **Terminal:**
+   ```sh
+   SCENE_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 03 start --path)"
+   cd "$SCENE_DIR"
+   npm test
+   cat src/discount.ts
+   ```
+   23 pass, no cap in the code.
+2. **Claude Code:** in the second terminal, `cd "$SCENE_DIR"` and start `claude`. Paste **phase A** of `prompts/coding-agent.md` unchanged (test only, no production change). **Say:** “Amelia, BMAD's developer agent, works the same way: red, green, refactor. Today I ask for red first and I stop her there.”
+3. While it runs: **Say:** “I am not going to read what it writes. I am going to watch whether the test fails for the right reason.”
+4. **Terminal** (main):
+   ```sh
+   npm test
+   shasum -a 256 tests/*.test.ts > red-tests.sha256
+   ```
+   A value mismatch, for example expected 1,500, received 2,000. Not a syntax error. **Say:** “Red for the right reason. And I just fingerprinted the tests.”
+5. **Claude Code:** paste **phase B** (smallest implementation, then refactor, tests unchanged).
+6. **Terminal:**
+   ```sh
+   npm test
+   shasum -a 256 -c red-tests.sha256
+   diff -u "$DEMO_ROOT/checkpoints/overlays/uncapped/src/discount.ts" src/discount.ts
+   ```
+   All green, every test file `OK`, only `discount.ts` changed. **Say:** “I did not read the implementation to trust it. I saw the test fail, then pass, with the tests untouched.” If the agent changed a test file, stop and point at it: that is stage 3.
+7. **Slide `s2`.** Read the cards: red then green without reading; but green tests can be weak, and the agent can edit them.
+8. **Bridge.** **Terminal:**
+   ```sh
+   SCENE_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 04 start --path)"
+   cd "$SCENE_DIR"
+   npm run test:coverage
+   ```
+   27 pass; 100% on all four metrics for `checkout.ts` and `discount.ts`. **Teams P3:** “100% coverage. Ship it?”
 
-Five tests pass. Show the short `docs/initial-brief.md`. Launch poll **P1**: “Five tests pass. Ship it?”
-
-**It breaks.** Chat **C1**: “€100 cart, SAVE10. What total do you expect?” Then:
-
-```sh
-npm run dev -- --port 5173
-```
-
-Choose €100, apply SAVE10: subtotal €100, discount €10, shipping €0, total €90. Read two chat answers: some expected €95. “The brief does not say whether free shipping uses the amount before or after the discount. The code picked one. The tests picked the same one, because the same agent wrote both. Reading the code line by line would not have found it: it does exactly what it was written to do.” Stop the server. If the live agent ran: did it mention the ambiguity?
-
-**What would have caught it?** Someone deciding what correct means, before the code exists.
-
-**New station: spec.** Advance to **r1**.
-
-“Vibe coding trusts the summary and our impression. Spec-driven development writes the intended behavior down first: a short spec with concrete examples. The agent works against it, and every check measures against it. Tools like GitHub Spec Kit or Kiro structure this; we use plain files.”
-
-**Green again.** Open `docs/specification.md` (about 45 lines). Chat **C2** (90 seconds): “Write one example that tells the two shipping rules apart.” Then:
-
-```sh
-SCENE_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 02 start --path)"
-cd "$SCENE_DIR"
-cp "$DEMO_ROOT/checkpoints/unit/shipping-acceptance.test.ts" tests/shipping-acceptance.test.ts
-npm test
-```
-
-One failure: expected shipping 500 and total 9,500; received 0 and 9,000.
-
-```sh
-FIXED_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 02 fixed --path)"
-diff -u "$SCENE_DIR/src/checkout.ts" "$FIXED_DIR/src/checkout.ts"
-cd "$FIXED_DIR"
-npm test
-```
-
-23 tests pass. “We just changed an old expected value, because the requirement was decided. Remember that sentence for round 4.”
-
-Fallback: `$FALLBACK_DIR/01-exposed.log`, `02-red.log`, `02-fixed.log`.
-
-## Round 2 — A test must fail first — 19:00–30:00
-
-Slide stays on **r1**.
-
-**It looks green.** New requirement: SAVE10 is capped at €15 (`docs/discount-cap-change.md`). Chat **C3**: “€200 with SAVE10: which values change?” (discount €15, total €185.) “Imagine the agent says: cap done, tests green.” Poll **P2**: “Ship it?”
-
-**It breaks (as a question).** “The agent wrote the code and the tests together. Have we ever seen that test fail? A test that cannot fail proves nothing.”
-
-**New station: test first.** Advance to **r2**. “We make the agent show us red before it writes code.”
-
-**Green again, live with the agent.**
-
-```sh
-SCENE_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 03 start --path)"
-cd "$SCENE_DIR"
-npm test
-cat src/discount.ts
-```
-
-23 pass, no cap in the code. Send **phase A** of `prompts/coding-agent.md` (test only, no production change). Budget 2 minutes. Then yourself:
-
-```sh
-npm test
-shasum -a 256 tests/*.test.ts > red-tests.sha256
-```
-
-A value mismatch, for example expected 1,500, received 2,000. Not a syntax error. Send **phase B**. Budget 2 minutes. Then:
-
-```sh
-npm test
-shasum -a 256 -c red-tests.sha256
-diff -u "$DEMO_ROOT/checkpoints/overlays/uncapped/src/discount.ts" src/discount.ts
-```
-
-All green, every test file `OK` since red, only `discount.ts` changed. “I did not read the implementation to trust it. I saw the test fail for the right reason and pass with the tests unchanged.” If the agent changed a test, stop and point at it: that is round 4.
-
-Fallback (no agent or over budget):
+Fallback (no agent, or over budget):
 
 ```sh
 cp "$DEMO_ROOT/checkpoints/unit/cap.test.ts" tests/cap.test.ts
 npm test
 diff -u "$DEMO_ROOT/checkpoints/overlays/uncapped/src/discount.ts" "$DEMO_ROOT/checkpoints/overlays/cap-green/src/discount.ts"
-diff -u "$DEMO_ROOT/checkpoints/overlays/cap-green/src/discount.ts" "$DEMO_ROOT/checkpoints/base/src/discount.ts"
 ```
 
-Original preparation evidence that red came first: `evidence/authoring/002-cap-red-before-implementation/execution.log`.
+Original evidence that red came first: `evidence/authoring/002-cap-red-before-implementation/execution.log`.
 
-## Round 3 — Test the tests — 30:00–40:00
+## Stage 3 — Test the tests — 41:00–53:00
 
-Slide stays on **r2**.
+Scenes `04` and `05`. Two layers in one stage: are the tests strong (mutants), and are they stable (lock)?
 
-**It looks green.**
+1. **Say:** “Coverage says the code ran. Not that anything checked the result. Let's break the code on purpose and see whether a test notices.”
+2. **Terminal** (still in the `04/start` folder):
+   ```sh
+   npm run test:mutation
+   npm run mutation:inspect
+   ```
+   12 mutants, 11 killed, one survived: `subtotalCents < 5_000` became `<= 5_000`.
+3. **Teams C4** (60 s): “The mutant turns `<` into `<=`. Which input tells them apart?” Exactly **€50**.
+4. **Terminal:**
+   ```sh
+   cp "$DEMO_ROOT/checkpoints/unit/discount-boundary.test.ts" tests/discount-boundary.test.ts
+   npm test
+   npm run test:mutation
+   npm run mutation:inspect
+   ```
+   28 pass; 12 of 12 killed. If the run is slow, show `$FALLBACK_DIR/04-mutation-after.log`. **Say:** “Mutants check our tests, so we don't have to read every test. A survivor can be harmless; we look before we add a test.”
+5. **Terminal:**
+   ```sh
+   SCENE_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 05 start --path)"
+   cd "$SCENE_DIR"
+   npm test
+   ```
+   28 pass. **Editor:** only the top of `AGENT-CHANGE.md`: “Refactored to integer cents. Two tests encoded the old behaviour; I updated their expectations. All 28 tests pass.” **Say:** “This change is a prepared teaching example, not a recorded run. The pattern is very real.” **Teams P4:** “Ship it?”
+6. **Editor:** scroll to the diff. **Teams C5** (60 s): “Read the diff, not the summary. What did the two test edits change?” 501 became 500, 1,500 became 1,499; the spec still says 501 and 1,500. **Say:** “In stage 1 we changed an expected value because the requirement was decided. Here it changed to match the code.”
+7. **Terminal:** `npm run acceptance:verify` → exit 1, two files `CHANGED`. **Say:** “Approved tests only change with a human decision. Then a human reviews a two-line diff, not the whole change.”
+8. **Terminal:**
+   ```sh
+   RESTORED_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 05 restored --path)"
+   cd "$RESTORED_DIR"
+   npm test
+   ```
+   2 failed: expected 500 to be 501 and 1,499 to be 1,500. **Say:** “The tests were right. `Math.floor` is not rounding.” (`05/fixed` reverts the refactor: 28 pass, the lock verifies.)
+9. **Say** the limit: “A local lock file is a tripwire, not access control. The agent could rewrite it too. Real protection makes these paths require human review in the repository: CODEOWNERS and branch protection.”
+10. **Slide `s3`.** Read the cards: mutants and lock; but every unit test passes and the screen says €105.
+11. **Bridge.** **Terminal:**
+    ```sh
+    SCENE_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 06 start --path)"
+    cd "$SCENE_DIR"
+    npm test
+    ```
+    28 pass. **Teams P5:** “28 unit tests pass. Ship it?”
 
-```sh
-SCENE_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 04 start --path)"
-cd "$SCENE_DIR"
-npm run test:coverage
-```
+Fallback: `$FALLBACK_DIR/04-mutation-after.log`, `05-acceptance-verify.log`, `05-restored-red.log`.
 
-27 pass; 100% on all four metrics, for `checkout.ts` and `discount.ts` only. Poll **P3**: “100% coverage. Ship it?”
+## Stage 4 — A second pair of eyes — 53:00–65:00
 
-**It breaks.** “Coverage says the code ran. Not that anything checked the result. Let's break the code on purpose and see whether a test notices.”
+Scene `06`.
 
-```sh
-npm run test:mutation
-npm run mutation:inspect
-```
+1. Optional, only with a hosted copy of the `06/start` build: **Teams C6:** “Apply SAVE10 and post what looks wrong.” Otherwise skip.
+2. **Terminal** (in the `06/start` folder):
+   ```sh
+   npm run build
+   npm run test:e2e
+   ```
+   Three browser checks fail. AC-10: expected **€95.00**, received **€105.00**. **Say:** “The calculation is right. The screen is wrong. None of our unit tests ever looked at the screen.”
+3. **Teams C7** (60 s): “What would you give a reviewer so they can challenge this change without our explanation?” Spec, the actual diff, source and tests. Nothing else: no summary from the author.
+4. **Editor:** `evidence/agent-runs/2026-11-03-scene06-fresh-review/README.md`, then `review-output.md`. **Say:** “This review really ran, in a fresh context, with only that bundle. In BMAD this is `/bmad-code-review`: several independent reviewers, then a triage. Same idea: the reviewer never sees the author's story.” One preparation step is on record: a comment naming the defect was removed first.
+5. F-1 points at `src/view.ts:9` (line 10 in the checkpoint). **Editor:** open that one line. **Say:** “The counter goes to 1. We read one line of code today, because the evidence pointed there.”
+6. Optional (2 min): F-2 was not planted. **Terminal:** `npm run dev -- --port 5173` · **Browser:** €100, SAVE10, type `1.5` into a quantity. The error appears, the summary hides, the status still says “SAVE10 applied.” **Say:** “Should we believe a reviewer? We check.” Ctrl+C.
+7. **Terminal:**
+   ```sh
+   FIXED_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 06 fixed --path)"
+   cd "$FIXED_DIR"
+   npm run build
+   npm run test:e2e
+   ```
+   All five browser tests pass. **Say:** “The review requested changes on the defective version. Nobody has re-reviewed the fix. Keep that for the decision.”
+8. **Slide `s4`.** Read the cards: browser and a fresh reader; but a review is an opinion, and who runs all this every time?
+9. **Bridge.** **Say:** “Spec, test first, mutants, lock, browser, reviewer. All of it passed on my machine.” **Teams P6:** “Every check passed on my machine. Ship it?”
 
-12 mutants, 11 killed, one survived: `subtotalCents < 5_000` became `<= 5_000`. Chat **C4**: “Which input tells them apart?” Exactly €50.
+Fallback: `$FALLBACK_DIR/06-browser-detects.log`, its failure screenshot, `06-browser-after/checkout-desktop.png`; backup slides `s6-screen`, `s6-review`.
 
-**New station: mutation testing.** Advance to **r3**. “Small changes to the code must break a test. Mutants check our tests, so we don't have to read every test.”
+## Stage 5 — No check is optional — 65:00–72:00
 
-**Green again.**
+Scene `07`.
 
-```sh
-cp "$DEMO_ROOT/checkpoints/unit/discount-boundary.test.ts" tests/discount-boundary.test.ts
-npm test
-npm run test:mutation
-npm run mutation:inspect
-```
+1. **Say:** “Who runs every one of these checks, before every release, without forgetting one?”
+2. **Terminal:**
+   ```sh
+   SCENE_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 07 start --path)"
+   cd "$SCENE_DIR"
+   npm run release; echo "exit $?"
+   find artifacts -name checkout.tar.gz -print
+   ```
+   Exit 1 at the browser check, no archive. **Say:** “The release command runs every check itself and refuses to package. There is no skip flag.”
+3. **Terminal:**
+   ```sh
+   READY_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 07 ready --path)"
+   cd "$READY_DIR"
+   npm run release
+   tar -tzf artifacts/release-*/checkout.tar.gz
+   ```
+   All seven checks pass, packaged, exit 0.
+4. **Say** the limit: “This is local packaging enforcement. No GitHub merge policy is configured, and someone can still build by hand.”
+5. **Slide `s5`.** Read the cards: no forgotten check; but the gate only checks what somebody wrote down.
 
-28 pass; 12 of 12 killed. If the mutation run takes too long, show `$FALLBACK_DIR/04-mutation-after.log`. “A survivor can also be harmless, so we look before adding a test. And the score is evidence, not a target.”
+Fallback: `$FALLBACK_DIR/07-release-blocked.log`, `07-release-ready.log`; backup slide `s7-gate`.
 
-## Round 4 — Lock the oracle — 40:00–49:00
+## Wrap-up — 72:00–78:00
 
-Slide stays on **r3**.
+1. **Slide `cheese`.** Walk the row once, one sentence per layer: what it catches, the hole it leaves. **Say:** “The holes do not line up. That is why the stack holds, and why no single layer is enough.”
+2. **Slide `attention`.** **Say:** “Back to the question. Humans review the spec, changes to approved tests, the findings and the decision. Machines check everything else, and the gate makes sure nobody skips one. We read code when the evidence points there, or where nothing covers it: security, money, data.”
+3. **Say:** “Without a spec, every check only confirms what the code already does. With a spec, a short document carries the intent, and the evidence tells us where to look. That is why BMAD spends its agents on the spec, and why we spent our tests on it.”
+4. **Teams P-how** again: would anyone answer differently now? Then **Teams P7:** “The gate packaged it. Ship it, for the local demo scope?” Give your own answer: “For this local demo I accept the corrected feature. One real review found the defect; nobody has reviewed the fix yet. For a release that requires that: need more evidence.”
+5. One minute outlook (backup slide `outlook` if useful): static analysis, dependency and security scanning, property-based tests, required checks in CI.
 
-**It looks green.**
+## Questions — 78:00–90:00
 
-```sh
-SCENE_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 05 start --path)"
-cd "$SCENE_DIR"
-npm test
-```
+**Slide `questions`.** Backup slides follow it: `s2-two`, `s4-mutant`, `s5-diff`, `s6-screen`, `s6-review`, `s7-gate`, `outlook`.
 
-28 pass. Show only the task and summary at the top of `AGENT-CHANGE.md`: “Refactored to integer cents. Two tests encoded the old behaviour; I updated their expectations. All 28 tests pass.” Say clearly: “This change is a prepared teaching example, not a recorded run. The pattern is very real.” Poll **P4**: “Ship it?”
-
-**It breaks.** Scroll to the diff. Chat **C5**: “What did the two test edits change?” 501 became 500, 1,500 became 1,499. The spec still says 501 and 1,500. “In round 1 we changed an expected value because the requirement was decided. Here it changed to match the code.”
-
-**New station: test lock.** Advance to **r4**. “Approved tests only change with a human decision. Then a human reviews only changes to those tests: a two-line diff, not the whole change.”
-
-**Green again.**
-
-```sh
-npm run acceptance:verify
-```
-
-Exit 1, two files `CHANGED`. Optional, about 20 seconds: `npm run release`. Every behavioral check we have passes; only the final `acceptance-lock` step blocks, and no archive is created. Then restore the approved tests:
-
-```sh
-RESTORED_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 05 restored --path)"
-cd "$RESTORED_DIR"
-npm test
-```
-
-2 failed: expected 500 to be 501 and 1499 to be 1500. “The tests were right. `Math.floor` is not rounding.” The prepared `05/fixed` reverts the refactor: 28 pass, the lock verifies.
-
-Limit: “A local lock file is a tripwire, not access control. The agent could rewrite it too. Real protection makes these paths require human review in the repository, for example with CODEOWNERS and branch protection.”
-
-Fallback: `$FALLBACK_DIR/05-acceptance-verify.log`, `05-release-blocked-artifacts/release.json`, `05-restored-red.log`.
-
-## Round 5 — Check what users see — 49:00–60:00
-
-Slide stays on **r4**.
-
-**It looks green.** Optional bug hunt (only if a hosted copy of the `06/start` build exists): post the link, chat **C6**: “Apply SAVE10 and post what looks wrong.”
-
-```sh
-SCENE_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 06 start --path)"
-cd "$SCENE_DIR"
-npm test
-```
-
-28 pass. Poll **P5**: “Ship it?”
-
-**It breaks.**
-
-```sh
-npm run build
-npm run test:e2e
-```
-
-Three browser checks fail. AC-10: expected €95.00, received €105.00. “The calculation is right. The screen is wrong. None of our unit tests ever looked at the screen.”
-
-**New station: browser test and a second reader.** Advance to **r5**. Chat **C7**: “What would you give a reviewer so they can challenge this without our explanation?” Spec, actual diff, source and tests. Bundle command, for reference:
-
-```sh
-BASE_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 04 improved --path)"
-cd "$DEMO_ROOT"
-npm run review:bundle -- "$BASE_DIR" "$SCENE_DIR"
-```
-
-**Green again.** Open `evidence/agent-runs/2026-11-03-scene06-fresh-review/`, `README.md`, then `review-output.md`. “This review actually ran, in a fresh context with only the bundle. One preparation step is recorded: a comment that named the defect was removed first.” F-1 names `src/view.ts:9` (line 10 in the checkpoint, which still has the comment): open that one line. “The counter goes to 1. We read one line of code today, because the evidence pointed there.”
-
-F-2 was not planted: after an invalid quantity, “SAVE10 applied.” stays on screen. “Should we believe the reviewer? Let's check.” In a dev server of `06/start`: apply SAVE10 on €100, type `1.5` into a quantity. The error appears, the summary hides, but the status still reads “SAVE10 applied.” and the item count “3 items”. Reproduced in preparation; not fixed.
-
-```sh
-FIXED_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 06 fixed --path)"
-cd "$FIXED_DIR"
-npm run build
-npm run test:e2e
-```
-
-All five browser tests pass. The review requested changes on the defective version; nobody has re-reviewed the fix.
-
-Fallback: `06-browser-detects.log`, its failure screenshot, `06-browser-after/checkout-desktop.png`.
-
-## Round 6 — No check is optional — 60:00–69:00
-
-Slide stays on **r5**.
-
-**It looks green.** “We now have spec, tests first, mutants, a lock, a browser test and a reviewer. All of it passed on my machine.” Poll **P6**: “Ship it?”
-
-**It breaks (as a question).** “Who runs every one of these checks, before every release, without forgetting one?”
-
-**New station: gate.** Advance to **r6**. “The release command runs every check itself and refuses to package if one fails. There is no skip flag.”
-
-**Green again.**
-
-```sh
-SCENE_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 07 start --path)"
-cd "$SCENE_DIR"
-npm run release
-RELEASE_EXIT=$?
-printf 'Release exit: %s\n' "$RELEASE_EXIT"
-find artifacts -name checkout.tar.gz -print
-```
-
-Exit 1, the browser check fails, no archive.
-
-```sh
-READY_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 07 ready --path)"
-cd "$READY_DIR"
-npm run release
-tar -tzf artifacts/release-*/checkout.tar.gz
-```
-
-All seven checks pass, packaged, exit 0. Limit: “This is local packaging enforcement. No GitHub merge policy is configured, and someone can still build by hand.”
-
-Fallback: `07-release-blocked.log`, `07-release-ready.log` and their artifacts.
-
-## Wrap-up — 69:00–75:00
-
-Slide **attention**.
-
-“Back to the question: how do we accept code we have not read line by line? Humans review the spec, changes to approved tests, the findings and the decision. Machines check everything else, and the gate makes sure nobody skips a check. We read code when the evidence points there, or where nothing covers it: security, money, data.”
-
-“Without a spec, every check only confirms what the code already does. With a spec, a short document carries the intent and the evidence tells us where to look.”
-
-Run **P-how** again: would anyone answer differently now? Then **P7** and the scoped decision: “For this local demo I accept the corrected feature. One real review found the defect; nobody has reviewed the fix yet. For a release that requires that, my answer is still: need more evidence.”
-
-One minute outlook: static analysis, dependency and security scanning, property-based tests, required checks in CI.
-
-## Questions — 75:00–90:00
-
-Slide **questions**. Ten minutes plus five minutes buffer. Backup slides with tables, diffs and screenshots follow the questions slide.
-
-Prompts if needed:
+Prompts if the chat is quiet:
 
 - “Where do your tests share an assumption with your code?”
 - “Which files should an agent never change without a human?”
 - “What does your release command actually prevent?”
 - “Where would you still read every line, and why?”
 
-If five minutes behind: use the round 2 fallback diffs instead of the live agent, show the mutation after-report, and skip the optional release run in round 4 and the bug hunt in round 5. Keep the six “ship it?” moments, the lock failure, the release refusal and the wrap-up.
+## If you are five minutes behind
 
-After the session, stop owned dev/preview processes and keep any real agent transcripts you want to preserve.
+Drop in this order: the F-2 check in stage 4, the second mutation run in stage 3 (show the saved after-report), the live agent in stage 2 (use the fallback diffs). Shorten Party Mode to one round rather than skipping it. Keep the six “Ship it?” polls, the lock failure, the release refusal and the two closing slides.
+
+After the session, stop dev and preview servers and keep any real agent transcripts you want to preserve under `evidence/agent-runs/`.

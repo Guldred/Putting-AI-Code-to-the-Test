@@ -2,14 +2,14 @@
 
 A small checkout and seven reproducible scenes for a 90-minute online presentation (Microsoft Teams) about accepting software produced by coding agents.
 
-Central question: **why spec-driven development instead of vibe coding, and how do we accept agent-written code safely without reviewing it line by line?** The talk starts with the rawest process (prompt → agent → ship). In six rounds something breaks live and the pipeline gains one station: spec, test first, mutation testing, a test lock, browser test and review, and a release gate. The seven technical scenes below are the demo states behind those rounds.
+Central question: **why spec-driven development instead of vibe coding, and how do we accept agent-written code safely without reviewing it line by line?** The talk starts with the rawest process (prompt → agent → ship) and improves it in five stages: a spec written with a team of agents ([BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD), including a live Party Mode), test first, mutation testing plus a test lock, browser test plus an independent review, and a release gate. Every stage shows what it catches and what still slips through. The seven technical scenes below are the demo states behind those stages.
 
 Learn how to challenge AI-generated code and decide whether it is ready to ship. The demo covers spec-driven development, TDD, mutation testing, independent reviews and quality gates. Prerequisites: basic programming and testing knowledge. **Audience members need no local setup.**
 
 ## Start here
 
 - [Talk brief](docs/talk-brief.md) and [timed 90-minute outline](docs/90-minute-outline.md)
-- [English presenter script: commands, observations, questions and fallbacks](docs/presenter-script.md)
+- [English presenter runbook: step by step, with every slide, command, poll and fallback](docs/presenter-script.md)
 - [Slide outline linked to demo scenes](docs/slide-outline.md), the [slide deck](https://claude.ai/artifact/NCdrVbdps2PhKMukZHdMJT) (private until shared) and [Teams polls and chat prompts](docs/teams-interaction.md)
 - [Deliberately ambiguous initial brief](docs/initial-brief.md), [clarified specification](docs/specification.md), [later cap requirement](docs/discount-cap-change.md)
 - [Acceptance criteria → actual verification evidence](docs/acceptance-evidence.md)
@@ -30,6 +30,16 @@ npm run dev
 Open the printed local URL. The canonical application is the final corrected version. It has three catalog items, editable quantities, SAVE10, shipping and a visible breakdown. Use the €50/€100/€200 fixture buttons to explore boundaries. Quantities and codes reset on reload.
 
 The npm cache and Playwright browser binaries stay inside this checkout. Do not run installation commands in generated scene workspaces, whose `node_modules` is a shared symlink. Linux presenters may need Playwright's documented OS browser dependencies before traveling.
+
+### BMAD Method (stage 1 Party Mode, stage 4 review)
+
+The talk uses the [BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD) skills in Claude Code. `skills-lock.json` records the installed versions; the skill copies under `.claude/skills/bmad*` and the generated `_bmad/` folder are gitignored. Install once per machine (needs internet and [`uv`](https://docs.astral.sh/uv/)):
+
+```sh
+npx skills add bmad-code-org/BMAD-METHOD -a claude-code -y --copy -s bmad -s bmod-core-tools -s bmod-method -s bmad-party-mode -s bmad-agent-analyst -s bmad-agent-pm -s bmad-agent-po -s bmad-agent-architect -s bmad-agent-ux-designer -s bmad-agent-dev -s bmad-build -s bmad-code-review -s bmad-review
+```
+
+Then, in Claude Code from the repository root, run `/bmad` and ask it to set up BMad with the defaults; it creates `_bmad/`. Party Mode is `/bmad-party-mode`. Its output differs on every run, so the runbook asks for one rehearsed transcript under `evidence/agent-runs/` as the fallback.
 
 ## Open a scene without discarding work
 

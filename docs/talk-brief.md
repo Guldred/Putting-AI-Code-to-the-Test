@@ -2,9 +2,9 @@
 
 ## Description
 
-Learn how to challenge AI-generated code and decide whether it is ready to ship. A practical demo covers spec-driven development, TDD, mutation testing, independent reviews and quality gates.
+Published description: learn how to challenge AI-generated code and decide whether it is ready to ship. A practical demo covers spec-driven development, TDD, mutation testing, independent reviews and quality gates. Prerequisites: basic programming and testing knowledge. No local setup required.
 
-Prerequisites: basic programming and testing knowledge. No local setup required. The session runs online in Microsoft Teams. The presenter runs everything on one local machine; participants at their own PCs take part through Teams polls, chat predictions and discussion.
+Proposed update (title unchanged): AI agents write code faster than we can read it. So how do we decide it is ready to ship? Step by step we turn “prompt and hope” into a spec-driven workflow, using the BMAD Method as the example framework, including its multi-agent Party Mode. At every step we show what it catches and what still slips through: specs, test-first, mutation testing, independent reviews and quality gates. Prerequisites: basic programming knowledge. No local setup required. The session runs online in Microsoft Teams. The presenter runs everything on one local machine; participants at their own PCs take part through Teams polls, chat predictions and discussion.
 
 ## Central question
 
@@ -18,11 +18,11 @@ By the end, participants can explain why spec-driven development is an alternati
 
 ## Scope
 
-Participants choose one session in this slot, so the session is self-contained: it explains what vibe coding and spec-driven development are before showing how each evidence layer works. It starts with an available repository; tool installation and agent configuration are presenter preparation, not part of the talk. Spec-driven tools (for example GitHub Spec Kit or Kiro) are mentioned, not demonstrated; the demo shows the practice with plain files.
+Participants choose one session in this slot, so the session is self-contained: it explains what vibe coding and spec-driven development are before showing how each evidence layer works. It starts with an available repository; tool installation and agent configuration are presenter preparation, not part of the talk. The [BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD) is the example framework for the human-facing parts: its role agents (analyst, PM, PO, UX, architect, developer), Party Mode (all agents in one discussion, live) and its independent code review. It is presented as what it is: one model in several roles, which widens the view but proves nothing. The hard evidence comes from the checks in this repository.
 
 This is not a claim that code is never read. Targeted reading stays necessary where the evidence points (a failing check, a review finding, a changed test) and for areas the checks do not cover, such as security-sensitive code.
 
-The talk is told as a pipeline that grows. It starts with the rawest process: prompt → agent → ship. In six rounds something goes wrong live with the same small EUR checkout, and the pipeline gains exactly one station that would have caught it: a spec (round 1, vibe coding versus spec-driven), test first, mutation testing, a test lock, browser test plus a fresh-context review, and a release gate. A coding agent is the author throughout; the presenter and audience accept its work. The repeated question is **“Ship it?”**, followed by **“What would have caught it?”**
+The talk is told as a pipeline that grows in five stages. It starts with the rawest process: prompt → agent → ship. In each stage something goes wrong live with the same small EUR checkout, and the pipeline gains the layer that would have caught it: a spec written with a team of agents (stage 1), test first (stage 2), mutation testing and a test lock (stage 3), browser test plus a fresh-context review (stage 4), and a release gate (stage 5). Every stage ends with the same two cards: *what it catches* and *what still slips through*; the second card is the problem that opens the next stage. A coding agent is the author throughout; the presenter and audience accept its work. The repeated question is **“Ship it?”**, followed by **“What would have caught it?”**
 
 ## Teaching contract
 
@@ -36,6 +36,6 @@ The talk is told as a pipeline that grows. It starts with the rawest process: pr
 
 ## Audience interaction
 
-Every round opens with the Teams poll **“Ship it?”** (**Ship it**, **Don't ship**, **Need more evidence**; see [Teams interaction](teams-interaction.md)) at the moment things look green. Ask for the missing observation, not confidence in an agent or tool. Return to the €100 SAVE10 order throughout; use the €200 order only to introduce the cap, and the €50 order to expose the exact minimum.
+Every stage opens with the Teams poll **“Ship it?”** (**Ship it**, **Don't ship**, **Need more evidence**; see [Teams interaction](teams-interaction.md)) at the moment things look green. Ask for the missing observation, not confidence in an agent or tool. Return to the €100 SAVE10 order throughout; use the €200 order only to introduce the cap, and the €50 order to expose the exact minimum.
 
 See the [90-minute schedule](90-minute-outline.md), [Teams interaction](teams-interaction.md), [presenter script](presenter-script.md), [evidence map](acceptance-evidence.md) and [slide outline](slide-outline.md).
