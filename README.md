@@ -1,6 +1,6 @@
-# Putting AI Code to the Test
+# Fully Agentic Development with Claude: How Do We Trust the Agentic Process?
 
-A small checkout and seven reproducible scenes for a 90-minute online presentation (Microsoft Teams) about accepting software produced by coding agents.
+Repository “Putting AI Code to the Test”: a small checkout and seven reproducible scenes for a 90-minute online workshop (Microsoft Teams) about accepting software produced by coding agents.
 
 Central question: **why spec-driven development instead of vibe coding, and how do we accept agent-written code safely without reviewing it line by line?** The talk starts with the rawest process (prompt → agent → ship) and improves it in five stages: a spec written with a team of agents ([BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD), including a live Party Mode), test first, mutation testing plus a test lock, browser test plus an independent review, and a release gate. Every stage shows what it catches and what still slips through. The seven technical scenes below are the demo states behind those stages.
 
