@@ -11,7 +11,7 @@ for (const file of files) await cp(join(root, file), join(base, file));
 await cp(join(root, 'src'), join(base, 'src'), { recursive: true });
 await cp(join(root, 'e2e'), join(root, 'checkpoints/browser'), { recursive: true });
 await mkdir(join(base, 'scripts'));
-for (const file of ['browser-test.mjs', 'evidence.mjs', 'release.mjs', 'inspect-mutations.mjs']) {
+for (const file of ['browser-test.mjs', 'evidence.mjs', 'release.mjs', 'inspect-mutations.mjs', 'acceptance.mjs']) {
   await cp(join(root, 'scripts', file), join(base, 'scripts', file));
 }
 const pkg = JSON.parse(await readFile(join(root, 'package.json'), 'utf8'));

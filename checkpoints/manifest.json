@@ -35,19 +35,28 @@
     }
   },
   "05": {
-    "title": "Independent Verification",
+    "title": "Green by Editing the Oracle",
     "defaultStage": "start",
     "stages": {
-      "start": { "overlays": ["ui-total-bug"], "tests": ["checkout", "discount-v1", "cap", "discount-boundary"], "browser": true, "observation": "SEEDED TEACHING DEFECT: view.ts displays subtotal + shipping as total. Unit tests pass; the built-UI browser test fails." },
-      "fixed": { "overlays": [], "tests": ["checkout", "discount-v1", "cap", "discount-boundary"], "browser": true, "observation": "Render result.totalCents. Browser assertions for €100 SAVE10 and the capped cart pass. Independent review is still a separate activity." }
+      "start": { "overlays": ["agent-floor"], "tests": ["checkout", "discount-v1=agent-discount-v1", "cap=agent-cap", "discount-boundary"], "browser": true, "lock": true, "observation": "PREPARED AGENT CHANGE (authored teaching example): an \"integer cents\" refactor of discount.ts plus two edited expected values. All unit tests pass. Read AGENT-CHANGE.md, then run npm run acceptance:verify." },
+      "restored": { "overlays": ["agent-floor"], "tests": ["checkout", "discount-v1", "cap", "discount-boundary"], "browser": true, "lock": true, "observation": "Approved tests restored, agent code kept. AC-08 and AC-12a fail: expected 501, received 500; expected 1500, received 1499. The tests were right; the code regressed." },
+      "fixed": { "overlays": [], "tests": ["checkout", "discount-v1", "cap", "discount-boundary"], "browser": true, "lock": true, "observation": "Revert the refactor. Unit tests pass and acceptance:verify confirms the approved oracles are unchanged." }
     }
   },
   "06": {
+    "title": "Independent Verification",
+    "defaultStage": "start",
+    "stages": {
+      "start": { "overlays": ["ui-total-bug"], "tests": ["checkout", "discount-v1", "cap", "discount-boundary"], "browser": true, "observation": "SEEDED TEACHING DEFECT: view.ts displays subtotal + shipping as total. Unit tests pass; the built-UI browser test fails.", "lock": true },
+      "fixed": { "overlays": [], "tests": ["checkout", "discount-v1", "cap", "discount-boundary"], "browser": true, "observation": "Render result.totalCents. Browser assertions for €100 SAVE10 and the capped cart pass. Independent review is still a separate activity.", "lock": true }
+    }
+  },
+  "07": {
     "title": "The Release Decision",
     "defaultStage": "start",
     "stages": {
-      "start": { "overlays": ["ui-total-bug"], "tests": ["checkout", "discount-v1", "cap", "discount-boundary"], "browser": true, "observation": "Required browser checks fail. npm run release must exit nonzero and leave no checkout.tar.gz in this new release attempt." },
-      "ready": { "overlays": [], "tests": ["checkout", "discount-v1", "cap", "discount-boundary"], "browser": true, "observation": "Required local checks pass and packaging produces a static archive. Make an explicit scoped acceptance decision; this is not a GitHub merge policy." }
+      "start": { "overlays": ["ui-total-bug"], "tests": ["checkout", "discount-v1", "cap", "discount-boundary"], "browser": true, "observation": "Required browser checks fail. npm run release must exit nonzero and leave no checkout.tar.gz in this new release attempt.", "lock": true },
+      "ready": { "overlays": [], "tests": ["checkout", "discount-v1", "cap", "discount-boundary"], "browser": true, "observation": "Required local checks pass and packaging produces a static archive. Make an explicit scoped acceptance decision; this is not a GitHub merge policy.", "lock": true }
     }
   }
 }

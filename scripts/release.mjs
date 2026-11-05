@@ -21,6 +21,8 @@ try {
     ['critical-boundary', [process.execPath, 'scripts/inspect-mutations.mjs', '--require-boundary-killed']],
     ['build', ['npm', 'run', 'build']],
     ['browser', ['npm', 'run', 'test:e2e']],
+    // Last on purpose: the evidence then shows every behavioral check passing against a changed oracle.
+    ['acceptance-lock', [process.execPath, 'scripts/acceptance.mjs', 'verify']],
   ];
   for (const [name, command] of steps) {
     console.log(`\nRequired check: ${name}`);

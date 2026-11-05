@@ -1,0 +1,15 @@
+{
+  "approvedBy": "Specification owner (prepared demo baseline)",
+  "approvedAt": "2026-11-03T16:26:07.295Z",
+  "basis": [
+    "docs/specification.md",
+    "docs/discount-cap-change.md"
+  ],
+  "files": {
+    "e2e/checkout.spec.ts": "a2c5409ab15f6eeb64b3efa707a55f29f6e6f70e8dd3b2f2ab3de66207603bcd",
+    "tests/cap.test.ts": "da83de106bdbd2dd3592d3e6f1e065814e63b260e95509663e0707b8966b6f62",
+    "tests/checkout.test.ts": "0c3d1efc91745814f19b5d544f2d862e3eaec4b2d041c24fe927b1949f9803fd",
+    "tests/discount-boundary.test.ts": "c2ccded067f7d02fc304a7f3bc103bc51f740929d536d3e2c066c274647d97c3",
+    "tests/discount-v1.test.ts": "9b0e87cef479a59b8d90be409c1c55c79b33871654e4ff2261461777201c967e"
+  }
+}

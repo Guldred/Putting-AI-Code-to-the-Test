@@ -17,6 +17,8 @@
     "test:e2e": "node scripts/browser-test.mjs",
     "test:mutation": "stryker run",
     "mutation:inspect": "node scripts/inspect-mutations.mjs",
+    "acceptance:verify": "node scripts/acceptance.mjs verify",
+    "acceptance:approve": "node scripts/acceptance.mjs approve",
     "release": "node scripts/release.mjs"
   },
   "devDependencies": {
