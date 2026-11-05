@@ -25,3 +25,7 @@ Party Mode in stage 1 has a 4-minute budget: two or three turns, one steering qu
 If five minutes behind: drop the F-2 check in stage 4, show the saved mutation after-report instead of the second run, use the stage 2 fallback diffs instead of the live agent. Shorten Party Mode to one round rather than skipping it. Keep the six “Ship it?” polls, the lock failure, the release refusal and the two closing slides.
 
 The fallback path needs no network access, account, external service or attendee setup. Dependency, browser and BMAD installation happens before the session; see the runbook's preflight.
+
+## Optional follow-along
+
+Participants who did step 1 of the [participant guide](participant-guide.md) before the session (about ten minutes: BMAD skills, `uv`, a throwaway branch) let their own agent build the same layers in a repository of their choice. After each stage slide the co-moderator posts a one-line cue (F2–F7); the agents run in parallel, so the schedule above does not change. Their results feed the questions segment.

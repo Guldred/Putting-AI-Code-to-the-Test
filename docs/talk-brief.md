@@ -4,7 +4,7 @@
 
 Published description: learn how to challenge AI-generated code and decide whether it is ready to ship. A practical demo covers spec-driven development, TDD, mutation testing, independent reviews and quality gates. Prerequisites: basic programming and testing knowledge. No local setup required.
 
-Proposed update (title unchanged): AI agents write code faster than we can read it. So how do we decide it is ready to ship? Step by step we turn “prompt and hope” into a spec-driven workflow, using the BMAD Method as the example framework, including its multi-agent Party Mode. At every step we show what it catches and what still slips through: specs, test-first, mutation testing, independent reviews and quality gates. Prerequisites: basic programming knowledge. No local setup required. The session runs online in Microsoft Teams. The presenter runs everything on one local machine; participants at their own PCs take part through Teams polls, chat predictions and discussion.
+Proposed update (title unchanged): AI agents write code faster than we can read it. So how do we decide it is ready to ship? Step by step we turn “prompt and hope” into a spec-driven workflow, using the BMAD Method as the example framework, including its multi-agent Party Mode. At every step we show what it catches and what still slips through: specs, test-first, mutation testing, independent reviews and quality gates. Prerequisites: basic programming knowledge. No local setup required. Optional: bring a repository and your coding agent, and a short guide lets you build the same steps in your own project while you watch. The session runs online in Microsoft Teams. The presenter runs everything on one local machine; participants at their own PCs take part through Teams polls, chat predictions and discussion.
 
 ## Central question
 
@@ -37,5 +37,7 @@ The talk is told as a pipeline that grows in five stages. It starts with the raw
 ## Audience interaction
 
 Every stage opens with the Teams poll **“Ship it?”** (**Ship it**, **Don't ship**, **Need more evidence**; see [Teams interaction](teams-interaction.md)) at the moment things look green. Ask for the missing observation, not confidence in an agent or tool. Return to the €100 SAVE10 order throughout; use the €200 order only to introduce the cap, and the €50 order to expose the exact minimum.
+
+Optionally, participants follow along in a repository of their own with the [participant guide](participant-guide.md): one sentence per stage to their coding agent, BMAD Party Mode for the spec and for a closing retrospective, and STOP points where they look before the agent continues. It is announced a week ahead because its setup takes ten minutes; nothing in the talk depends on it.
 
 See the [90-minute schedule](90-minute-outline.md), [Teams interaction](teams-interaction.md), [presenter script](presenter-script.md), [evidence map](acceptance-evidence.md) and [slide outline](slide-outline.md).

@@ -11,6 +11,7 @@ Learn how to challenge AI-generated code and decide whether it is ready to ship.
 - [Talk brief](docs/talk-brief.md) and [timed 90-minute outline](docs/90-minute-outline.md)
 - [English presenter runbook: step by step, with every slide, command, poll and fallback](docs/presenter-script.md)
 - [Slide outline linked to demo scenes](docs/slide-outline.md), the [slide deck](https://claude.ai/artifact/NCdrVbdps2PhKMukZHdMJT) (private until shared) and [Teams polls and chat prompts](docs/teams-interaction.md)
+- [Participant guide: follow along in your own repository](docs/participant-guide.md), optional, one sentence per stage to your coding agent
 - [Deliberately ambiguous initial brief](docs/initial-brief.md), [clarified specification](docs/specification.md), [later cap requirement](docs/discount-cap-change.md)
 - [Acceptance criteria → actual verification evidence](docs/acceptance-evidence.md)
 - [Latest rehearsal](evidence/latest.md), [provenance](evidence/README.md), [scoped release decision](docs/release-decision.md)
@@ -40,6 +41,8 @@ npx skills add bmad-code-org/BMAD-METHOD -a claude-code -y --copy -s bmad -s bmo
 ```
 
 Then, in Claude Code from the repository root, run `/bmad` and ask it to set up BMad with the defaults; it creates `_bmad/`. Party Mode is `/bmad-party-mode`. Its output differs on every run, so the runbook asks for one rehearsed transcript under `evidence/agent-runs/` as the fallback.
+
+Participants can do the same in their own repository: the [participant guide](docs/participant-guide.md) has the setup as step 1 and one agent instruction per stage, with Party Mode for the spec and for a closing retrospective. The guide must be on `main` before the invite goes out; step 1 downloads it from there.
 
 ## Open a scene without discarding work
 

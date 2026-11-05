@@ -33,6 +33,22 @@ The running poll is **“Ship it?”**: single choice with **Ship it**, **Don't 
 
 Every stage also has the same unnumbered chat question after the problem appears: **“What would have caught it?”**
 
+## Follow-along cues (optional)
+
+Participants who did step 1 of the [participant guide](participant-guide.md) before the session let their own agent build the same layers in a repository of their choice. The co-moderator posts each cue right after the stage slide; the presenter only points at it. Their agents run while the talk continues, and nothing in the talk depends on their results. Pin the first message.
+
+| ID | When | Co-moderator posts |
+| --- | --- | --- |
+| F1 | Opening | “Following along in your own repo? Post ✅ if step 1 of the guide is done. Guide: https://github.com/Guldred/Putting-AI-Code-to-the-Test/blob/main/docs/participant-guide.md — every cue is one sentence for your agent.” |
+| F2 | After slide `s1` | “Step 2 now. Paste to your agent: `Read docs/participant-guide.md and do step 2. Stop at the first STOP.` Then post: Step 2: N open questions, N acceptance criteria.” |
+| F3 | After slide `s2` | “Step 3. Paste: `Read docs/participant-guide.md and do step 3. Stop at the first STOP.` Post: Step 3: red N, green N, tests unchanged.” |
+| F4 | After slide `s3` | “Step 4. Paste: `Read docs/participant-guide.md and do step 4. Stop at the first STOP.` Post: Step 4: mutant killed or survived, lock blocks edits.” |
+| F5 | After slide `s4` | “Step 5 needs a **new** session: second terminal, `claude`, then paste: `Read docs/participant-guide.md and do step 5 as the reviewer.` Post: Step 5: N findings, recommendation.” |
+| F6 | After slide `s5` | “Step 6, back in the author session. Paste: `Read docs/participant-guide.md and do step 6. Stop at the first STOP.` Post: Step 6: gate passes, blocks, passes.” |
+| F7 | Slide `cheese` | “Step 7, the retrospective. Paste: `Read docs/participant-guide.md and do step 7. Stop at the first STOP.` Post your first action item during the questions.” |
+
+During the questions the presenter asks: “What did your fresh reviewer find that the author session never mentioned? What did your gate block?”
+
 ## Online delivery notes
 
 - Share the whole screen, not one window, so switches between deck, terminal, browser and Claude Code stay visible.
@@ -40,3 +56,4 @@ Every stage also has the same unnumbered chat question after the problem appears
 - There is a short streaming delay: pause after a failing command before commenting on it.
 - Breakout rooms are not used; the exercises are short enough for the chat.
 - The bug hunt needs a public copy of the seeded `06/start` build (for example on GitHub Pages). Without it, skip C6; nothing else depends on it.
+- The follow-along cues are the co-moderator's job. Participants post outcomes only, never code or customer data; remind them once at F1.

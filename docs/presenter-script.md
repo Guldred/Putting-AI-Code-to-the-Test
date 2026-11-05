@@ -16,6 +16,8 @@ Legend for each step: **Slide** = advance the deck · **Terminal** = type this �
 
 **Every stage, same rhythm:** it looks green → poll “Ship it?” → it breaks, live → chat “What would have caught it?” → the new layer, live → the stage slide names what it caught and what still slips through.
 
+**The follow-along (optional):** participants who set up the [participant guide](participant-guide.md) before the session let their own agent build the same layers in a repository of their choice. After each stage slide the co-moderator posts a one-line cue (F2–F7 in [Teams interaction](teams-interaction.md)); their agents work while we go on. Nothing in the talk depends on it.
+
 ## Before the audience arrives
 
 ### Once per machine (needs internet)
@@ -29,6 +31,10 @@ npx skills add bmad-code-org/BMAD-METHOD -a claude-code -y --copy -s bmad -s bmo
 The BMAD skills land in `.claude/skills/` (gitignored; `skills-lock.json` records the versions). `uv` must be installed (`brew install uv`); BMAD's scripts run through it. Then, in Claude Code from the repository root, run `/bmad` and type `Set up BMad for this project with the defaults.` It creates `_bmad/` (gitignored). Check: `ls _bmad/scripts` lists `resolve_config.py`.
 
 Rehearse Party Mode once (stage 1, step 5 below) and keep the transcript: create `evidence/agent-runs/<date>-party-mode/` with the exact prompt and the unedited output. That is the fallback if the live party stalls.
+
+### Follow-along, one week ahead
+
+The [participant guide](participant-guide.md) must be on `main` before the invite goes out, because step 1 downloads it from the raw `main` URL. Put the link and “Step 1 takes ten minutes, do it before the session” into the invite or a reminder mail. Walk through the guide yourself once in a scratch repository (all seven steps, about 40 minutes), so you know what their agents will show. The co-moderator gets the cue texts F1–F7 from [Teams interaction](teams-interaction.md) ready to paste.
 
 ### Before every run
 
@@ -51,7 +57,7 @@ Every `scene.mjs` call creates a fresh folder under `.demo-runs/`; nothing you d
 
 ## Opening — 00:00–05:00
 
-1. **Slide `cover`.** Welcome. “No setup on your side. I run everything; you vote and you type in the chat.”
+1. **Slide `cover`.** Welcome. “No setup on your side. I run everything; you vote and you type in the chat. If you did step 1 of the guide, keep your agent open: your cues come as chat messages.” **Teams F1:** the co-moderator asks who is following along.
 2. **Slide `problem`.** **Say:** “Coding agents write more code than any of us can read carefully. So the question is not *is the agent good*. It is: how do we decide to accept code we have not read line by line?”
 3. **Teams P-how:** “How do you accept agent-written code today?” Leave the result visible.
 4. **Say:** “We start with the rawest process there is, and we improve it in five stages. Every stage catches something, and every stage leaves a hole. And in every stage I will ask you the same thing: ship it?”
@@ -107,7 +113,7 @@ Scene `02`.
     npm test
     ```
     23 tests pass. **Say:** “We changed an old expected value because the requirement was decided. Remember that sentence for stage 3.”
-11. **Slide `s1`.** Read the cards: ambiguity caught before code; a spec on paper proves nothing.
+11. **Slide `s1`.** Read the cards: ambiguity caught before code; a spec on paper proves nothing. **Teams F2:** the co-moderator posts the step-2 cue; their Party Mode runs while we go on.
 12. **Bridge.** **Editor:** `docs/discount-cap-change.md`: SAVE10 is capped at €15. **Teams C3** (30 s): “€200 cart with SAVE10: which values change?” (discount €15, total €185.) **Say:** “Imagine the agent comes back: cap done, tests green.” **Teams P2:** “Ship it?”
 13. **Say:** “The agent wrote the code and the test together. Has that test ever failed? A test that cannot fail proves nothing.”
 
@@ -141,7 +147,7 @@ Scene `03`, live agent. Observation budget 2 minutes per phase.
    diff -u "$DEMO_ROOT/checkpoints/overlays/uncapped/src/discount.ts" src/discount.ts
    ```
    All green, every test file `OK`, only `discount.ts` changed. **Say:** “I did not read the implementation to trust it. I saw the test fail, then pass, with the tests untouched.” If the agent changed a test file, stop and point at it: that is stage 3.
-7. **Slide `s2`.** Read the cards: red then green without reading; but green tests can be weak, and the agent can edit them.
+7. **Slide `s2`.** Read the cards: red then green without reading; but green tests can be weak, and the agent can edit them. **Teams F3:** step-3 cue.
 8. **Bridge.** **Terminal:**
    ```sh
    SCENE_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 04 start --path)"
@@ -197,7 +203,7 @@ Scenes `04` and `05`. Two layers in one stage: are the tests strong (mutants), a
    ```
    2 failed: expected 500 to be 501 and 1,499 to be 1,500. **Say:** “The tests were right. `Math.floor` is not rounding.” (`05/fixed` reverts the refactor: 28 pass, the lock verifies.)
 9. **Say** the limit: “A local lock file is a tripwire, not access control. The agent could rewrite it too. Real protection makes these paths require human review in the repository: CODEOWNERS and branch protection.”
-10. **Slide `s3`.** Read the cards: mutants and lock; but every unit test passes and the screen says €105.
+10. **Slide `s3`.** Read the cards: mutants and lock; but every unit test passes and the screen says €105. **Teams F4:** step-4 cue.
 11. **Bridge.** **Terminal:**
     ```sh
     SCENE_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 06 start --path)"
@@ -231,7 +237,7 @@ Scene `06`.
    npm run test:e2e
    ```
    All five browser tests pass. **Say:** “The review requested changes on the defective version. Nobody has re-reviewed the fix. Keep that for the decision.”
-8. **Slide `s4`.** Read the cards: browser and a fresh reader; but a review is an opinion, and who runs all this every time?
+8. **Slide `s4`.** Read the cards: browser and a fresh reader; but a review is an opinion, and who runs all this every time? **Teams F5:** step-5 cue (a fresh session, not the author's).
 9. **Bridge.** **Say:** “Spec, test first, mutants, lock, browser, reviewer. All of it passed on my machine.” **Teams P6:** “Every check passed on my machine. Ship it?”
 
 Fallback: `$FALLBACK_DIR/06-browser-detects.log`, its failure screenshot, `06-browser-after/checkout-desktop.png`; backup slides `s6-screen`, `s6-review`.
@@ -258,13 +264,13 @@ Scene `07`.
    ```
    All seven checks pass, packaged, exit 0.
 4. **Say** the limit: “This is local packaging enforcement. No GitHub merge policy is configured, and someone can still build by hand.”
-5. **Slide `s5`.** Read the cards: no forgotten check; but the gate only checks what somebody wrote down.
+5. **Slide `s5`.** Read the cards: no forgotten check; but the gate only checks what somebody wrote down. **Teams F6:** step-6 cue.
 
 Fallback: `$FALLBACK_DIR/07-release-blocked.log`, `07-release-ready.log`; backup slide `s7-gate`.
 
 ## Wrap-up — 72:00–78:00
 
-1. **Slide `cheese`.** Walk the row once, one sentence per layer: what it catches, the hole it leaves. **Say:** “The holes do not line up. That is why the stack holds, and why no single layer is enough.”
+1. **Slide `cheese`.** Walk the row once, one sentence per layer: what it catches, the hole it leaves. **Say:** “The holes do not line up. That is why the stack holds, and why no single layer is enough.” **Teams F7:** step-7 cue, the Party Mode retrospective; its results come in during the questions.
 2. **Slide `attention`.** **Say:** “Back to the question. Humans review the spec, changes to approved tests, the findings and the decision. Machines check everything else, and the gate makes sure nobody skips one. We read code when the evidence points there, or where nothing covers it: security, money, data.”
 3. **Say:** “Without a spec, every check only confirms what the code already does. With a spec, a short document carries the intent, and the evidence tells us where to look. That is why BMAD spends its agents on the spec, and why we spent our tests on it.”
 4. **Teams P-how** again: would anyone answer differently now? Then **Teams P7:** “The gate packaged it. Ship it, for the local demo scope?” Give your own answer: “For this local demo I accept the corrected feature. One real review found the defect; nobody has reviewed the fix yet. For a release that requires that: need more evidence.”
@@ -280,9 +286,10 @@ Prompts if the chat is quiet:
 - “Which files should an agent never change without a human?”
 - “What does your release command actually prevent?”
 - “Where would you still read every line, and why?”
+- Follow-along: “What did your fresh reviewer find that the author session never mentioned? What did your gate block?” Read two chat answers aloud.
 
 ## If you are five minutes behind
 
-Drop in this order: the F-2 check in stage 4, the second mutation run in stage 3 (show the saved after-report), the live agent in stage 2 (use the fallback diffs). Shorten Party Mode to one round rather than skipping it. Keep the six “Ship it?” polls, the lock failure, the release refusal and the two closing slides.
+Drop in this order: the F-2 check in stage 4, the second mutation run in stage 3 (show the saved after-report), the live agent in stage 2 (use the fallback diffs). Shorten Party Mode to one round rather than skipping it. Keep the six “Ship it?” polls, the lock failure, the release refusal and the two closing slides. The follow-along cues cost nothing: the co-moderator posts them, and the participants' agents run in parallel.
 
 After the session, stop dev and preview servers and keep any real agent transcripts you want to preserve under `evidence/agent-runs/`.
