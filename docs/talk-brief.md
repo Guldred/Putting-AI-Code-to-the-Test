@@ -4,11 +4,19 @@
 
 Published description: learn how to challenge AI-generated code and decide whether it is ready to ship. A practical demo covers spec-driven development, TDD, mutation testing, independent reviews and quality gates. Prerequisites: basic programming and testing knowledge. No local setup required.
 
-Proposed title: **Fully Agentic Development with Claude: How Do We Trust the Agentic Process?**
+Title: **Fully Agentic Development with Claude: How Do We Trust the Agentic Process?**
 
-Proposed description: Claude writes the code; nobody reads it line by line. So how do we trust what ships? Step by step we build a fully agentic workflow with spec-driven development and the BMAD Method: specs from a team of agents, test-first, mutation testing, independent reviews and a release gate, each showing what it catches and what still slips through. Hands-on: you build the same steps in your own repository with Claude.
+Description: Claude writes the code; nobody reads it all line by line. So how do we trust what ships? In 90 minutes we build a Claude-focused, fully agentic workflow step by step: a spec written by a team of agents with the BMAD Method (live Party Mode), test-first, mutation testing, an independent reviewer in its own session, and a release gate without a skip flag. At every step we look at what it catches and what still slips through. Optionally, you build the same steps in your own repository with Claude; watching is fine too.
 
-Requirements: Claude Code (Desktop app or CLI) with an active plan, signed in; Git; Node.js 22 or newer; internet access during the session; a repository of your own or an empty folder (Claude creates a minimal project). Basic programming knowledge. Claude Code is the supported path; other agents that run Agent Skills with a Claude model can follow the same guide, untested. The session runs online in Microsoft Teams; the presenter runs everything on one machine, participants take part through polls, chat and their own Claude.
+Requirements:
+
+- Watching only: nothing. Following along: Claude Code with an active plan, signed in. The Claude Desktop app (Code tab) is recommended; the CLI works too.
+- Git and Node.js 22 or newer, and internet access during the session: Claude installs the BMAD Method and `uv` in the first step and asks before each install.
+- A repository to work in: a small project of your own, or a customer project on a throwaway branch. No repository? Claude creates a minimal one.
+- A different coding agent can follow most steps, but we have not tested that and cannot support it during the session.
+- Basic programming knowledge.
+
+The session runs online in Microsoft Teams; the presenter runs everything on one machine, participants take part through polls, chat and their own Claude.
 
 ## Central question
 
