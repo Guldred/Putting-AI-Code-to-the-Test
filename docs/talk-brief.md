@@ -4,7 +4,19 @@
 
 Published description: learn how to challenge AI-generated code and decide whether it is ready to ship. A practical demo covers spec-driven development, TDD, mutation testing, independent reviews and quality gates. Prerequisites: basic programming and testing knowledge. No local setup required.
 
-Proposed update (title unchanged): AI agents write code faster than we can read it. So how do we decide it is ready to ship? Step by step we turn “prompt and hope” into a spec-driven workflow, using the BMAD Method as the example framework, including its multi-agent Party Mode. At every step we show what it catches and what still slips through: specs, test-first, mutation testing, independent reviews and quality gates. Prerequisites: basic programming knowledge. No local setup required. Optional: bring a repository and your coding agent, and a short guide lets you build the same steps in your own project while you watch. The session runs online in Microsoft Teams. The presenter runs everything on one local machine; participants at their own PCs take part through Teams polls, chat predictions and discussion.
+Title: **Fully Agentic Development with Claude: How Do We Trust the Agentic Process?**
+
+Description: Claude writes the code; nobody reads it all line by line. So how do we trust what ships? In 90 minutes we build a Claude-focused, fully agentic workflow step by step: a spec written by a team of agents with the BMAD Method (live Party Mode), test-first, mutation testing, an independent reviewer in its own session, and a release gate without a skip flag. At every step we look at what it catches and what still slips through. Optionally, you build the same steps in your own repository with Claude; watching is fine too.
+
+Requirements:
+
+- Watching only: nothing. Following along: Claude Code with an active plan, signed in. The Claude Desktop app (Code tab) is recommended; the CLI works too.
+- Git and Node.js 22 or newer, and internet access during the session: Claude installs the BMAD Method and `uv` in the first step and asks before each install.
+- A repository to work in: a small project of your own, or a customer project on a throwaway branch. No repository? Claude creates a minimal one.
+- A different coding agent can follow most steps, but we have not tested that and cannot support it during the session.
+- Basic programming knowledge.
+
+The session runs online in Microsoft Teams; the presenter runs everything on one machine, participants take part through polls, chat and their own Claude.
 
 ## Central question
 
@@ -18,7 +30,7 @@ By the end, participants can explain why spec-driven development is an alternati
 
 ## Scope
 
-Participants choose one session in this slot, so the session is self-contained: it explains what vibe coding and spec-driven development are before showing how each evidence layer works. It starts with an available repository; tool installation and agent configuration are presenter preparation, not part of the talk. The [BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD) is the example framework for the human-facing parts: its role agents (analyst, PM, PO, UX, architect, developer), Party Mode (all agents in one discussion, live) and its independent code review. It is presented as what it is: one model in several roles, which widens the view but proves nothing. The hard evidence comes from the checks in this repository.
+Participants choose one session in this slot, so the session is self-contained: it explains what vibe coding and spec-driven development are before showing how each evidence layer works. It starts with an available repository; tool installation and agent configuration are presenter preparation, not part of the talk. The [BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD) is the example framework for the human-facing parts: its role agents (analyst, PM, PO, UX, architect, developer), Party Mode (all agents in one discussion, live) and its independent code review. It is presented as what it is: one model in several roles, which widens the view but proves nothing. The hard evidence comes from the checks in this repository. The host is Claude Code in the Claude Desktop app, used for three moments that each carry a stage: a design canvas generated from the spec (stage 1), the coding agent as a separate session in the scene folder (stage 2), and the fresh-context reviewer as a session in its own worktree (stage 4). Everything else is tool-agnostic.
 
 This is not a claim that code is never read. Targeted reading stays necessary where the evidence points (a failing check, a review finding, a changed test) and for areas the checks do not cover, such as security-sensitive code.
 
@@ -38,6 +50,6 @@ The talk is told as a pipeline that grows in five stages. It starts with the raw
 
 Every stage opens with the Teams poll **“Ship it?”** (**Ship it**, **Don't ship**, **Need more evidence**; see [Teams interaction](teams-interaction.md)) at the moment things look green. Ask for the missing observation, not confidence in an agent or tool. Return to the €100 SAVE10 order throughout; use the €200 order only to introduce the cap, and the €50 order to expose the exact minimum.
 
-Optionally, participants follow along in a repository of their own with the [participant guide](participant-guide.md): one sentence per stage to their coding agent, BMAD Party Mode for the spec and for a closing retrospective, and STOP points where they look before the agent continues. It is announced a week ahead because its setup takes ten minutes; nothing in the talk depends on it.
+Optionally, participants follow along in a repository of their own with the [participant guide](participant-guide.md): one sentence per stage to their coding agent, BMAD Party Mode for the spec and for a closing retrospective, and STOP points where they look before the agent continues. Step 1 is the setup, done by the participant's Claude during the opening; nothing in the talk depends on it.
 
 See the [90-minute schedule](90-minute-outline.md), [Teams interaction](teams-interaction.md), [presenter script](presenter-script.md), [evidence map](acceptance-evidence.md) and [slide outline](slide-outline.md).

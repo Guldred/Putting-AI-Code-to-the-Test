@@ -8,63 +8,50 @@ Every step is one sentence to your agent:
 
 Instead of the path you can paste the raw URL of this file. The agent reads the step, does it, and stops where the step says **STOP**, so you can look before it goes on. Type `continue` when you have looked.
 
-Step 1 is setup and takes about ten minutes: do it **before the session**. Steps 2 to 7 follow the stages of the talk; the co-moderator posts each cue in the Teams chat. An agent run takes two to six minutes and runs while the talk continues. The steps use the [BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD): its role agents and Party Mode write the spec in step 2 and run the retrospective in step 7.
+Step 1 is the setup, and **Claude does it at the start of the session**: you bring nothing but Claude Code, signed in. Steps 2 to 7 follow the stages of the talk; the co-moderator posts each cue in the Teams chat. An agent run takes two to six minutes and runs while the talk continues. The steps use the [BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD): its role agents and Party Mode write the spec in step 2 and run the retrospective in step 7.
 
 ## Ground rules, for you and for your agent
 
 - Work on a new branch. Create nothing outside the repository.
 - Add files. Do not change existing production code or existing tests, except where a step says so.
-- Never commit, push, open a pull request or delete anything. The branch is yours to throw away afterwards.
+- Never commit, push, open a pull request or delete anything. The branch is yours to throw away afterwards. The one exception: the first commit of a repository Claude created in step 1, so later diffs have a baseline.
 - No secrets, customer data or customer code in the Teams chat. Post outcomes only, such as “Step 3: red 4, green 4”.
 - If a step does not fit your stack, say so in the chat and skip it.
 
 Agent: these rules apply to every step below. Before any command that installs, deletes or changes something the rules do not cover, stop and ask.
 
-## Step 1 — Setup, before the session (about 10 minutes)
+## Step 1 — Setup, at the start of the session (Claude does it, 5 to 8 minutes)
 
-You need Git, Node.js 22 or newer, [Claude Code](https://docs.claude.com/en/docs/claude-code/overview) and [`uv`](https://docs.astral.sh/uv/getting-started/installation/), which runs the BMAD Method's scripts. Another agent works if `npx skills` supports it (`npx skills --help` lists them); the slash commands below are then that agent's skill commands.
+You need nothing prepared except **Claude Code, signed in**: the Claude Desktop app (Code tab) or the `claude` CLI. Open it in the folder you want to work in: a small project of your own, a customer project (Claude works on a throwaway branch), or an empty folder (Claude creates a minimal project). Then paste, as the first thing you say:
 
-```sh
-# macOS / Linux
-curl -LsSf https://astral.sh/uv/install.sh | sh
-# Windows, PowerShell
-powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-```
+> Read https://raw.githubusercontent.com/Guldred/Putting-AI-Code-to-the-Test/main/docs/participant-guide.md and do step 1. Stop at the first STOP.
 
-**Pick a repository.** A small test project of your own is ideal. A customer project works if you stay on a throwaway branch and keep the ground rules. No repository at hand? Ask your agent:
+Claude asks before every install and tells you what it is doing. It runs while the talk continues. If it ends with “Step 1 blocked”, post that line in the chat and simply watch the session; nothing in the talk depends on this step, and nobody debugs your machine live.
 
-> Create a minimal project in the language you prefer, with a test runner set up and one function `discountedTotal(subtotalCents, code)`: the code SAVE10 gives 10 % off, and orders under €100 pay €5 shipping. No tests yet.
+Other hosts: Claude Code is the supported path. An agent that runs Agent Skills and a Claude model, such as GitHub Copilot agent mode or Cursor, can follow the same guide (`npx skills add … -a <agent>`, skills called by name instead of slash commands, a new chat instead of a new session); we have not tested them and cannot support them live.
 
-That gives you the same example the presenter uses.
+**Agent:** do the following in order and say what you are doing in one line each. Install nothing without asking first. Do not commit, push, delete or change existing files, except `.gitignore` and the first commit of a repository you create here.
 
-**Install.** In a terminal at the repository root:
-
-```sh
-git switch -c putting-ai-code-to-the-test
-mkdir -p docs
-curl -fsSL https://raw.githubusercontent.com/Guldred/Putting-AI-Code-to-the-Test/main/docs/participant-guide.md -o docs/participant-guide.md
-npx skills add bmad-code-org/BMAD-METHOD -a claude-code -y --copy -s bmad -s bmod-core-tools -s bmod-method -s bmad-party-mode -s bmad-agent-analyst -s bmad-agent-pm -s bmad-agent-po -s bmad-agent-architect -s bmad-agent-ux-designer -s bmad-agent-dev -s bmad-code-review -s bmad-review
-```
-
-Add these lines to the repository's `.gitignore`, so the skills and BMAD's generated folder never end up in a commit:
-
-```
-.claude/skills/bmad*/
-.claude/skills/bmod*/
-_bmad/
-_bmad-output/
-.bmad-help-setup-modules.toml
-```
-
-In a customer repository you can install the skills globally instead (`npx skills add … -g`), which puts nothing under `.claude/` in the repository; `_bmad/` is still created at the project root by the next step.
-
-**Set up BMAD.** Start `claude` at the repository root, type `/bmad`, then:
-
-> Set up BMad for this project with the defaults.
-
-Accept the defaults. Check: `ls _bmad/scripts` lists `resolve_config.py`. Then type `/bmad-party-mode`: when six roles greet you (Mary, John, Sofia, Sally, Winston, Amelia), setup is done. Say goodbye and leave the session.
-
-You can also hand this whole step to your agent with the usual sentence; it asks before each install.
+1. **Check the tools.** Run `git --version`, `node --version`, `npx --version` and `uv --version`.
+   - Node.js missing or older than 22: **STOP** and print exactly `Step 1 blocked: install Node.js 22 or newer from https://nodejs.org, then say continue.`
+   - `uv` missing: ask once, then install it (macOS and Linux: `curl -LsSf https://astral.sh/uv/install.sh | sh`; Windows PowerShell: `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"`). Use the path the installer prints if the shell does not find `uv` yet, and verify with `uv --version`.
+   - No internet or a blocked download: **STOP** with `Step 1 blocked: no internet access for installs.`
+2. **Pick the repository.** If the current folder is a Git repository: use it, create and switch to the branch `putting-ai-code-to-the-test`, and leave any uncommitted changes exactly as they are. If it is not a repository or is empty: ask once whether to create a minimal project here, then create it in the language the user prefers: `git init`, a test runner set up, and one function `discountedTotal(subtotalCents, code)` where the code SAVE10 gives 10 % off and orders under €100 pay €5 shipping, no tests yet, one initial commit, then the branch.
+3. **Save this guide** unchanged as `docs/participant-guide.md` in the repository (download the URL above again). Every later step reads it from there.
+4. **Install the BMAD skills:**
+   ```sh
+   npx skills add bmad-code-org/BMAD-METHOD -a claude-code -y --copy -s bmad -s bmod-core-tools -s bmod-method -s bmad-party-mode -s bmad-agent-analyst -s bmad-agent-pm -s bmad-agent-po -s bmad-agent-architect -s bmad-agent-ux-designer -s bmad-agent-dev -s bmad-code-review -s bmad-review
+   ```
+   Then make sure `.gitignore` contains these five lines, adding the missing ones:
+   ```
+   .claude/skills/bmad*/
+   .claude/skills/bmod*/
+   _bmad/
+   _bmad-output/
+   .bmad-help-setup-modules.toml
+   ```
+5. **Set up BMAD.** Use the `bmad` skill you just installed and run its setup for this project with every default; it needs no answers from the user. It creates `_bmad/`. Check that `_bmad/scripts/resolve_config.py` exists, then run `uv run _bmad/scripts/resolve_config.py --project-root . --key core.output_folder`; it must print a value. If the setup fails, read the error once, fix what is yours to fix (a missing `uv`, a wrong folder), try once more, and otherwise **STOP** with `Step 1 blocked: BMAD setup failed: <one line>`.
+6. **STOP.** Report four lines: the repository and branch; the Node and `uv` versions; the BMAD version from `skills-lock.json`; and the sentence for the chat, either `Step 1 done` or `Step 1 blocked: <reason>`.
 
 ## Step 2 — Say what correct means (after stage 1)
 
@@ -79,6 +66,8 @@ You can also hand this whole step to your agent with the usual sentence; it asks
    **STOP.**
 
 If Party Mode is not available, play three roles yourself, analyst, product owner and developer, and let them argue the topic for two rounds before writing the spec.
+
+**Optional, if the rule has a screen:** ask your author session for a design from the same spec: `Create a Claude Design of <slug> from docs/spec-<slug>.md: one screen per acceptance criterion, each annotated with the criterion it implements.` It takes a few minutes and runs while the talk continues. The UI or browser test you may write later checks the real screen against the same criteria.
 
 **You should see:** at least one question nobody asked before. **Chat:** “Step 2: N open questions, N acceptance criteria.”
 
@@ -109,11 +98,13 @@ If Party Mode is not available, play three roles yourself, analyst, product owne
 
 ## Step 5 — A second pair of eyes (after stage 4)
 
-This step needs a **fresh** session: open a second terminal in the same repository and start a new `claude`. The author session stays open but says nothing. Paste into the fresh session:
+This step needs a **fresh** session that has never seen the author's conversation. In the Claude Desktop app, ask your author session:
 
-> Read docs/participant-guide.md and do step 5 as the reviewer.
+> Start a separate session in this folder, sharing this checkout, with exactly this brief and nothing else: Read docs/participant-guide.md and do step 5 as the reviewer.
 
-Or use BMAD's reviewer: `/bmad-code-review`, and tell it to review the uncommitted changes on this branch against `docs/spec-<slug>.md`.
+A new row appears in the sidebar; right-click it → Open in → Split view, and watch it work beside the author. Its findings come back to the author session as a note. In a terminal instead: a second terminal in the same repository, a new `claude`, and paste the brief yourself.
+
+Or use BMAD's reviewer in that fresh session: `/bmad-code-review`, and tell it to review the uncommitted changes on this branch against `docs/spec-<slug>.md`.
 
 **Reviewer agent:**
 

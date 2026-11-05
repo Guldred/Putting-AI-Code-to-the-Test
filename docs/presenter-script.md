@@ -2,7 +2,7 @@
 
 Step by step through the 90 minutes: which slide is up, what you type, what you say, what the audience does. All spoken lines and on-screen copy are English. The session runs online in Microsoft Teams; everyone sits at their own PC. [Teams interaction](teams-interaction.md) lists the polls (P-…) and chat prompts (C-…); the [timed outline](90-minute-outline.md) protects the schedule.
 
-Legend for each step: **Slide** = advance the deck · **Terminal** = type this · **Browser** = show this · **Claude Code** = agent session · **Teams** = poll or chat · **Say** = the sentence that carries the point.
+Legend for each step: **Slide** = advance the deck · **Terminal** = type this · **Browser** = show this · **Desktop** = the Claude Desktop app, Code tab: the author session on this repository, plus the sessions it starts, one row each in the sidebar · **Teams** = poll or chat · **Say** = the sentence that carries the point.
 
 ## The idea
 
@@ -16,7 +16,9 @@ Legend for each step: **Slide** = advance the deck · **Terminal** = type this �
 
 **Every stage, same rhythm:** it looks green → poll “Ship it?” → it breaks, live → chat “What would have caught it?” → the new layer, live → the stage slide names what it caught and what still slips through.
 
-**The follow-along (optional):** participants who set up the [participant guide](participant-guide.md) before the session let their own agent build the same layers in a repository of their choice. After each stage slide the co-moderator posts a one-line cue (F2–F7 in [Teams interaction](teams-interaction.md)); their agents work while we go on. Nothing in the talk depends on it.
+**The follow-along (optional):** participants who bring Claude Code let it set itself up during the opening (step 1 of the [participant guide](participant-guide.md), launched by cue F1) and then build the same layers in a repository of their choice. After each stage slide the co-moderator posts a one-line cue (F2–F7 in [Teams interaction](teams-interaction.md)); their agents work while we go on. Nothing in the talk depends on it.
+
+**Three Claude-specific moments, each tied to a stage:** stage 1 shows a Claude Design canvas generated from the spec (pre-generated, two minutes); stage 2 runs the coding agent as a separate Desktop session in the scene folder, a row in the sidebar, accepted from outside; stage 4 starts the fresh-context reviewer as a session in its own worktree, which reports back as a note. Everything else is tool-agnostic.
 
 ## Before the audience arrives
 
@@ -32,9 +34,15 @@ The BMAD skills land in `.claude/skills/` (gitignored; `skills-lock.json` record
 
 Rehearse Party Mode once (stage 1, step 5 below) and keep the transcript: create `evidence/agent-runs/<date>-party-mode/` with the exact prompt and the unedited output. That is the fallback if the live party stalls.
 
+### Claude Desktop app and the design canvas
+
+Open this repository in the Desktop app's Code tab: that session is the **author session** of the talk, with the sidebar visible. Start one throwaway session from it once, so the folder-trust prompt and the new row are familiar: `Start a separate session in <any scene folder> that runs npm test and reports the result.` Right-click the new row → Open in → Split view.
+
+The design canvas [Checkout from the spec](https://claude.ai/artifact/GQRqDvLH2crGaSjhTabeQL) was generated from `docs/specification.md` and `docs/discount-cap-change.md` with the diva-e Conclusion design system: four screens (AC-10, AC-03b, AC-12d, AC-09), each annotated with the rule it implements. Keep it in a browser tab. Generation takes minutes, so it is never a live step; to regenerate, ask the author session: `Create a Claude Design of the checkout from docs/specification.md and docs/discount-cap-change.md with the diva-e Conclusion design system: one screen per key acceptance criterion (AC-10, AC-03b, AC-12d, AC-09), each annotated with the rule it implements.`
+
 ### Follow-along, one week ahead
 
-The [participant guide](participant-guide.md) must be on `main` before the invite goes out, because step 1 downloads it from the raw `main` URL. Put the link and “Step 1 takes ten minutes, do it before the session” into the invite or a reminder mail. Walk through the guide yourself once in a scratch repository (all seven steps, about 40 minutes), so you know what their agents will show. The co-moderator gets the cue texts F1–F7 from [Teams interaction](teams-interaction.md) ready to paste.
+The [participant guide](participant-guide.md) must be on `main` before the session, because step 1 fetches it from the raw `main` URL. The invite asks for exactly this: Claude Code signed in (Desktop app or CLI), Git, Node.js 22 or newer, internet access, and a repository of their own or an empty folder. Nothing is installed in advance: step 1 is launched by cue F1 in the opening and runs during stage 0, and their Claude installs `uv`, the BMAD skills and the BMAD setup itself. Walk through the guide yourself once in a scratch repository (all seven steps, about 45 minutes), so you know what their agents will show and where step 1 can stop. The co-moderator gets the cue texts F1–F7 from [Teams interaction](teams-interaction.md) ready to paste, plus the canned reply for a blocked step 1. You never debug a participant's machine live.
 
 ### Before every run
 
@@ -43,7 +51,7 @@ npm run preflight
 npm run rehearse
 ```
 
-Check that `evidence/latest.md` says **passed**. Then keep these open: the [deck](https://claude.ai/artifact/NCdrVbdps2PhKMukZHdMJT) in present mode, one terminal (font 20 pt or more), one browser tab, an editor with `docs/initial-brief.md` and `docs/specification.md`, and a second terminal for Claude Code. Teams: polls created in advance, share the whole **screen**, a co-moderator watches the chat.
+Check that `evidence/latest.md` says **passed**. Then keep these open: the [deck](https://claude.ai/artifact/NCdrVbdps2PhKMukZHdMJT) in present mode, one terminal (font 20 pt or more), one browser tab, an editor with `docs/initial-brief.md` and `docs/specification.md`, the Claude Desktop app with this repository as the author session and the sidebar visible, and the design canvas in a browser tab. Teams: polls created in advance, share the whole **screen**, a co-moderator watches the chat.
 
 In the main terminal, from the repository root:
 
@@ -57,7 +65,7 @@ Every `scene.mjs` call creates a fresh folder under `.demo-runs/`; nothing you d
 
 ## Opening — 00:00–05:00
 
-1. **Slide `cover`.** Welcome. “No setup on your side. I run everything; you vote and you type in the chat. If you did step 1 of the guide, keep your agent open: your cues come as chat messages.” **Teams F1:** the co-moderator asks who is following along.
+1. **Slide `cover`.** Welcome. **Teams F1:** the co-moderator posts the step-1 sentence. **Say:** “I run everything here; you vote and you type in the chat. If you brought Claude, paste the first chat message now and let it run: it sets itself up during the next ten minutes and asks before it installs anything. Whatever it says at the end, post that line in the chat. If it is blocked, just watch; nothing today depends on it.”
 2. **Slide `problem`.** **Say:** “Coding agents write more code than any of us can read carefully. So the question is not *is the agent good*. It is: how do we decide to accept code we have not read line by line?”
 3. **Teams P-how:** “How do you accept agent-written code today?” Leave the result visible.
 4. **Say:** “We start with the rawest process there is, and we improve it in five stages. Every stage catches something, and every stage leaves a hole. And in every stage I will ask you the same thing: ship it?”
@@ -84,28 +92,29 @@ Scene `01`. Nothing on the slide yet; stay on `problem`.
 
 Fallback: `$FALLBACK_DIR/01-exposed.log`.
 
-## Stage 1 — Say what correct means (BMAD + Party Mode) — 14:00–30:00
+## Stage 1 — Say what correct means (BMAD + Party Mode) — 14:00–32:00
 
 Scene `02`.
 
 1. **Slide `bmad`.** Walk the six roles in one sentence each. **Say:** “BMAD is an agent framework for exactly this: each role is an agent with a job. Party Mode puts all of them in one room, in character, and lets them argue. You steer.”
 2. **Teams C2** (60 s): “Read the brief on screen. What is unclear or missing before we write the spec?” Keep the brief visible in the editor while the chat fills.
-3. **Claude Code** (second terminal, repository root): `claude`, then `/bmad-party-mode`.
+3. **Desktop** (author session): `/bmad-party-mode`.
 4. When the room greets you, type:
    > Topic: docs/initial-brief.md. We are about to build this checkout. Before anyone writes code: what is unclear in this brief, what would each of you decide differently, and what must the spec say?
 5. Let two or three turns run (budget 4 minutes). Steer once, for example: `John, Sally: a €100 cart with SAVE10. Free shipping or €5? Decide.` Then: `Thanks, wrap up with the open questions.`
 6. **Say** while it runs: “Same model, six roles. It widens the view; it does not prove anything. The value is the questions nobody asked.”
 7. Compare with the chat: did the room find **exactly €100** and **before or after the discount**? Read the best chat answer aloud. Fallback: the preserved party transcript from the rehearsal, or backup slide `s2-two`.
 8. **Editor:** `docs/specification.md` (about 45 lines). **Say:** “This is what the PM and the PO turn the argument into: a short spec with numbered acceptance criteria. AC-06 decides it: free shipping uses the subtotal *after* the discount, and €100 is not over €100. Forty-five lines. This is what humans review.”
-9. **Terminal:**
-   ```sh
-   SCENE_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 02 start --path)"
-   cd "$SCENE_DIR"
-   cp "$DEMO_ROOT/checkpoints/unit/shipping-acceptance.test.ts" tests/shipping-acceptance.test.ts
-   npm test
-   ```
-   One failure: expected shipping 500 and total 9,500; received 0 and 9,000. **Say:** “The spec, written as a test, disagrees with the code. The code was plausible; it was not what we decided.”
+9. **Browser:** the design canvas (two minutes, pre-generated). Walk the four screens: €100 with SAVE10 shows €95; exactly €50 still qualifies; €200 is capped at €15 and ships free; a quantity of 1.5 shows no total at all. **Say:** “Same spec, next artifact. Nobody drew these: Claude generated them from the spec, and every screen carries the criterion it implements. In stage 4 the browser test checks the real screen against the same criterion.”
 10. **Terminal:**
+    ```sh
+    SCENE_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 02 start --path)"
+    cd "$SCENE_DIR"
+    cp "$DEMO_ROOT/checkpoints/unit/shipping-acceptance.test.ts" tests/shipping-acceptance.test.ts
+    npm test
+    ```
+    One failure: expected shipping 500 and total 9,500; received 0 and 9,000. **Say:** “The spec, written as a test, disagrees with the code. The code was plausible; it was not what we decided.”
+11. **Terminal:**
     ```sh
     FIXED_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 02 fixed --path)"
     diff -u "$SCENE_DIR/src/checkout.ts" "$FIXED_DIR/src/checkout.ts"
@@ -113,13 +122,13 @@ Scene `02`.
     npm test
     ```
     23 tests pass. **Say:** “We changed an old expected value because the requirement was decided. Remember that sentence for stage 3.”
-11. **Slide `s1`.** Read the cards: ambiguity caught before code; a spec on paper proves nothing. **Teams F2:** the co-moderator posts the step-2 cue; their Party Mode runs while we go on.
-12. **Bridge.** **Editor:** `docs/discount-cap-change.md`: SAVE10 is capped at €15. **Teams C3** (30 s): “€200 cart with SAVE10: which values change?” (discount €15, total €185.) **Say:** “Imagine the agent comes back: cap done, tests green.” **Teams P2:** “Ship it?”
-13. **Say:** “The agent wrote the code and the test together. Has that test ever failed? A test that cannot fail proves nothing.”
+12. **Slide `s1`.** Read the cards: ambiguity caught before code; a spec on paper proves nothing. **Teams F2:** the co-moderator posts the step-2 cue; their Party Mode runs while we go on.
+13. **Bridge.** **Editor:** `docs/discount-cap-change.md`: SAVE10 is capped at €15. **Teams C3** (30 s): “€200 cart with SAVE10: which values change?” (discount €15, total €185.) **Say:** “Imagine the agent comes back: cap done, tests green.” **Teams P2:** “Ship it?”
+14. **Say:** “The agent wrote the code and the test together. Has that test ever failed? A test that cannot fail proves nothing.”
 
 Fallback: `$FALLBACK_DIR/02-red.log`, `02-fixed.log`.
 
-## Stage 2 — A test must fail first — 30:00–41:00
+## Stage 2 — A test must fail first — 32:00–43:00
 
 Scene `03`, live agent. Observation budget 2 minutes per phase.
 
@@ -131,7 +140,9 @@ Scene `03`, live agent. Observation budget 2 minutes per phase.
    cat src/discount.ts
    ```
    23 pass, no cap in the code.
-2. **Claude Code:** in the second terminal, `cd "$SCENE_DIR"` and start `claude`. Paste **phase A** of `prompts/coding-agent.md` unchanged (test only, no production change). **Say:** “Amelia, BMAD's developer agent, works the same way: red, green, refactor. Today I ask for red first and I stop her there.”
+2. **Desktop:** in the author session, with the scene path pasted in:
+   > Start a separate session in `<SCENE_DIR>`, sharing that folder, for the coding agent. Its brief is phase A of prompts/coding-agent.md, unchanged: the cap test only, no production change.
+   The app may ask once to trust the folder. A new row appears in the sidebar; right-click it → Open in → Split view. **Say:** “Amelia, BMAD's developer agent, works the same way: red, green, refactor. Today I ask for red first and I stop her there. And she gets a room of her own: a session in that folder. I see a row, not a chat.” Fallback: second terminal, `cd "$SCENE_DIR"`, `claude`, paste phase A yourself.
 3. While it runs: **Say:** “I am not going to read what it writes. I am going to watch whether the test fails for the right reason.”
 4. **Terminal** (main):
    ```sh
@@ -139,7 +150,7 @@ Scene `03`, live agent. Observation budget 2 minutes per phase.
    shasum -a 256 tests/*.test.ts > red-tests.sha256
    ```
    A value mismatch, for example expected 1,500, received 2,000. Not a syntax error. **Say:** “Red for the right reason. And I just fingerprinted the tests.”
-5. **Claude Code:** paste **phase B** (smallest implementation, then refactor, tests unchanged).
+5. **Desktop:** in the agent's session (split view), paste **phase B** (smallest implementation, then refactor, tests unchanged).
 6. **Terminal:**
    ```sh
    npm test
@@ -166,7 +177,7 @@ diff -u "$DEMO_ROOT/checkpoints/overlays/uncapped/src/discount.ts" "$DEMO_ROOT/c
 
 Original evidence that red came first: `evidence/authoring/002-cap-red-before-implementation/execution.log`.
 
-## Stage 3 — Test the tests — 41:00–53:00
+## Stage 3 — Test the tests — 43:00–55:00
 
 Scenes `04` and `05`. Two layers in one stage: are the tests strong (mutants), and are they stable (lock)?
 
@@ -214,7 +225,7 @@ Scenes `04` and `05`. Two layers in one stage: are the tests strong (mutants), a
 
 Fallback: `$FALLBACK_DIR/04-mutation-after.log`, `05-acceptance-verify.log`, `05-restored-red.log`.
 
-## Stage 4 — A second pair of eyes — 53:00–65:00
+## Stage 4 — A second pair of eyes — 55:00–68:00
 
 Scene `06`.
 
@@ -226,10 +237,19 @@ Scene `06`.
    ```
    Three browser checks fail. AC-10: expected **€95.00**, received **€105.00**. **Say:** “The calculation is right. The screen is wrong. None of our unit tests ever looked at the screen.”
 3. **Teams C7** (60 s): “What would you give a reviewer so they can challenge this change without our explanation?” Spec, the actual diff, source and tests. Nothing else: no summary from the author.
-4. **Editor:** `evidence/agent-runs/2026-11-03-scene06-fresh-review/README.md`, then `review-output.md`. **Say:** “This review really ran, in a fresh context, with only that bundle. In BMAD this is `/bmad-code-review`: several independent reviewers, then a triage. Same idea: the reviewer never sees the author's story.” One preparation step is on record: a comment naming the defect was removed first.
-5. F-1 points at `src/view.ts:9` (line 10 in the checkpoint). **Editor:** open that one line. **Say:** “The counter goes to 1. We read one line of code today, because the evidence pointed there.”
-6. Optional (2 min): F-2 was not planted. **Terminal:** `npm run dev -- --port 5173` · **Browser:** €100, SAVE10, type `1.5` into a quantity. The error appears, the summary hides, the status still says “SAVE10 applied.” **Say:** “Should we believe a reviewer? We check.” Ctrl+C.
-7. **Terminal:**
+4. **Terminal** (main) and **Desktop.** Build the bundle and start the live reviewer:
+   ```sh
+   cd "$DEMO_ROOT"
+   BASE_DIR="$(node scripts/scene.mjs 04 improved --path)"
+   npm run review:bundle -- "$BASE_DIR" "$SCENE_DIR"
+   ```
+   It prints `Fresh-context review bundle: <path>`. In the author session:
+   > Start a separate session in its own worktree that reviews the bundle at `<path>` following prompts/independent-reviewer.md. Read-only, no author explanation; report findings and one recommendation.
+   The row appears; leave it working. **Say:** “A fresh context is not a discipline, it is a mechanism: its own session, its own worktree, nothing of this conversation. Its report comes back as a note.” It takes a few minutes; carry on.
+5. **Editor:** `evidence/agent-runs/2026-11-03-scene06-fresh-review/README.md`, then `review-output.md`. **Say:** “This review really ran, in a fresh context, with only that bundle. In BMAD this is `/bmad-code-review`: several independent reviewers, then a triage. Same idea: the reviewer never sees the author's story.” One preparation step is on record: a comment naming the defect was removed first.
+6. F-1 points at `src/view.ts:9` (line 10 in the checkpoint). **Editor:** open that one line. **Say:** “The counter goes to 1. We read one line of code today, because the evidence pointed there.”
+7. Optional (2 min): F-2 was not planted. **Terminal:** `npm run dev -- --port 5173` · **Browser:** €100, SAVE10, type `1.5` into a quantity. The error appears, the summary hides, the status still says “SAVE10 applied.” **Say:** “Should we believe a reviewer? We check.” Ctrl+C.
+8. **Terminal:**
    ```sh
    FIXED_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 06 fixed --path)"
    cd "$FIXED_DIR"
@@ -237,12 +257,14 @@ Scene `06`.
    npm run test:e2e
    ```
    All five browser tests pass. **Say:** “The review requested changes on the defective version. Nobody has re-reviewed the fix. Keep that for the decision.”
-8. **Slide `s4`.** Read the cards: browser and a fresh reader; but a review is an opinion, and who runs all this every time? **Teams F5:** step-5 cue (a fresh session, not the author's).
-9. **Bridge.** **Say:** “Spec, test first, mutants, lock, browser, reviewer. All of it passed on my machine.” **Teams P6:** “Every check passed on my machine. Ship it?”
+9. **Slide `s4`.** Read the cards: browser and a fresh reader; but a review is an opinion, and who runs all this every time? **Teams F5:** step-5 cue (a fresh session, not the author's).
+10. **Bridge.** **Say:** “Spec, test first, mutants, lock, browser, reviewer. All of it passed on my machine.” **Teams P6:** “Every check passed on my machine. Ship it?”
 
 Fallback: `$FALLBACK_DIR/06-browser-detects.log`, its failure screenshot, `06-browser-after/checkout-desktop.png`; backup slides `s6-screen`, `s6-review`.
 
-## Stage 5 — No check is optional — 65:00–72:00
+**When the live reviewer's note arrives** (usually during stage 5 or the wrap-up): read its recommendation and its first finding aloud and compare with F-1. Say which run is which; the preserved review is the evidence, the live one is the mechanism. If it has not reported by the questions, open its row and show where it stands.
+
+## Stage 5 — No check is optional — 68:00–75:00
 
 Scene `07`.
 
@@ -268,15 +290,15 @@ Scene `07`.
 
 Fallback: `$FALLBACK_DIR/07-release-blocked.log`, `07-release-ready.log`; backup slide `s7-gate`.
 
-## Wrap-up — 72:00–78:00
+## Wrap-up — 75:00–81:00
 
 1. **Slide `cheese`.** Walk the row once, one sentence per layer: what it catches, the hole it leaves. **Say:** “The holes do not line up. That is why the stack holds, and why no single layer is enough.” **Teams F7:** step-7 cue, the Party Mode retrospective; its results come in during the questions.
-2. **Slide `attention`.** **Say:** “Back to the question. Humans review the spec, changes to approved tests, the findings and the decision. Machines check everything else, and the gate makes sure nobody skips one. We read code when the evidence points there, or where nothing covers it: security, money, data.”
+2. **Slide `attention`.** **Say:** “Back to the question. Humans review the spec, changes to approved tests, the findings and the decision. Machines check everything else, and the gate makes sure nobody skips one. We read code when the evidence points there, or where nothing covers it: security, money, data.” Point at the Desktop sidebar: author session, agent session, reviewer session, one row each. **Say:** “That is what I read today: sessions and their evidence, not their chats.”
 3. **Say:** “Without a spec, every check only confirms what the code already does. With a spec, a short document carries the intent, and the evidence tells us where to look. That is why BMAD spends its agents on the spec, and why we spent our tests on it.”
 4. **Teams P-how** again: would anyone answer differently now? Then **Teams P7:** “The gate packaged it. Ship it, for the local demo scope?” Give your own answer: “For this local demo I accept the corrected feature. One real review found the defect; nobody has reviewed the fix yet. For a release that requires that: need more evidence.”
 5. One minute outlook (backup slide `outlook` if useful): static analysis, dependency and security scanning, property-based tests, required checks in CI.
 
-## Questions — 78:00–90:00
+## Questions — 81:00–90:00
 
 **Slide `questions`.** Backup slides follow it: `s2-two`, `s4-mutant`, `s5-diff`, `s6-screen`, `s6-review`, `s7-gate`, `outlook`.
 
@@ -290,6 +312,6 @@ Prompts if the chat is quiet:
 
 ## If you are five minutes behind
 
-Drop in this order: the F-2 check in stage 4, the second mutation run in stage 3 (show the saved after-report), the live agent in stage 2 (use the fallback diffs). Shorten Party Mode to one round rather than skipping it. Keep the six “Ship it?” polls, the lock failure, the release refusal and the two closing slides. The follow-along cues cost nothing: the co-moderator posts them, and the participants' agents run in parallel.
+Drop in this order: the F-2 check in stage 4, the second mutation run in stage 3 (show the saved after-report), the live agent in stage 2 (use the fallback diffs). Shorten Party Mode to one round rather than skipping it. Skip starting the live reviewer session (the preserved review stays) and reduce the design canvas to one sentence. Keep the six “Ship it?” polls, the lock failure, the release refusal and the two closing slides. The follow-along cues cost nothing: the co-moderator posts them, and the participants' agents run in parallel.
 
 After the session, stop dev and preview servers and keep any real agent transcripts you want to preserve under `evidence/agent-runs/`.
