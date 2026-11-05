@@ -266,6 +266,8 @@ Fallback: `$FALLBACK_DIR/06-browser-detects.log`, its failure screenshot, `06-br
 
 **When the live reviewer's note arrives** (usually during stage 5 or the wrap-up): read its recommendation and its first finding aloud and compare with F-1. Say which run is which; the preserved review is the evidence, the live one is the mechanism. If it has not reported by the questions, open its row and show where it stands.
 
+A rehearsed run of exactly this session (own worktree, bundle only, `view.ts:10` found, 3 of 5 browser checks failing, “request changes”) is preserved in `evidence/agent-runs/2026-11-05-rehearsal-fresh-review/`.
+
 ## Stage 5 — No check is optional — 68:00–75:00
 
 Scene `07`.
