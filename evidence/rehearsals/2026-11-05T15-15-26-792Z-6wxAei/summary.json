@@ -1,0 +1,209 @@
+{
+  "status": "passed",
+  "startedAt": "2026-11-05T15:15:26.794Z",
+  "checks": [
+    {
+      "name": "01-green",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 1770
+    },
+    {
+      "name": "01-exposed",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "durationMs": 1854
+    },
+    {
+      "name": "02-start",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 1399
+    },
+    {
+      "name": "02-red",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "durationMs": 1973
+    },
+    {
+      "name": "02-fixed",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 2338
+    },
+    {
+      "name": "03-start",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 1325
+    },
+    {
+      "name": "03-red",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "durationMs": 2186
+    },
+    {
+      "name": "03-green",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 2820
+    },
+    {
+      "name": "03-refactor",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 2083
+    },
+    {
+      "name": "04-coverage-before",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 2945
+    },
+    {
+      "name": "04-mutation-before",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 6587
+    },
+    {
+      "name": "04-boundary-policy-blocked",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "durationMs": 222
+    },
+    {
+      "name": "04-mutation-after",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 5712
+    },
+    {
+      "name": "04-boundary-policy-passed",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 169
+    },
+    {
+      "name": "05-unit-green",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 1687
+    },
+    {
+      "name": "05-acceptance-verify",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "durationMs": 481
+    },
+    {
+      "name": "05-release-blocked",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "durationMs": 15417
+    },
+    {
+      "name": "05-restored-red",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "durationMs": 2203
+    },
+    {
+      "name": "05-fixed-green",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 2998
+    },
+    {
+      "name": "05-acceptance-verified",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 1287
+    },
+    {
+      "name": "06-unit-green",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 2847
+    },
+    {
+      "name": "06-build-bug",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 1625
+    },
+    {
+      "name": "06-browser-detects",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "durationMs": 19220
+    },
+    {
+      "name": "06-build-fixed",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 1535
+    },
+    {
+      "name": "06-browser-passes",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 6943
+    },
+    {
+      "name": "07-release-blocked",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "durationMs": 31385
+    },
+    {
+      "name": "07-release-ready",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 13688
+    },
+    {
+      "name": "07-archive-contents",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "durationMs": 7
+    }
+  ],
+  "workspaces": {
+    "01-start": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/01-start-daqRxw",
+    "01-exposed": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/01-exposed-W6aA05",
+    "02-start": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/02-start-ErsZBf",
+    "02-red": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/02-red-33P2eu",
+    "02-fixed": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/02-fixed-kPrhXp",
+    "03-start": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/03-start-XNvXTB",
+    "03-red": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/03-red-zeaMiH",
+    "03-green": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/03-green-STVyWq",
+    "03-refactor": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/03-refactor-lSvE9q",
+    "04-start": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/04-start-TX6LjO",
+    "04-improved": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/04-improved-uf00eG",
+    "05-start": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/05-start-MgLyGu",
+    "05-restored": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/05-restored-9QHO9c",
+    "05-fixed": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/05-fixed-ezOHE7",
+    "06-start": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-start-S50nUq",
+    "06-fixed": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/06-fixed-w8XZBP",
+    "07-start": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/07-start-cZ7s69",
+    "07-ready": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/07-ready-aHLVKr"
+  },
+  "assertions": [
+    "Opening another scene preserved edited source and a user note in an earlier run.",
+    "Shipping and cap failures contain the intended value mismatches; fixes pass.",
+    "The minimum-order mutant survives before AC-03b and is killed after it; the gate enforces that case.",
+    "Edited expected values kept every behavioral check green; only the acceptance lock blocked release. Restored tests expose the regression.",
+    "Business tests pass with the seeded UI defect; a real built-UI assertion detects €105 instead of €95 and passes after the fix.",
+    "Seeded UI defect blocked release at the browser check; no archive exists.",
+    "Fixed release produced a static archive containing index.html and assets."
+  ],
+  "releaseArchive": {
+    "path": "/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/07-ready-aHLVKr/artifacts/release-2026-11-05T15-17-31-290Z/checkout.tar.gz",
+    "sha256": "895cccf42b899bccd2c8542fb39a08f80e13e68b589283cc5158982eeb4bdcd3"
+  },
+  "finishedAt": "2026-11-05T15:17:44.566Z",
+  "durationMs": 137775
+}

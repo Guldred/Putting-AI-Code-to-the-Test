@@ -177,6 +177,8 @@ diff -u "$DEMO_ROOT/checkpoints/overlays/uncapped/src/discount.ts" "$DEMO_ROOT/c
 
 Original evidence that red came first: `evidence/authoring/002-cap-red-before-implementation/execution.log`.
 
+A rehearsed live run of both phases (32 s red, 41 s green, test files byte-identical) is preserved in `evidence/agent-runs/2026-11-05-rehearsal-scene03-live-agent/`; use its reports if the live agent stalls, and say so.
+
 ## Stage 3 — Test the tests — 43:00–55:00
 
 Scenes `04` and `05`. Two layers in one stage: are the tests strong (mutants), and are they stable (lock)?

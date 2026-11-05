@@ -1,0 +1,44 @@
+
+> putting-ai-code-to-the-test@1.0.0 test
+> vitest run
+
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/02-red-33P2eu[39m
+
+ [31m❯[39m tests/shipping-acceptance.test.ts [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 10[2mms[22m[39m
+[31m   [31m×[31m AC-06: a €100 cart with SAVE10 pays €5 shipping because merchandise is €90[39m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/assumed.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 3[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m tests/shipping-acceptance.test.ts[2m > [22mAC-06: a €100 cart with SAVE10 pays €5 shipping because merchandise is €90
+[31m[1mAssertionError[22m: expected { subtotalCents: 10000, …(3) } to deeply equal { subtotalCents: 10000, …(3) }[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "discountCents": 1000,[22m
+[32m-   "shippingCents": 500,[39m
+[31m+   "shippingCents": 0,[39m
+[2m    "subtotalCents": 10000,[22m
+[32m-   "totalCents": 9500,[39m
+[31m+   "totalCents": 9000,[39m
+[2m  }[22m
+
+[36m [2m❯[22m tests/shipping-acceptance.test.ts:[2m5:81[22m[39m
+    [90m  3| [39m
+    [90m  4| [39mit('AC-06: a €100 cart with SAVE10 pays €5 shipping because merchandis…
+    [90m  5| [39m  expect(calculateCheckout([{ unitPriceCents: 10000, quantity: 1 }], '…
+    [90m   | [39m                                                                                [31m^[39m
+    [90m  6| [39m    subtotalCents: 10000, discountCents: 1000, shippingCents: 500, tot…
+    [90m  7| [39m  })[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m1 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m5 passed[39m[22m[90m (6)[39m
+[2m   Start at [22m 16:15:33
+[2m   Duration [22m 748ms[2m (transform 48ms, setup 0ms, import 73ms, tests 12ms, environment 0ms)[22m
+

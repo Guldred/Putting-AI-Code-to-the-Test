@@ -1,0 +1,136 @@
+
+> putting-ai-code-to-the-test@1.0.0 test:e2e
+> node scripts/browser-test.mjs
+
+
+Running 5 tests using 1 worker
+
+  ✘  1 e2e/checkout.spec.ts:5:1 › AC-10: built UI shows the complete €100 cart breakdown after SAVE10 (3.2s)
+  ✘  2 e2e/checkout.spec.ts:17:1 › AC-11: edits, code removal, empty cart and reload recalculate (2.9s)
+  ✓  3 e2e/checkout.spec.ts:35:1 › AC-09: invalid quantity hides the summary instead of showing a stale total (445ms)
+  ✘  4 e2e/checkout.spec.ts:43:1 › AC-12d: the built UI shows the capped discount on a €200 cart (2.8s)
+  ✓  5 e2e/checkout.spec.ts:53:1 › mobile: fixture controls and the total stay accessible without horizontal scrolling (224ms)
+
+
+  1) e2e/checkout.spec.ts:5:1 › AC-10: built UI shows the complete €100 cart breakdown after SAVE10 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('total')
+    Expected: "€95.00"
+    Received: "€105.00"
+    Timeout:  2500ms
+
+    Call log:
+      - Expect "toHaveText" getByTestId('total') with timeout 2500ms
+      - waiting for getByTestId('total')
+        9 × locator resolved to <strong data-testid="total">€105.00</strong>
+          - unexpected value "€105.00"
+
+
+      10 |   await expect(page.getByTestId('discount')).toHaveText('−€10.00');
+      11 |   await expect(page.getByTestId('shipping')).toHaveText('€5.00');
+    > 12 |   await expect(page.getByTestId('total')).toHaveText('€95.00');
+         |                                           ^
+      13 |   await expect(page.getByRole('status')).toHaveText('SAVE10 applied.');
+      14 |   await page.screenshot({ path: 'reports/browser/checkout-desktop.png', fullPage: true });
+      15 | });
+        at /Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/07-start-cZ7s69/e2e/checkout.spec.ts:12:43
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/checkout-AC-10-built-UI-sh-d191d-cart-breakdown-after-SAVE10/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/checkout-AC-10-built-UI-sh-d191d-cart-breakdown-after-SAVE10/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/checkout-AC-10-built-UI-sh-d191d-cart-breakdown-after-SAVE10/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/checkout-AC-10-built-UI-sh-d191d-cart-breakdown-after-SAVE10/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) e2e/checkout.spec.ts:17:1 › AC-11: edits, code removal, empty cart and reload recalculate ─────
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('total')
+    Expected: "€50.00"
+    Received: "€55.00"
+    Timeout:  2500ms
+
+    Call log:
+      - Expect "toHaveText" getByTestId('total') with timeout 2500ms
+      - waiting for getByTestId('total')
+        9 × locator resolved to <strong data-testid="total">€55.00</strong>
+          - unexpected value "€55.00"
+
+
+      22 |   await page.getByRole('button', { name: 'Apply' }).click();
+      23 |   await expect(page.getByTestId('discount')).toHaveText('−€5.00');
+    > 24 |   await expect(page.getByTestId('total')).toHaveText('€50.00');
+         |                                           ^
+      25 |   await page.getByRole('button', { name: 'Remove code' }).click();
+      26 |   await expect(page.getByTestId('total')).toHaveText('€55.00');
+      27 |   await page.getByRole('button', { name: 'Clear cart' }).click();
+        at /Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/07-start-cZ7s69/e2e/checkout.spec.ts:24:43
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/checkout-AC-11-edits-code--fe771-cart-and-reload-recalculate/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/checkout-AC-11-edits-code--fe771-cart-and-reload-recalculate/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/checkout-AC-11-edits-code--fe771-cart-and-reload-recalculate/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/checkout-AC-11-edits-code--fe771-cart-and-reload-recalculate/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) e2e/checkout.spec.ts:43:1 › AC-12d: the built UI shows the capped discount on a €200 cart ─────
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('total')
+    Expected: "€185.00"
+    Received: "€200.00"
+    Timeout:  2500ms
+
+    Call log:
+      - Expect "toHaveText" getByTestId('total') with timeout 2500ms
+      - waiting for getByTestId('total')
+        9 × locator resolved to <strong data-testid="total">€200.00</strong>
+          - unexpected value "€200.00"
+
+
+      48 |   await expect(page.getByTestId('discount')).toHaveText('−€15.00');
+      49 |   await expect(page.getByTestId('shipping')).toHaveText('€0.00');
+    > 50 |   await expect(page.getByTestId('total')).toHaveText('€185.00');
+         |                                           ^
+      51 | });
+      52 |
+      53 | test('mobile: fixture controls and the total stay accessible without horizontal scrolling', async ({ page }) => {
+        at /Users/christian.malak/MyProjects/Putting-AI-Code-to-the-Test/.claude/worktrees/hungry-spence-aeb33c/.demo-runs/07-start-cZ7s69/e2e/checkout.spec.ts:50:43
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/checkout-AC-12d-the-built--196e8-ped-discount-on-a-€200-cart/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/checkout-AC-12d-the-built--196e8-ped-discount-on-a-€200-cart/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/checkout-AC-12d-the-built--196e8-ped-discount-on-a-€200-cart/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/checkout-AC-12d-the-built--196e8-ped-discount-on-a-€200-cart/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    e2e/checkout.spec.ts:5:1 › AC-10: built UI shows the complete €100 cart breakdown after SAVE10 ─
+    e2e/checkout.spec.ts:17:1 › AC-11: edits, code removal, empty cart and reload recalculate ──────
+    e2e/checkout.spec.ts:43:1 › AC-12d: the built UI shows the capped discount on a €200 cart ──────
+  2 passed (14.4s)
