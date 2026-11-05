@@ -28,4 +28,4 @@ The fallback path needs no network access, account, external service or attendee
 
 ## Optional follow-along
 
-Participants who did step 1 of the [participant guide](participant-guide.md) before the session (about ten minutes: BMAD skills, `uv`, a throwaway branch) let their own agent build the same layers in a repository of their choice. After each stage slide the co-moderator posts a one-line cue (F2–F7); the agents run in parallel, so the schedule above does not change. Their results feed the questions segment.
+Participants who bring Claude Code paste one sentence in the opening (cue F1); their Claude installs `uv` and the BMAD skills, sets BMAD up and reports back during stage 0 (5 to 8 minutes, in parallel). After each stage slide the co-moderator posts a one-line cue (F2–F7) and their Claude builds the same layer in a repository of their choice. The agents run in parallel, so the schedule above does not change. Their results feed the questions segment.

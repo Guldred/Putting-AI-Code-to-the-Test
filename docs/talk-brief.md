@@ -4,7 +4,11 @@
 
 Published description: learn how to challenge AI-generated code and decide whether it is ready to ship. A practical demo covers spec-driven development, TDD, mutation testing, independent reviews and quality gates. Prerequisites: basic programming and testing knowledge. No local setup required.
 
-Proposed update (title unchanged): AI agents write code faster than we can read it. So how do we decide it is ready to ship? Step by step we turn “prompt and hope” into a spec-driven workflow, shown with Claude Code in the Claude Desktop app and the BMAD Method as the example tooling: BMAD's multi-agent Party Mode, screens generated from the spec with Claude Design, and agent sessions in their own worktrees. At every step we show what it catches and what still slips through: specs, test-first, mutation testing, independent reviews and quality gates. Prerequisites: basic programming knowledge. No local setup required. Optional: bring a repository and your coding agent, and a short guide lets you build the same steps in your own project while you watch. The session runs online in Microsoft Teams. The presenter runs everything on one local machine; participants at their own PCs take part through Teams polls, chat predictions and discussion.
+Proposed title: **Fully Agentic Development with Claude: How Do We Trust the Agentic Process?**
+
+Proposed description: Claude writes the code; nobody reads it line by line. So how do we trust what ships? Step by step we build a fully agentic workflow with spec-driven development and the BMAD Method: specs from a team of agents, test-first, mutation testing, independent reviews and a release gate, each showing what it catches and what still slips through. Hands-on: you build the same steps in your own repository with Claude.
+
+Requirements: Claude Code (Desktop app or CLI) with an active plan, signed in; Git; Node.js 22 or newer; internet access during the session; a repository of your own or an empty folder (Claude creates a minimal project). Basic programming knowledge. Claude Code is the supported path; other agents that run Agent Skills with a Claude model can follow the same guide, untested. The session runs online in Microsoft Teams; the presenter runs everything on one machine, participants take part through polls, chat and their own Claude.
 
 ## Central question
 
@@ -38,6 +42,6 @@ The talk is told as a pipeline that grows in five stages. It starts with the raw
 
 Every stage opens with the Teams poll **“Ship it?”** (**Ship it**, **Don't ship**, **Need more evidence**; see [Teams interaction](teams-interaction.md)) at the moment things look green. Ask for the missing observation, not confidence in an agent or tool. Return to the €100 SAVE10 order throughout; use the €200 order only to introduce the cap, and the €50 order to expose the exact minimum.
 
-Optionally, participants follow along in a repository of their own with the [participant guide](participant-guide.md): one sentence per stage to their coding agent, BMAD Party Mode for the spec and for a closing retrospective, and STOP points where they look before the agent continues. It is announced a week ahead because its setup takes ten minutes; nothing in the talk depends on it.
+Optionally, participants follow along in a repository of their own with the [participant guide](participant-guide.md): one sentence per stage to their coding agent, BMAD Party Mode for the spec and for a closing retrospective, and STOP points where they look before the agent continues. Step 1 is the setup, done by the participant's Claude during the opening; nothing in the talk depends on it.
 
 See the [90-minute schedule](90-minute-outline.md), [Teams interaction](teams-interaction.md), [presenter script](presenter-script.md), [evidence map](acceptance-evidence.md) and [slide outline](slide-outline.md).

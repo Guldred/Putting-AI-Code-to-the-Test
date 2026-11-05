@@ -16,7 +16,7 @@ Legend for each step: **Slide** = advance the deck · **Terminal** = type this �
 
 **Every stage, same rhythm:** it looks green → poll “Ship it?” → it breaks, live → chat “What would have caught it?” → the new layer, live → the stage slide names what it caught and what still slips through.
 
-**The follow-along (optional):** participants who set up the [participant guide](participant-guide.md) before the session let their own agent build the same layers in a repository of their choice. After each stage slide the co-moderator posts a one-line cue (F2–F7 in [Teams interaction](teams-interaction.md)); their agents work while we go on. Nothing in the talk depends on it.
+**The follow-along (optional):** participants who bring Claude Code let it set itself up during the opening (step 1 of the [participant guide](participant-guide.md), launched by cue F1) and then build the same layers in a repository of their choice. After each stage slide the co-moderator posts a one-line cue (F2–F7 in [Teams interaction](teams-interaction.md)); their agents work while we go on. Nothing in the talk depends on it.
 
 **Three Claude-specific moments, each tied to a stage:** stage 1 shows a Claude Design canvas generated from the spec (pre-generated, two minutes); stage 2 runs the coding agent as a separate Desktop session in the scene folder, a row in the sidebar, accepted from outside; stage 4 starts the fresh-context reviewer as a session in its own worktree, which reports back as a note. Everything else is tool-agnostic.
 
@@ -42,7 +42,7 @@ The design canvas [Checkout from the spec](https://claude.ai/artifact/GQRqDvLH2c
 
 ### Follow-along, one week ahead
 
-The [participant guide](participant-guide.md) must be on `main` before the invite goes out, because step 1 downloads it from the raw `main` URL. Put the link and “Step 1 takes ten minutes, do it before the session” into the invite or a reminder mail. Walk through the guide yourself once in a scratch repository (all seven steps, about 40 minutes), so you know what their agents will show. The co-moderator gets the cue texts F1–F7 from [Teams interaction](teams-interaction.md) ready to paste.
+The [participant guide](participant-guide.md) must be on `main` before the session, because step 1 fetches it from the raw `main` URL. The invite asks for exactly this: Claude Code signed in (Desktop app or CLI), Git, Node.js 22 or newer, internet access, and a repository of their own or an empty folder. Nothing is installed in advance: step 1 is launched by cue F1 in the opening and runs during stage 0, and their Claude installs `uv`, the BMAD skills and the BMAD setup itself. Walk through the guide yourself once in a scratch repository (all seven steps, about 45 minutes), so you know what their agents will show and where step 1 can stop. The co-moderator gets the cue texts F1–F7 from [Teams interaction](teams-interaction.md) ready to paste, plus the canned reply for a blocked step 1. You never debug a participant's machine live.
 
 ### Before every run
 
@@ -65,7 +65,7 @@ Every `scene.mjs` call creates a fresh folder under `.demo-runs/`; nothing you d
 
 ## Opening — 00:00–05:00
 
-1. **Slide `cover`.** Welcome. “No setup on your side. I run everything; you vote and you type in the chat. If you did step 1 of the guide, keep your agent open: your cues come as chat messages.” **Teams F1:** the co-moderator asks who is following along.
+1. **Slide `cover`.** Welcome. **Teams F1:** the co-moderator posts the step-1 sentence. **Say:** “I run everything here; you vote and you type in the chat. If you brought Claude, paste the first chat message now and let it run: it sets itself up during the next ten minutes and asks before it installs anything. Whatever it says at the end, post that line in the chat. If it is blocked, just watch; nothing today depends on it.”
 2. **Slide `problem`.** **Say:** “Coding agents write more code than any of us can read carefully. So the question is not *is the agent good*. It is: how do we decide to accept code we have not read line by line?”
 3. **Teams P-how:** “How do you accept agent-written code today?” Leave the result visible.
 4. **Say:** “We start with the rawest process there is, and we improve it in five stages. Every stage catches something, and every stage leaves a hole. And in every stage I will ask you the same thing: ship it?”

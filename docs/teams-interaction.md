@@ -35,17 +35,19 @@ Every stage also has the same unnumbered chat question after the problem appears
 
 ## Follow-along cues (optional)
 
-Participants who did step 1 of the [participant guide](participant-guide.md) before the session let their own agent build the same layers in a repository of their choice. The co-moderator posts each cue right after the stage slide; the presenter only points at it. Their agents run while the talk continues, and nothing in the talk depends on their results. Pin the first message.
+Participants who bring Claude Code let it set itself up in step 1 of the [participant guide](participant-guide.md) during the opening, then build the same layers in a repository of their choice. The co-moderator posts each cue right after the stage slide; the presenter only points at it. Their agents run while the talk continues, and nothing in the talk depends on their results. Pin the first message.
 
 | ID | When | Co-moderator posts |
 | --- | --- | --- |
-| F1 | Opening | “Following along in your own repo? Post ✅ if step 1 of the guide is done. Guide: https://github.com/Guldred/Putting-AI-Code-to-the-Test/blob/main/docs/participant-guide.md — every cue is one sentence for your agent.” |
+| F1 | Opening | “Following along? Open Claude Code in the folder you want to work in (your project, a customer repo, or an empty folder) and paste: `Read https://raw.githubusercontent.com/Guldred/Putting-AI-Code-to-the-Test/main/docs/participant-guide.md and do step 1. Stop at the first STOP.` It installs what it needs and asks first. When it stops, post its last line here: Step 1 done, or Step 1 blocked. Every later cue is one sentence for Claude.” |
 | F2 | After slide `s1` | “Step 2 now. Paste to your agent: `Read docs/participant-guide.md and do step 2. Stop at the first STOP.` Then post: Step 2: N open questions, N acceptance criteria.” |
 | F3 | After slide `s2` | “Step 3. Paste: `Read docs/participant-guide.md and do step 3. Stop at the first STOP.` Post: Step 3: red N, green N, tests unchanged.” |
 | F4 | After slide `s3` | “Step 4. Paste: `Read docs/participant-guide.md and do step 4. Stop at the first STOP.` Post: Step 4: mutant killed or survived, lock blocks edits.” |
 | F5 | After slide `s4` | “Step 5 needs a **fresh** session. In the Desktop app, tell your author session: `Start a separate session in this folder, sharing this checkout, with exactly this brief: Read docs/participant-guide.md and do step 5 as the reviewer.` (Terminal: second `claude`, paste the brief.) Post: Step 5: N findings, recommendation.” |
 | F6 | After slide `s5` | “Step 6, back in the author session. Paste: `Read docs/participant-guide.md and do step 6. Stop at the first STOP.` Post: Step 6: gate passes, blocks, passes.” |
 | F7 | Slide `cheese` | “Step 7, the retrospective. Paste: `Read docs/participant-guide.md and do step 7. Stop at the first STOP.` Post your first action item during the questions.” |
+
+Canned reply for a blocked step 1 (co-moderator only, never the presenter): “Thanks. Follow the line Claude gave you after the session; for now just watch, nothing today depends on it.” Never debug a participant's machine in the chat.
 
 During the questions the presenter asks: “What did your fresh reviewer find that the author session never mentioned? What did your gate block?”
 

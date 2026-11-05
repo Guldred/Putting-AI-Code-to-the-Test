@@ -4,7 +4,7 @@ A small checkout and seven reproducible scenes for a 90-minute online presentati
 
 Central question: **why spec-driven development instead of vibe coding, and how do we accept agent-written code safely without reviewing it line by line?** The talk starts with the rawest process (prompt → agent → ship) and improves it in five stages: a spec written with a team of agents ([BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD), including a live Party Mode), test first, mutation testing plus a test lock, browser test plus an independent review, and a release gate. Every stage shows what it catches and what still slips through. The seven technical scenes below are the demo states behind those stages.
 
-Learn how to challenge AI-generated code and decide whether it is ready to ship. The demo covers spec-driven development, TDD, mutation testing, independent reviews and quality gates. Prerequisites: basic programming and testing knowledge. **Audience members need no local setup.**
+Learn how to challenge AI-generated code and decide whether it is ready to ship. The demo covers spec-driven development, TDD, mutation testing, independent reviews and quality gates. Prerequisites: basic programming knowledge. **Watching needs no setup; following along needs only Claude Code, which sets itself up in step 1 of the participant guide.**
 
 ## Start here
 
@@ -42,7 +42,7 @@ npx skills add bmad-code-org/BMAD-METHOD -a claude-code -y --copy -s bmad -s bmo
 
 Then, in Claude Code from the repository root, run `/bmad` and ask it to set up BMad with the defaults; it creates `_bmad/`. Party Mode is `/bmad-party-mode`. Its output differs on every run, so the runbook asks for one rehearsed transcript under `evidence/agent-runs/` as the fallback.
 
-Participants can do the same in their own repository: the [participant guide](docs/participant-guide.md) has the setup as step 1 and one agent instruction per stage, with Party Mode for the spec and for a closing retrospective. The guide must be on `main` before the invite goes out; step 1 downloads it from there.
+Participants can do the same in their own repository: the [participant guide](docs/participant-guide.md) has the setup as step 1 and one agent instruction per stage, with Party Mode for the spec and for a closing retrospective. Step 1 runs at the start of the session: the participant's Claude fetches the guide from `main`, installs `uv` and the BMAD skills and runs the BMAD setup, so the guide must be on `main` before the session.
 
 ### Claude Desktop app (stage 1 design, stage 2 agent session, stage 4 reviewer session)
 
