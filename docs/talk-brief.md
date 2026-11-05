@@ -1,4 +1,4 @@
-# Putting AI Code to the Test
+# Fully Agentic Development with Claude: How Do We Trust the Agentic Process?
 
 ## Description
 
