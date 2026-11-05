@@ -44,6 +44,10 @@ Then, in Claude Code from the repository root, run `/bmad` and ask it to set up 
 
 Participants can do the same in their own repository: the [participant guide](docs/participant-guide.md) has the setup as step 1 and one agent instruction per stage, with Party Mode for the spec and for a closing retrospective. The guide must be on `main` before the invite goes out; step 1 downloads it from there.
 
+### Claude Desktop app (stage 1 design, stage 2 agent session, stage 4 reviewer session)
+
+The presenter runs the talk from the Claude Desktop app's Code tab with this repository open as the author session. Three moments use the app: a [design canvas generated from the spec](https://claude.ai/artifact/GQRqDvLH2crGaSjhTabeQL) (private until shared; four screens, one per acceptance criterion, pre-generated), the coding agent started as a separate session in the scene folder (a row in the sidebar, accepted from the main terminal), and the fresh-context reviewer started as a session in its own worktree that reports back as a note. The runbook has the exact sentences; a second terminal with `claude` is the fallback for every one of them.
+
 ## Open a scene without discarding work
 
 Run from the repository root:

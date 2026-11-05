@@ -43,7 +43,7 @@ Participants who did step 1 of the [participant guide](participant-guide.md) bef
 | F2 | After slide `s1` | “Step 2 now. Paste to your agent: `Read docs/participant-guide.md and do step 2. Stop at the first STOP.` Then post: Step 2: N open questions, N acceptance criteria.” |
 | F3 | After slide `s2` | “Step 3. Paste: `Read docs/participant-guide.md and do step 3. Stop at the first STOP.` Post: Step 3: red N, green N, tests unchanged.” |
 | F4 | After slide `s3` | “Step 4. Paste: `Read docs/participant-guide.md and do step 4. Stop at the first STOP.` Post: Step 4: mutant killed or survived, lock blocks edits.” |
-| F5 | After slide `s4` | “Step 5 needs a **new** session: second terminal, `claude`, then paste: `Read docs/participant-guide.md and do step 5 as the reviewer.` Post: Step 5: N findings, recommendation.” |
+| F5 | After slide `s4` | “Step 5 needs a **fresh** session. In the Desktop app, tell your author session: `Start a separate session in this folder, sharing this checkout, with exactly this brief: Read docs/participant-guide.md and do step 5 as the reviewer.` (Terminal: second `claude`, paste the brief.) Post: Step 5: N findings, recommendation.” |
 | F6 | After slide `s5` | “Step 6, back in the author session. Paste: `Read docs/participant-guide.md and do step 6. Stop at the first STOP.` Post: Step 6: gate passes, blocks, passes.” |
 | F7 | Slide `cheese` | “Step 7, the retrospective. Paste: `Read docs/participant-guide.md and do step 7. Stop at the first STOP.` Post your first action item during the questions.” |
 

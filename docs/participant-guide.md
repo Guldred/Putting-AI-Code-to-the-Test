@@ -22,7 +22,7 @@ Agent: these rules apply to every step below. Before any command that installs, 
 
 ## Step 1 — Setup, before the session (about 10 minutes)
 
-You need Git, Node.js 22 or newer, [Claude Code](https://docs.claude.com/en/docs/claude-code/overview) and [`uv`](https://docs.astral.sh/uv/getting-started/installation/), which runs the BMAD Method's scripts. Another agent works if `npx skills` supports it (`npx skills --help` lists them); the slash commands below are then that agent's skill commands.
+You need Git, Node.js 22 or newer, [Claude Code](https://docs.claude.com/en/docs/claude-code/overview) and [`uv`](https://docs.astral.sh/uv/getting-started/installation/), which runs the BMAD Method's scripts. The easiest host is the **Claude Desktop app**: open your repository in its Code tab. That session is your *author session*; every session it starts for you shows up as a row in the sidebar, which keeps the overview clean when several agents work at once. A terminal with `claude` works the same way. Another agent works if `npx skills` supports it (`npx skills --help` lists them); the slash commands below are then that agent's skill commands.
 
 ```sh
 # macOS / Linux
@@ -80,6 +80,8 @@ You can also hand this whole step to your agent with the usual sentence; it asks
 
 If Party Mode is not available, play three roles yourself, analyst, product owner and developer, and let them argue the topic for two rounds before writing the spec.
 
+**Optional, if the rule has a screen:** ask your author session for a design from the same spec: `Create a Claude Design of <slug> from docs/spec-<slug>.md: one screen per acceptance criterion, each annotated with the criterion it implements.` It takes a few minutes and runs while the talk continues. The UI or browser test you may write later checks the real screen against the same criteria.
+
 **You should see:** at least one question nobody asked before. **Chat:** “Step 2: N open questions, N acceptance criteria.”
 
 ## Step 3 — A test must fail first (after stage 2)
@@ -109,11 +111,13 @@ If Party Mode is not available, play three roles yourself, analyst, product owne
 
 ## Step 5 — A second pair of eyes (after stage 4)
 
-This step needs a **fresh** session: open a second terminal in the same repository and start a new `claude`. The author session stays open but says nothing. Paste into the fresh session:
+This step needs a **fresh** session that has never seen the author's conversation. In the Claude Desktop app, ask your author session:
 
-> Read docs/participant-guide.md and do step 5 as the reviewer.
+> Start a separate session in this folder, sharing this checkout, with exactly this brief and nothing else: Read docs/participant-guide.md and do step 5 as the reviewer.
 
-Or use BMAD's reviewer: `/bmad-code-review`, and tell it to review the uncommitted changes on this branch against `docs/spec-<slug>.md`.
+A new row appears in the sidebar; right-click it → Open in → Split view, and watch it work beside the author. Its findings come back to the author session as a note. In a terminal instead: a second terminal in the same repository, a new `claude`, and paste the brief yourself.
+
+Or use BMAD's reviewer in that fresh session: `/bmad-code-review`, and tell it to review the uncommitted changes on this branch against `docs/spec-<slug>.md`.
 
 **Reviewer agent:**
 
