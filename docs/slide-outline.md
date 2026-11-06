@@ -10,10 +10,10 @@ The six stage slides `s0`–`s5` share one layout: a row of stations, a green ca
 | --- | --- | --- | --- | --- | ---: |
 | 1 | `cover` | | | | |
 | 2 | `problem` — agents write more code than we can read; poll P-how | | | | |
-| 3 | `s0` Prompt in, code out, ship | prompt → agent → ship | Fast, green, confident | Nobody decided: €90 or €95 | 0 |
+| 3 | `s0` Prompt in, code out, ship | prompt → implement → ship | Fast, green, confident | Nobody decided: €90 or €95 | 0 |
 | 4 | `s0-prompt` What stage 0 brings: one prompt | | the prompt, 5/5 green, €90 | five undecided points | |
 | 5 | `bmad` A team writes the spec: the BMAD Method | | six roles; Party Mode; chat C2 | perspective, not proof | |
-| 6 | `s1` Say what correct means | spec → agent → ship | Ambiguity before code; AC-06 red then green | A spec on paper proves nothing | 0 |
+| 6 | `s1` Say what correct means | spec → implement → ship | Ambiguity before code; AC-06 red then green | A spec on paper proves nothing | 0 |
 | 7 | `s1-grill` What stage 1 brings: the grill session | | prompt phrases → the room's questions | | |
 | 8 | `s1-spec` What stage 1 brings: the spec | | prompt sentence vs rule 5; AC-05a/b, AC-06, AC-07a | | |
 | 9 | `s2` A test must fail first | + test first | Red for the right reason, green with tests unchanged | Weak tests; the agent edits the expected value | 0 |
