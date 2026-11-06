@@ -40,7 +40,7 @@ The talk uses the [BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD) sk
 Read https://raw.githubusercontent.com/Guldred/Putting-AI-Code-to-the-Test/main/docs/participant-guide.md and do step 1. Stop at the first STOP.
 ```
 
-The presenter pastes it in the opening into the author session, the participants into their own Claude. Use the permission mode Ask permissions: in Auto mode Claude's safety check can refuse the installs. The skill copies, `skills-lock.json` and the generated `_bmad/` stay out of Git. Party Mode is `/bmad-party-mode`; its output differs on every run, so the runbook asks for one rehearsed transcript under `evidence/agent-runs/` as the fallback. Step 1 fetches the guide from `main`, so guide changes must be on `main` before the session.
+The presenter pastes it in the opening into a live session in an empty folder and does every later step there too; the participants paste it into their own Claude. Use the permission mode Ask permissions: in Auto mode Claude's safety check can refuse the installs. The skill copies, `skills-lock.json` and the generated `_bmad/` stay out of Git. Party Mode is `/bmad-party-mode`; its output differs on every run, so the runbook asks for one rehearsed transcript under `evidence/agent-runs/` as the fallback. Step 1 fetches the guide from `main`, so guide changes must be on `main` before the session.
 
 ### Claude Desktop app (stage 1 design, stage 2 agent session, stage 4 reviewer session)
 
