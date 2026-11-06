@@ -98,7 +98,7 @@ Scene `01`. Nothing on the slide yet; stay on `problem`.
 5. **Terminal:** `npm run dev -- --port 5173` · **Browser:** open the printed URL, click **€100**, apply **SAVE10**. Subtotal €100, discount €10, shipping €0, total **€90**.
 6. Read two chat answers aloud; some expected **€95**. **Say:** “The brief does not say whether free shipping looks at the amount before or after the discount. The code picked one. The tests picked the same one, because the same agent wrote both. Reading the code line by line would not have found this: it does exactly what it was written to do.” Ctrl+C.
 7. **Teams chat:** “What would have caught it?” Someone will say: a decision, a spec.
-8. **Slide `s0`.** Read the two cards: fast and green; nobody decided what correct means.
+8. **Slide `s0`.** Read the two cards: fast and green; nobody decided what correct means. Then **slide `s0-prompt`** (30 s): the prompt and what came back, the baseline every later stage is compared with.
 9. **Say:** “So who decides what correct means? Normally a team: analyst, product owner, UX, architect, developer. We can have that team even when it is just me and an agent.”
 
 Fallback: `$FALLBACK_DIR/01-exposed.log`.
@@ -133,7 +133,7 @@ Scene `02`.
     npm test
     ```
     23 tests pass. **Say:** “We changed an old expected value because the requirement was decided. Remember that sentence for stage 3.”
-12. **Slide `s1`.** Read the cards: ambiguity caught before code; a spec on paper proves nothing. **Teams F2:** the co-moderator posts the step-2 cue; their Party Mode runs while we go on.
+12. **Slide `s1`.** Read the cards: ambiguity caught before code; a spec on paper proves nothing. Then **slides `s1-grill` and `s1-spec`** (30 s each): the questions the room had to find, and how one prompt sentence became rule 5 and four examples. This is the comparison: Spec → Agent → Ship against Prompt → Agent → Ship. **Teams F2:** the co-moderator posts the step-2 cue; their Party Mode runs while we go on.
 13. **Bridge.** **Editor:** `docs/discount-cap-change.md`: SAVE10 is capped at €15. **Teams C3** (30 s): “€200 cart with SAVE10: which values change?” (discount €15, total €185.) **Say:** “Imagine the agent comes back: cap done, tests green.” **Teams P2:** “Ship it?”
 14. **Say:** “The agent wrote the code and the test together. Has that test ever failed? A test that cannot fail proves nothing.”
 
@@ -169,7 +169,7 @@ Scene `03`, live agent. Observation budget 2 minutes per phase.
    diff -u "$DEMO_ROOT/checkpoints/overlays/uncapped/src/discount.ts" src/discount.ts
    ```
    All green, every test file `OK`, only `discount.ts` changed. **Say:** “I did not read the implementation to trust it. I saw the test fail, then pass, with the tests untouched.” If the agent changed a test file, stop and point at it: that is stage 3.
-7. **Slide `s2`.** Read the cards: red then green without reading; but green tests can be weak, and the agent can edit them. **Teams F3:** step-3 cue.
+7. **Slide `s2`.** Read the cards: red then green without reading; but green tests can be weak, and the agent can edit them. Then **slide `s2-red`** (30 s): the order is the evidence; its numbers come from the rehearsal run, so name what you saw live first. **Teams F3:** step-3 cue.
 8. **Bridge.** **Terminal:**
    ```sh
    SCENE_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 04 start --path)"
@@ -227,7 +227,7 @@ Scenes `04` and `05`. Two layers in one stage: are the tests strong (mutants), a
    ```
    2 failed: expected 500 to be 501 and 1,499 to be 1,500. **Say:** “The tests were right. `Math.floor` is not rounding.” (`05/fixed` reverts the refactor: 28 pass, the lock verifies.)
 9. **Say** the limit: “A local lock file is a tripwire, not access control. The agent could rewrite it too. Real protection makes these paths require human review in the repository: CODEOWNERS and branch protection.”
-10. **Slide `s3`.** Read the cards: mutants and lock; but every unit test passes and the screen says €105. **Teams F4:** step-4 cue.
+10. **Slide `s3`.** Read the cards: mutants and lock; but every unit test passes and the screen says €105. Then **slides `s4-mutant` and `s5-diff`** (30 s each): the survivor and the moved oracle, as a recap. **Teams F4:** step-4 cue.
 11. **Bridge.** **Terminal:**
     ```sh
     SCENE_DIR="$(node "$DEMO_ROOT/scripts/scene.mjs" 06 start --path)"
@@ -270,10 +270,10 @@ Scene `06`.
    npm run test:e2e
    ```
    All five browser tests pass. **Say:** “The review requested changes on the defective version. Nobody has re-reviewed the fix. Keep that for the decision.”
-9. **Slide `s4`.** Read the cards: browser and a fresh reader; but a review is an opinion, and who runs all this every time? **Teams F5:** step-5 cue (a fresh session, not the author's).
+9. **Slide `s4`.** Read the cards: browser and a fresh reader; but a review is an opinion, and who runs all this every time? Then **slides `s6-screen` and `s6-review`** (30 s each). **Teams F5:** step-5 cue (a fresh session, not the author's).
 10. **Bridge.** **Say:** “Spec, test first, mutants, lock, browser, reviewer. All of it passed on my machine.” **Teams P6:** “Every check passed on my machine. Ship it?”
 
-Fallback: `$FALLBACK_DIR/06-browser-detects.log`, its failure screenshot, `06-browser-after/checkout-desktop.png`; backup slides `s6-screen`, `s6-review`.
+Fallback: `$FALLBACK_DIR/06-browser-detects.log`, its failure screenshot, `06-browser-after/checkout-desktop.png`; slides `s6-screen`, `s6-review`.
 
 **When the live reviewer's note arrives** (usually during stage 5 or the wrap-up): read its recommendation and its first finding aloud and compare with F-1. Say which run is which; the preserved review is the evidence, the live one is the mechanism. If it has not reported by the questions, open its row and show where it stands.
 
@@ -301,9 +301,9 @@ Scene `07`.
    ```
    All seven checks pass, packaged, exit 0.
 4. **Say** the limit: “This is local packaging enforcement. No GitHub merge policy is configured, and someone can still build by hand.”
-5. **Slide `s5`.** Read the cards: no forgotten check; but the gate only checks what somebody wrote down. **Teams F6:** step-6 cue.
+5. **Slide `s5`.** Read the cards: no forgotten check; but the gate only checks what somebody wrote down. Then **slide `s7-gate`** (30 s). **Teams F6:** step-6 cue.
 
-Fallback: `$FALLBACK_DIR/07-release-blocked.log`, `07-release-ready.log`; backup slide `s7-gate`.
+Fallback: `$FALLBACK_DIR/07-release-blocked.log`, `07-release-ready.log`; slide `s7-gate`.
 
 ## Wrap-up — 75:00–81:00
 
@@ -315,7 +315,7 @@ Fallback: `$FALLBACK_DIR/07-release-blocked.log`, `07-release-ready.log`; backup
 
 ## Questions — 81:00–90:00
 
-**Slide `questions`.** Backup slides follow it: `s2-two`, `s4-mutant`, `s5-diff`, `s6-screen`, `s6-review`, `s7-gate`, `outlook`.
+**Slide `questions`.** Backup slides follow it: `s2-two`, `outlook`.
 
 Prompts if the chat is quiet:
 
@@ -327,6 +327,6 @@ Prompts if the chat is quiet:
 
 ## If you are five minutes behind
 
-Drop in this order: the F-2 check in stage 4, the second mutation run in stage 3 (show the saved after-report), the live agent in stage 2 (use the fallback diffs). Shorten Party Mode to one round rather than skipping it. Skip starting the live reviewer session (the preserved review stays) and reduce the design canvas to one sentence. Keep the six “Ship it?” polls, the lock failure, the release refusal and the two closing slides. The follow-along cues cost nothing: the co-moderator posts them, and the participants' agents run in parallel.
+The slides after each stage slide are a recap of what was just live; under time pressure show only `s1-spec` and skip the others (about four minutes). Then drop in this order: the F-2 check in stage 4, the second mutation run in stage 3 (show the saved after-report), the live agent in stage 2 (use the fallback diffs). Shorten Party Mode to one round rather than skipping it. Skip starting the live reviewer session (the preserved review stays) and reduce the design canvas to one sentence. Keep the six “Ship it?” polls, the lock failure, the release refusal and the two closing slides. The follow-along cues cost nothing: the co-moderator posts them, and the participants' agents run in parallel.
 
 After the session, stop dev and preview servers and keep any real agent transcripts you want to preserve under `evidence/agent-runs/`.

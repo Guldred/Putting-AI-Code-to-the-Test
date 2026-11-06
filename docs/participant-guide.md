@@ -8,13 +8,15 @@ Every step is one sentence to your agent:
 
 Instead of the path you can paste the raw URL of this file. The agent reads the step, does it, and stops where the step says **STOP**, so you can look before it goes on. Type `continue` when you have looked.
 
+Every step from 2 on starts by committing what the previous step changed, as one commit `Step N: …` on your branch. So while a step runs and after it stops, `git diff` (or the diff view of the Claude Desktop app) shows exactly what this one step changed, and `git log` tells the story step by step.
+
 Step 1 is the setup, and **Claude does it at the start of the session**: you bring nothing but Claude Code, signed in. Steps 2 to 7 follow the stages of the talk; the co-moderator posts each cue in the Teams chat. An agent run takes two to six minutes and runs while the talk continues. The steps use the [BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD): its role agents and Party Mode write the spec in step 2 and run the retrospective in step 7.
 
 ## Ground rules, for you and for your agent
 
 - Work on a new branch. Create nothing outside the repository.
 - Add files. Do not change existing production code or existing tests, except where a step says so.
-- Never commit, push, open a pull request or delete anything. The branch is yours to throw away afterwards. The one exception: the first commit of a repository Claude created in step 1, so later diffs have a baseline.
+- Commit only on the branch `putting-ai-code-to-the-test`, and only as each step says: item 0 of every step from 2 on commits the previous step. Never push, open a pull request or delete anything. The branch is yours to throw away afterwards.
 - No secrets, customer data or customer code in the Teams chat. Post outcomes only, such as “Step 3: red 4, green 4”.
 - If a step does not fit your stack, say so in the chat and skip it.
 
@@ -30,13 +32,13 @@ Claude asks before every install (about three: a test runner if it creates a pro
 
 Other hosts: Claude Code is the supported path. An agent that runs Agent Skills and a Claude model, such as GitHub Copilot agent mode or Cursor, can follow the same guide (`npx skills add … -a <agent>`, skills called by name instead of slash commands, a new chat instead of a new session); we have not tested them and cannot support them live.
 
-**Agent:** do the following in order and say what you are doing in one line each. Install nothing without asking first. Do not commit, push or delete anything, and do not change existing files except `.gitignore`, what this step itself writes (`docs/participant-guide.md`, `skills-lock.json`, `.claude/skills/`, `_bmad/`) and the first commit of a repository you create here. If something from this step already exists (the branch, the guide, the skills, `_bmad/`), check it, say so in one line and go on. If a permission check refuses a command, do not work around it: **STOP** and print exactly `Step 1 blocked: Claude was not allowed to run <command>. Switch the permission mode to Ask permissions, then say continue.` On `continue`, run that command again.
+**Agent:** do the following in order and say what you are doing in one line each. Install nothing without asking first. Do not push or delete anything, commit only where item 2 or 6 says so, and do not change existing files except `.gitignore`, what this step itself writes (`docs/participant-guide.md`, `skills-lock.json`, `.claude/skills/`, `_bmad/`) and the first commit of a repository you create here. If something from this step already exists (the branch, the guide, the skills, `_bmad/`), check it, say so in one line and go on. If a permission check refuses a command, do not work around it: **STOP** and print exactly `Step 1 blocked: Claude was not allowed to run <command>. Switch the permission mode to Ask permissions, then say continue.` On `continue`, run that command again.
 
 1. **Check the tools.** Run `git --version`, `node --version`, `npx --version` and `uv --version`.
    - Node.js missing or older than 22: **STOP** and print exactly `Step 1 blocked: install Node.js 22 or newer from https://nodejs.org, then say continue.`
    - `uv` missing: ask once, then install it (macOS and Linux: `curl -LsSf https://astral.sh/uv/install.sh | sh`; Windows PowerShell: `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"`). Use the path the installer prints if the shell does not find `uv` yet, and verify with `uv --version`.
    - No internet or a blocked download: **STOP** with `Step 1 blocked: no internet access for installs.`
-2. **Pick the repository.** If the current folder is a Git repository: use it, create and switch to the branch `putting-ai-code-to-the-test` (or switch to it if it exists), and leave any uncommitted changes exactly as they are. If it is not a repository or is empty: ask once whether to create a minimal project here, then `git init`, set up a test runner, and write one function `discountedTotal(subtotalCents, code)` where the code SAVE10 gives 10 % off and orders under €100 pay €5 shipping. Any reasonable reading of that rule is fine; step 2 settles the details. No tests yet; the runner may report “no test files”, which is expected. Create the branch now; the initial commit comes in item 6.
+2. **Pick the repository.** If the current folder is a Git repository: use it, create and switch to the branch `putting-ai-code-to-the-test` (or switch to it if it exists), If it has uncommitted changes, ask once: commit them on the new branch as `Before the workshop`, or **STOP** so the user can deal with them first. Later steps commit everything, so nothing of the user's may stay uncommitted. If it is not a repository or is empty: ask once whether to create a minimal project here, then `git init`, set up a test runner, and write one function `discountedTotal(subtotalCents, code)` where the code SAVE10 gives 10 % off and orders under €100 pay €5 shipping. Any reasonable reading of that rule is fine; step 2 settles the details. No tests yet; the runner may report “no test files”, which is expected. Create the branch now; the initial commit comes in item 6.
 3. **Save this guide** unchanged as `docs/participant-guide.md` in the repository (download the URL above again). If that file already exists with the same content, leave it. Every later step reads it from there.
 4. **Install the BMAD skills:**
    ```sh
@@ -51,12 +53,13 @@ Other hosts: Claude Code is the supported path. An agent that runs Agent Skills 
    .bmad-help-setup-modules.toml
    ```
 5. **Set up BMAD.** Use the `bmad` skill you just installed and run its setup for this project with every default, passing only this project's `.claude/skills` folder as the skills root (never scan or change global skills); it needs no answers from the user. It creates `_bmad/`. Check that `_bmad/scripts/resolve_config.py` exists, then run `uv run _bmad/scripts/resolve_config.py --project-root . --key core.output_folder`; it prints one JSON line with that key. If the setup fails, read the error once, fix what is yours to fix (a missing `uv`, a wrong folder), try once more, and otherwise **STOP** with `Step 1 blocked: BMAD setup failed: <one line>`.
-6. **Baseline and STOP.** In a repository you created in item 2, make the one initial commit now, so it includes the project, the guide, `.gitignore` and `skills-lock.json`. In an existing repository commit nothing; whatever this step added or changed stays uncommitted on the branch. Then **STOP** and report four lines: the repository and branch; the Node and `uv` versions; the BMAD module version from the setup output (also in `.claude/skills/bmod-method/bmod.toml`), or `not installed`; and the sentence for the chat, either `Step 1 done` or `Step 1 blocked: <reason>`.
+6. **Baseline and STOP.** In a repository you created in item 2, make the initial commit now, `Step 1: setup`, so it includes the project, the guide, `.gitignore` and `skills-lock.json`. In an existing repository commit nothing; whatever this step added or changed stays uncommitted, so the user can look at it, and step 2 commits it. Then **STOP** and report four lines: the repository and branch; the Node and `uv` versions; the BMAD module version from the setup output (also in `.claude/skills/bmod-method/bmod.toml`), or `not installed`; and the sentence for the chat, either `Step 1 done` or `Step 1 blocked: <reason>`.
 
 ## Step 2 — Say what correct means (after stage 1)
 
 **Agent:**
 
+0. **Commit step 1 first.** Check that the current branch is `putting-ai-code-to-the-test`; if not, **STOP** and say so. Run `git add -A` and `git commit -m "Step 1: setup"`; if there is nothing to commit, say so. Show the commit in one line (`git log --oneline -1`). From here on commit nothing: this step's changes stay uncommitted, so the diff shows exactly this step.
 1. Ask the user which small rule or feature of this repository is today's example: something that fits a short spec, such as a validation rule, a price or discount rule, a limit. If the user has no preference, propose one from the code, or use the discount rule from step 1. Call it `<slug>` below.
 2. Start Party Mode (the `bmad-party-mode` skill) on this topic:
    > Topic: `<slug>` in this repository. Before anyone writes code: what is unclear about this rule, what would each of you decide differently, and what must the spec say? Give concrete inputs and boundary values.
@@ -75,6 +78,7 @@ If the `bmad-party-mode` skill is not found although step 1 installed it, this s
 
 **Agent:**
 
+0. **Commit step 2 first.** Check that the current branch is `putting-ai-code-to-the-test`; if not, **STOP** and say so. Run `git add -A` and `git commit -m "Step 2: <one line on what it did>"`; if there is nothing to commit, say so. Show the commit in one line (`git log --oneline -1`). From here on commit nothing: this step's changes stay uncommitted, so the diff shows exactly this step.
 1. Read `docs/spec-<slug>.md`. Write one test per acceptance criterion in the project's test framework, in a **new** test file. Do not touch existing tests. Do not change production code.
 2. Run the tests. The new tests must fail because the behaviour is missing or different. A test that fails with a syntax, import or setup error is not a valid red: fix the test, not the code.
 3. Record a fingerprint of the new test file(s) in `docs/acceptance.sha256`: `shasum -a 256 <files> > docs/acceptance.sha256` on macOS and Linux; on Windows, write the same `<hash>  <path>` lines from `Get-FileHash -Algorithm SHA256`.
@@ -88,6 +92,7 @@ If the `bmad-party-mode` skill is not found although step 1 installed it, this s
 
 **Agent:**
 
+0. **Commit step 3 first.** Check that the current branch is `putting-ai-code-to-the-test`; if not, **STOP** and say so. Run `git add -A` and `git commit -m "Step 3: <one line on what it did>"`; if there is nothing to commit, say so. Show the commit in one line (`git log --oneline -1`). From here on commit nothing: this step's changes stay uncommitted, so the diff shows exactly this step.
 1. **One mutant by hand.** In the production code from step 3, change one comparison or one constant (`<` to `<=`, a limit by one, a rate). Run the tests and report **killed** (a test failed) or **survived** (all green). Then undo the change exactly and run the tests again to prove it is gone.
    If it survived: **STOP.** Name the input that would tell the original and the mutant apart, and ask the user whether to add that test. Only after a yes: add it to the step-3 test file, re-run, update `docs/acceptance.sha256`, and say that the fingerprint changed because a human decided.
    If the stack has a mutation tool (Stryker, mutmut, PIT, cargo-mutants, Infection), name it; do not install it now.
@@ -98,18 +103,22 @@ If the `bmad-party-mode` skill is not found although step 1 installed it, this s
 
 ## Step 5 — A second pair of eyes (after stage 4)
 
-This step needs a **fresh** session that has never seen the author's conversation. In the Claude Desktop app, ask your author session:
+First, in your **author session**: `Read docs/participant-guide.md and do item 0 of step 5.`
+
+0. **Commit step 4 first.** Check that the current branch is `putting-ai-code-to-the-test`; if not, **STOP** and say so. Run `git add -A` and `git commit -m "Step 4: <one line on what it did>"`; if there is nothing to commit, say so. Show the commit in one line (`git log --oneline -1`). From here on commit nothing: this step's changes stay uncommitted, so the diff shows exactly this step.
+
+Then the review. It needs a **fresh** session that has never seen the author's conversation. In the Claude Desktop app, ask your author session:
 
 > Start a separate session in this folder, sharing this checkout, with exactly this brief and nothing else: Read docs/participant-guide.md and do step 5 as the reviewer.
 
 A new row appears in the sidebar; right-click it → Open in → Split view, and watch it work beside the author. Its findings come back to the author session as a note. In a terminal instead: a second terminal in the same repository, a new `claude`, and paste the brief yourself.
 
-Or use BMAD's reviewer in that fresh session: `/bmad-code-review`, and tell it to review the uncommitted changes on this branch against `docs/spec-<slug>.md`.
+Or use BMAD's reviewer in that fresh session: `/bmad-code-review`, and tell it to review the commits after `Step 1: setup` on this branch against `docs/spec-<slug>.md`.
 
 **Reviewer agent:**
 
 1. This is a read-only review. Change nothing. Do not ask the author anything.
-2. Read `docs/spec-<slug>.md`, then `git status` and `git diff`, and read every new file the diff does not show. Run the test suite if it runs without installing anything.
+2. Read `docs/spec-<slug>.md`. Find the newest commit named `Step 1: setup` in `git log --oneline` and review `git diff <that commit> HEAD`: everything steps 2 to 4 changed. Item 0 above was done by the author session, not by you. Run the test suite if it runs without installing anything.
 3. For each finding: severity, file and line, the violated acceptance criterion, a reproducing input, expected versus observed. Separate defects from product questions. Ground every finding in the code or in a run; say what you could not verify.
 4. End with one recommendation: accept, request changes, or need more evidence. A lack of findings is not proof of correctness.
    **STOP.**
@@ -120,6 +129,7 @@ Or use BMAD's reviewer in that fresh session: `/bmad-code-review`, and tell it t
 
 **Agent (author session):**
 
+0. **Commit step 5 first.** Check that the current branch is `putting-ai-code-to-the-test`; if not, **STOP** and say so. Run `git add -A` and `git commit -m "Step 5: <one line on what it did>"`; if there is nothing to commit, say so. Show the commit in one line (`git log --oneline -1`). From here on commit nothing: this step's changes stay uncommitted, so the diff shows exactly this step.
 1. Write `scripts/gate` in the project's convention (shell script, npm script, Make target, …). It runs, in order: the type check and linter if the project has them, the whole test suite, and `scripts/check-acceptance-lock`. It stops at the first failure with a nonzero exit code and a message naming the failed check. It has no flag, variable or argument that skips a check.
 2. Run it: it passes. Then break one test expectation in the step-3 test file, run it again: it blocks and names the lock. Revert and run it once more.
    **STOP.** Show all three runs.
@@ -130,6 +140,7 @@ Or use BMAD's reviewer in that fresh session: `/bmad-code-review`, and tell it t
 
 **Agent:**
 
+0. **Commit step 6 first.** Check that the current branch is `putting-ai-code-to-the-test`; if not, **STOP** and say so. Run `git add -A` and `git commit -m "Step 6: <one line on what it did>"`; if there is nothing to commit, say so. Show the commit in one line (`git log --oneline -1`). From here on commit nothing: this step's changes stay uncommitted, so the diff shows exactly this step.
 1. Read `docs/spec-<slug>.md`, the step-3 test file, `docs/acceptance.sha256`, the review findings from step 5 (ask the user to paste them if they are in the other session) and `scripts/gate`.
 2. Start Party Mode (the `bmad-party-mode` skill) on this topic:
    > Retrospective on steps 2 to 6 in this repository. What went well, what did not, and what would each of you change next time: in the spec, in the tests, in the review, in the gate? Be concrete and disagree where you do.
@@ -144,4 +155,4 @@ BMAD also has `bmad-retrospective`, which judges a whole finished epic from its 
 
 ## After the session
 
-Keep the branch if you want to continue, or remove it: `git switch -` and `git branch -D putting-ai-code-to-the-test`. The untracked `_bmad/` folder and `.claude/skills/bmad*` copies can be deleted at any time; `npx skills remove` or deleting the folders is enough.
+`git log --oneline` shows one commit per step; the retrospective from step 7 is the last uncommitted change. Keep the branch if you want to continue, or remove it: `git switch -` and `git branch -D putting-ai-code-to-the-test`. The untracked `_bmad/` folder and `.claude/skills/bmad*` copies can be deleted at any time; `npx skills remove` or deleting the folders is enough.
