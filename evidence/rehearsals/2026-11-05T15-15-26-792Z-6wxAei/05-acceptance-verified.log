@@ -1,0 +1,11 @@
+
+> putting-ai-code-to-the-test@1.0.0 acceptance:verify
+> node scripts/acceptance.mjs verify
+
+Approved by: Specification owner (prepared demo baseline) (2026-11-03T16:26:07.295Z). Basis: docs/specification.md, docs/discount-cap-change.md
+  unchanged e2e/checkout.spec.ts
+  unchanged tests/cap.test.ts
+  unchanged tests/checkout.test.ts
+  unchanged tests/discount-boundary.test.ts
+  unchanged tests/discount-v1.test.ts
+Acceptance oracles match the approved baseline.

@@ -177,6 +177,8 @@ diff -u "$DEMO_ROOT/checkpoints/overlays/uncapped/src/discount.ts" "$DEMO_ROOT/c
 
 Original evidence that red came first: `evidence/authoring/002-cap-red-before-implementation/execution.log`.
 
+A rehearsed live run of both phases (32 s red, 41 s green, test files byte-identical) is preserved in `evidence/agent-runs/2026-11-05-rehearsal-scene03-live-agent/`; use its reports if the live agent stalls, and say so.
+
 ## Stage 3 — Test the tests — 43:00–55:00
 
 Scenes `04` and `05`. Two layers in one stage: are the tests strong (mutants), and are they stable (lock)?
@@ -263,6 +265,8 @@ Scene `06`.
 Fallback: `$FALLBACK_DIR/06-browser-detects.log`, its failure screenshot, `06-browser-after/checkout-desktop.png`; backup slides `s6-screen`, `s6-review`.
 
 **When the live reviewer's note arrives** (usually during stage 5 or the wrap-up): read its recommendation and its first finding aloud and compare with F-1. Say which run is which; the preserved review is the evidence, the live one is the mechanism. If it has not reported by the questions, open its row and show where it stands.
+
+A rehearsed run of exactly this session (own worktree, bundle only, `view.ts:10` found, 3 of 5 browser checks failing, “request changes”) is preserved in `evidence/agent-runs/2026-11-05-rehearsal-fresh-review/`.
 
 ## Stage 5 — No check is optional — 68:00–75:00
 

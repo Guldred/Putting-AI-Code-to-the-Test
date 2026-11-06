@@ -26,7 +26,7 @@ You need nothing prepared except **Claude Code, signed in**: the Claude Desktop 
 
 > Read https://raw.githubusercontent.com/Guldred/Putting-AI-Code-to-the-Test/main/docs/participant-guide.md and do step 1. Stop at the first STOP.
 
-Claude asks before every install and tells you what it is doing. It runs while the talk continues. If it ends with “Step 1 blocked”, post that line in the chat and simply watch the session; nothing in the talk depends on this step, and nobody debugs your machine live.
+Claude asks before every install (about three: a test runner if it creates a project, the BMAD skills, and `uv` if missing) and tells you what it is doing. The skills installer prints “Review skills before use; they run with full agent permissions”; that is expected. The whole step takes a few minutes and runs while the talk continues. If it ends with “Step 1 blocked”, post that line in the chat and simply watch the session; nothing in the talk depends on this step, and nobody debugs your machine live.
 
 Other hosts: Claude Code is the supported path. An agent that runs Agent Skills and a Claude model, such as GitHub Copilot agent mode or Cursor, can follow the same guide (`npx skills add … -a <agent>`, skills called by name instead of slash commands, a new chat instead of a new session); we have not tested them and cannot support them live.
 
@@ -36,7 +36,7 @@ Other hosts: Claude Code is the supported path. An agent that runs Agent Skills 
    - Node.js missing or older than 22: **STOP** and print exactly `Step 1 blocked: install Node.js 22 or newer from https://nodejs.org, then say continue.`
    - `uv` missing: ask once, then install it (macOS and Linux: `curl -LsSf https://astral.sh/uv/install.sh | sh`; Windows PowerShell: `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"`). Use the path the installer prints if the shell does not find `uv` yet, and verify with `uv --version`.
    - No internet or a blocked download: **STOP** with `Step 1 blocked: no internet access for installs.`
-2. **Pick the repository.** If the current folder is a Git repository: use it, create and switch to the branch `putting-ai-code-to-the-test`, and leave any uncommitted changes exactly as they are. If it is not a repository or is empty: ask once whether to create a minimal project here, then create it in the language the user prefers: `git init`, a test runner set up, and one function `discountedTotal(subtotalCents, code)` where the code SAVE10 gives 10 % off and orders under €100 pay €5 shipping, no tests yet, one initial commit, then the branch.
+2. **Pick the repository.** If the current folder is a Git repository: use it, create and switch to the branch `putting-ai-code-to-the-test`, and leave any uncommitted changes exactly as they are. If it is not a repository or is empty: ask once whether to create a minimal project here, then `git init`, set up a test runner, and write one function `discountedTotal(subtotalCents, code)` where the code SAVE10 gives 10 % off and orders under €100 pay €5 shipping. Any reasonable reading of that rule is fine; step 2 settles the details. No tests yet; the runner may report “no test files”, which is expected. Create the branch now; the initial commit comes in item 6.
 3. **Save this guide** unchanged as `docs/participant-guide.md` in the repository (download the URL above again). Every later step reads it from there.
 4. **Install the BMAD skills:**
    ```sh
@@ -50,8 +50,8 @@ Other hosts: Claude Code is the supported path. An agent that runs Agent Skills 
    _bmad-output/
    .bmad-help-setup-modules.toml
    ```
-5. **Set up BMAD.** Use the `bmad` skill you just installed and run its setup for this project with every default; it needs no answers from the user. It creates `_bmad/`. Check that `_bmad/scripts/resolve_config.py` exists, then run `uv run _bmad/scripts/resolve_config.py --project-root . --key core.output_folder`; it must print a value. If the setup fails, read the error once, fix what is yours to fix (a missing `uv`, a wrong folder), try once more, and otherwise **STOP** with `Step 1 blocked: BMAD setup failed: <one line>`.
-6. **STOP.** Report four lines: the repository and branch; the Node and `uv` versions; the BMAD version from `skills-lock.json`; and the sentence for the chat, either `Step 1 done` or `Step 1 blocked: <reason>`.
+5. **Set up BMAD.** Use the `bmad` skill you just installed and run its setup for this project with every default, passing only this project's `.claude/skills` folder as the skills root (never scan or change global skills); it needs no answers from the user. It creates `_bmad/`. Check that `_bmad/scripts/resolve_config.py` exists, then run `uv run _bmad/scripts/resolve_config.py --project-root . --key core.output_folder`; it prints one JSON line with that key. If the setup fails, read the error once, fix what is yours to fix (a missing `uv`, a wrong folder), try once more, and otherwise **STOP** with `Step 1 blocked: BMAD setup failed: <one line>`.
+6. **Baseline and STOP.** In a repository you created in item 2, make the one initial commit now, so it includes the project, the guide, `.gitignore` and `skills-lock.json`. In an existing repository commit nothing; the guide, the lock file and the `.gitignore` lines stay uncommitted on the branch. Then **STOP** and report four lines: the repository and branch; the Node and `uv` versions; the BMAD module version from the setup output (also in `.claude/skills/bmod-method/bmod.toml`); and the sentence for the chat, either `Step 1 done` or `Step 1 blocked: <reason>`.
 
 ## Step 2 — Say what correct means (after stage 1)
 
