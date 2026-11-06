@@ -129,7 +129,7 @@ Scene `02`.
     npm test
     ```
     23 tests pass. **Say:** “We changed an old expected value because the requirement was decided. Remember that sentence for stage 3.”
-12. **Slide `s1`.** Read the cards: ambiguity caught before code; a spec on paper proves nothing. Then **slides `s1-grill` and `s1-spec`** (30 s each): the questions the room had to find, and how one prompt sentence became rule 5 and four examples. This is the comparison: Spec → Implement → Ship against Prompt → Agent → Ship. **Live session:** the diff view shows the spec file step 2 wrote (30 s). **Say:** “Same idea, a fresh project, one sentence. That diff is everything Claude changed in this step.”
+12. **Slide `s1`.** Read the cards: ambiguity caught before code; a spec on paper proves nothing. Then **slides `s1-grill` and `s1-spec`** (30 s each): the questions the room had to find, and how one prompt sentence became rule 5 and four examples. This is the comparison: Spec → Implement → Ship against Prompt → Implement → Ship. **Live session:** the diff view shows the spec file step 2 wrote (30 s). **Say:** “Same idea, a fresh project, one sentence. That diff is everything Claude changed in this step.”
 13. **Bridge.** **Editor:** `docs/discount-cap-change.md`: SAVE10 is capped at €15. **Teams C3** (30 s): “€200 cart with SAVE10: which values change?” (discount €15, total €185.) **Say:** “Imagine the agent comes back: cap done, tests green.” **Teams P2:** “Ship it?”
 14. **Say:** “The agent wrote the code and the test together. Has that test ever failed? A test that cannot fail proves nothing.”
 
