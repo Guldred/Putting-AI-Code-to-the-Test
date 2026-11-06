@@ -2,7 +2,7 @@
 
 The session runs online in Microsoft Teams. Participants sit at their own PCs and take part through Teams polls and chat; nobody installs anything. See [Teams interaction](teams-interaction.md).
 
-Central question: **why spec-driven, and how do we accept agent-written code safely without reviewing it line by line?** The talk starts with the rawest process (prompt → agent → ship) and improves it in five stages. Each stage has the same two beats: *what it catches* and *what still slips through*; the thing that slips through opens the next stage. The BMAD Method is the example framework for the spec work (roles, Party Mode) and the independent review; the hard checks come from this repository.
+Central question: **why spec-driven, and how do we accept agent-written code safely without reviewing it line by line?** The talk starts with the rawest process (prompt → implement → ship) and improves it in five stages. Each stage has the same two beats: *what it catches* and *what still slips through*; the thing that slips through opens the next stage. The BMAD Method is the example framework for the spec work (roles, Party Mode) and the independent review; the hard checks come from this repository.
 
 | Time | Duration | Segment | Layer added | Technical scenes |
 | --- | ---: | --- | --- | --- |
