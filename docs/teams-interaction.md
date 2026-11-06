@@ -39,7 +39,7 @@ Participants who bring Claude Code let it set itself up in step 1 of the [partic
 
 | ID | When | Co-moderator posts |
 | --- | --- | --- |
-| F1 | Opening | “Following along? Open Claude Code in the folder you want to work in (your project, a customer repo, or an empty folder) and paste: `Read https://raw.githubusercontent.com/Guldred/Putting-AI-Code-to-the-Test/main/docs/participant-guide.md and do step 1. Stop at the first STOP.` It installs what it needs and asks first. When it stops, post its last line here: Step 1 done, or Step 1 blocked. Every later cue is one sentence for Claude.” |
+| F1 | Opening | “Following along? Open Claude Code in the folder you want to work in (your project, a customer repo, or an empty folder) and paste: `Read https://raw.githubusercontent.com/Guldred/Putting-AI-Code-to-the-Test/main/docs/participant-guide.md and do step 1. Stop at the first STOP.` Keep the permission mode on Ask permissions (not Auto): it installs what it needs and you approve each install with a click. When it stops, post its last line here: Step 1 done, or Step 1 blocked. Every later cue is one sentence for Claude.” |
 | F2 | After slide `s1` | “Step 2 now. Paste to your agent: `Read docs/participant-guide.md and do step 2. Stop at the first STOP.` Then post: Step 2: N open questions, N acceptance criteria.” |
 | F3 | After slide `s2` | “Step 3. Paste: `Read docs/participant-guide.md and do step 3. Stop at the first STOP.` Post: Step 3: red N, green N, tests unchanged.” |
 | F4 | After slide `s3` | “Step 4. Paste: `Read docs/participant-guide.md and do step 4. Stop at the first STOP.` Post: Step 4: mutant killed or survived, lock blocks edits.” |

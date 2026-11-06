@@ -27,22 +27,30 @@ Legend for each step: **Slide** = advance the deck · **Terminal** = type this �
 ```sh
 npm ci
 PLAYWRIGHT_BROWSERS_PATH="$PWD/node_modules/.cache/ms-playwright" npx playwright install chromium
-npx skills add bmad-code-org/BMAD-METHOD -a claude-code -y --copy -s bmad -s bmod-core-tools -s bmod-method -s bmad-party-mode -s bmad-agent-analyst -s bmad-agent-pm -s bmad-agent-po -s bmad-agent-architect -s bmad-agent-ux-designer -s bmad-agent-dev -s bmad-build -s bmad-code-review -s bmad-review
 ```
 
-The BMAD skills land in `.claude/skills/` (gitignored; `skills-lock.json` records the versions). `uv` must be installed (`brew install uv`); BMAD's scripts run through it. Then, in Claude Code from the repository root, run `/bmad` and type `Set up BMad for this project with the defaults.` It creates `_bmad/` (gitignored). Check: `ls _bmad/scripts` lists `resolve_config.py`.
+### BMAD: set up live, with the participants' sentence
 
-Rehearse Party Mode once (stage 1, step 5 below) and keep the transcript: create `evidence/agent-runs/<date>-party-mode/` with the exact prompt and the unedited output. That is the fallback if the live party stalls.
+You do not install BMAD by hand. In the opening you paste the step-1 sentence (cue F1) into the author session, exactly as the participants do, and Claude installs the skills and sets BMAD up on screen while you run stage 0. The point is the demonstration: one sentence, and Claude does the rest.
+
+- **Rehearse in a throwaway clone, never in the demo checkout,** so the live run starts from scratch: `git clone https://github.com/Guldred/Putting-AI-Code-to-the-Test.git` into a scratch folder, open that folder in the Desktop app, paste the F1 sentence. Check three things: it ends with `Step 1 done`; you know the approval prompts it shows; and `/bmad-party-mode` works in the same session afterwards (if not, stage 1 starts in a new session in the same folder).
+- **In that clone, rehearse Party Mode** (stage 1, steps 3 to 5) and keep the transcript: create `evidence/agent-runs/<date>-party-mode/` in this repository with the exact prompt and the unedited output. This is the required fallback: stage 1 now depends on the live setup.
+- **Permission mode Ask permissions** in the author session, not Auto. In Auto mode Claude's safety check refused `npx skills add` in a rehearsal (2026-11-06); with Ask permissions each install is one click, which is also what the audience should see.
+- **The demo checkout stays clean:** no `.claude/skills/bmad*`, no `_bmad/`, branch `main`. After a run, reset it from the terminal:
+  ```sh
+  git switch main && git branch -D putting-ai-code-to-the-test
+  rm -rf .claude/skills/bmad* .claude/skills/bmod* _bmad _bmad-output .bmad-help-setup-modules.toml skills-lock.json
+  ```
 
 ### Claude Desktop app and the design canvas
 
-Open this repository in the Desktop app's Code tab: that session is the **author session** of the talk, with the sidebar visible. Start one throwaway session from it once, so the folder-trust prompt and the new row are familiar: `Start a separate session in <any scene folder> that runs npm test and reports the result.` Right-click the new row → Open in → Split view.
+Open this repository's own folder (the checkout you present from, not a worktree the app creates) in the Desktop app's Code tab: that session is the **author session** of the talk, with the sidebar visible and the permission mode on Ask permissions. Step 1 switches this checkout to the branch `putting-ai-code-to-the-test`. Start one throwaway session from it once, so the folder-trust prompt and the new row are familiar: `Start a separate session in <any scene folder> that runs npm test and reports the result.` Right-click the new row → Open in → Split view.
 
 The design canvas [Checkout from the spec](https://claude.ai/artifact/GQRqDvLH2crGaSjhTabeQL) was generated from `docs/specification.md` and `docs/discount-cap-change.md` with the diva-e Conclusion design system: four screens (AC-10, AC-03b, AC-12d, AC-09), each annotated with the rule it implements. Keep it in a browser tab. Generation takes minutes, so it is never a live step; to regenerate, ask the author session: `Create a Claude Design of the checkout from docs/specification.md and docs/discount-cap-change.md with the diva-e Conclusion design system: one screen per key acceptance criterion (AC-10, AC-03b, AC-12d, AC-09), each annotated with the rule it implements.`
 
 ### Follow-along, one week ahead
 
-The [participant guide](participant-guide.md) must be on `main` before the session, because step 1 fetches it from the raw `main` URL. The invite asks for exactly this: Claude Code signed in (Desktop app or CLI), Git, Node.js 22 or newer, internet access, and a repository of their own or an empty folder. Nothing is installed in advance: step 1 is launched by cue F1 in the opening and runs during stage 0, and their Claude installs `uv`, the BMAD skills and the BMAD setup itself. Walk through the guide yourself once in a scratch repository (all seven steps, about 45 minutes), so you know what their agents will show and where step 1 can stop. The co-moderator gets the cue texts F1–F7 from [Teams interaction](teams-interaction.md) ready to paste, plus the canned reply for a blocked step 1. You never debug a participant's machine live.
+The [participant guide](participant-guide.md) must be on `main` before the session, because step 1 fetches it from the raw `main` URL. The invite asks for exactly this: Claude Code signed in (Desktop app or CLI), Git, Node.js 22 or newer, internet access, and a repository of their own or an empty folder. Nothing is installed in advance: step 1 is launched by cue F1 in the opening and runs during stage 0, and their Claude installs `uv`, the BMAD skills and the BMAD setup itself. Walk through the guide yourself once in a scratch repository (all seven steps, about 45 minutes), so you know what their agents will show and where step 1 can stop; the throwaway clone from the BMAD rehearsal above works. The co-moderator gets the cue texts F1–F7 from [Teams interaction](teams-interaction.md) ready to paste, plus the canned reply for a blocked step 1. You never debug a participant's machine live.
 
 ### Before every run
 
@@ -65,7 +73,10 @@ Every `scene.mjs` call creates a fresh folder under `.demo-runs/`; nothing you d
 
 ## Opening — 00:00–05:00
 
-1. **Slide `cover`.** Welcome. **Teams F1:** the co-moderator posts the step-1 sentence. **Say:** “I run everything here; you vote and you type in the chat. If you brought Claude, paste the first chat message now and let it run: it sets itself up during the next ten minutes and asks before it installs anything. Whatever it says at the end, post that line in the chat. If it is blocked, just watch; nothing today depends on it.”
+1. **Slide `cover`.** Welcome. **Teams F1:** the co-moderator posts the step-1 sentence. **Desktop** (author session, on screen): paste the same sentence:
+   > Read https://raw.githubusercontent.com/Guldred/Putting-AI-Code-to-the-Test/main/docs/participant-guide.md and do step 1. Stop at the first STOP.
+
+   **Say:** “This is all I type to set up today's tooling, and it is exactly the sentence in the chat. If you brought Claude, paste it now and let it run: it sets itself up during the next ten minutes and asks before it installs anything. Keep it on Ask permissions. Whatever it says at the end, post that line in the chat. If it is blocked, just watch; nothing today depends on your setup.” Approve the installs in the author session between the stage 0 steps (about three prompts).
 2. **Slide `problem`.** **Say:** “Coding agents write more code than any of us can read carefully. So the question is not *is the agent good*. It is: how do we decide to accept code we have not read line by line?”
 3. **Teams P-how:** “How do you accept agent-written code today?” Leave the result visible.
 4. **Say:** “We start with the rawest process there is, and we improve it in five stages. Every stage catches something, and every stage leaves a hole. And in every stage I will ask you the same thing: ship it?”
@@ -98,7 +109,7 @@ Scene `02`.
 
 1. **Slide `bmad`.** Walk the six roles in one sentence each. **Say:** “BMAD is an agent framework for exactly this: each role is an agent with a job. Party Mode puts all of them in one room, in character, and lets them argue. You steer.”
 2. **Teams C2** (60 s): “Read the brief on screen. What is unclear or missing before we write the spec?” Keep the brief visible in the editor while the chat fills.
-3. **Desktop** (author session): `/bmad-party-mode`.
+3. **Desktop** (author session): it should show `Step 1 done` from the opening. Type `/bmad-party-mode`. If step 1 is blocked or the skill is not found, open a new session in the same folder once; if that fails too, use the preserved party transcript (step 7) and say so.
 4. When the room greets you, type:
    > Topic: docs/initial-brief.md. We are about to build this checkout. Before anyone writes code: what is unclear in this brief, what would each of you decide differently, and what must the spec say?
 5. Let two or three turns run (budget 4 minutes). Steer once, for example: `John, Sally: a €100 cart with SAVE10. Free shipping or €5? Decide.` Then: `Thanks, wrap up with the open questions.`
