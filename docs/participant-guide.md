@@ -1,6 +1,6 @@
 # Follow along in your own repository
 
-Optional. During the session the presenter builds the pipeline in this repository. In parallel, your own coding agent can build the same layers in a repository of your choice: a small test project, or a customer project on a throwaway branch. Nothing in the talk depends on this; skip any step and you lose nothing.
+Optional. During the session the presenter builds the pipeline in this repository, and does every step of this guide live in an empty folder, with the same sentences you get. In parallel, your own coding agent can build the same layers in a repository of your choice: a small test project, or a customer project on a throwaway branch. Nothing in the talk depends on this; skip any step and you lose nothing.
 
 Every step is one sentence to your agent:
 
@@ -55,7 +55,7 @@ Other hosts: Claude Code is the supported path. An agent that runs Agent Skills 
 5. **Set up BMAD.** Use the `bmad` skill you just installed and run its setup for this project with every default, passing only this project's `.claude/skills` folder as the skills root (never scan or change global skills); it needs no answers from the user. It creates `_bmad/`. Check that `_bmad/scripts/resolve_config.py` exists, then run `uv run _bmad/scripts/resolve_config.py --project-root . --key core.output_folder`; it prints one JSON line with that key. If the setup fails, read the error once, fix what is yours to fix (a missing `uv`, a wrong folder), try once more, and otherwise **STOP** with `Step 1 blocked: BMAD setup failed: <one line>`.
 6. **Baseline and STOP.** In a repository you created in item 2, make the initial commit now, `Step 1: setup`, so it includes the project, the guide, `.gitignore` and `skills-lock.json`. In an existing repository commit nothing; whatever this step added or changed stays uncommitted, so the user can look at it, and step 2 commits it. Then **STOP** and report four lines: the repository and branch; the Node and `uv` versions; the BMAD module version from the setup output (also in `.claude/skills/bmod-method/bmod.toml`), or `not installed`; and the sentence for the chat, either `Step 1 done` or `Step 1 blocked: <reason>`.
 
-## Step 2 — Say what correct means (after stage 1)
+## Step 2 — Say what correct means (stage 1)
 
 **Agent:**
 
@@ -74,7 +74,7 @@ If the `bmad-party-mode` skill is not found although step 1 installed it, this s
 
 **You should see:** at least one question nobody asked before. **Chat:** “Step 2: N open questions, N acceptance criteria.”
 
-## Step 3 — A test must fail first (after stage 2)
+## Step 3 — A test must fail first (start of stage 2)
 
 **Agent:**
 
@@ -88,7 +88,7 @@ If the `bmad-party-mode` skill is not found although step 1 installed it, this s
 
 **You should see:** red for the right reason (a value mismatch), then green with every test file unchanged. **Chat:** “Step 3: red N, green N, tests unchanged.”
 
-## Step 4 — Test the tests (after stage 3)
+## Step 4 — Test the tests (start of stage 3)
 
 **Agent:**
 
@@ -101,7 +101,7 @@ If the `bmad-party-mode` skill is not found although step 1 installed it, this s
 
 **You should see:** whether your tests notice a broken rule, and a two-line diff a human would review. **Chat:** “Step 4: mutant killed/survived, lock blocks edits.”
 
-## Step 5 — A second pair of eyes (after stage 4)
+## Step 5 — A second pair of eyes (start of stage 4)
 
 First, in your **author session**: `Read docs/participant-guide.md and do item 0 of step 5.`
 
@@ -125,7 +125,7 @@ Or use BMAD's reviewer in that fresh session: `/bmad-code-review`, and tell it t
 
 **You should see:** at least one thing the author session did not mention. **Chat:** “Step 5: N findings, recommendation: …”
 
-## Step 6 — No check is optional (after stage 5)
+## Step 6 — No check is optional (start of stage 5)
 
 **Agent (author session):**
 
