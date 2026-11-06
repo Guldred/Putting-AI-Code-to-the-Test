@@ -34,15 +34,13 @@ The npm cache and Playwright browser binaries stay inside this checkout. Do not 
 
 ### BMAD Method (stage 1 Party Mode, stage 4 review)
 
-The talk uses the [BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD) skills in Claude Code. `skills-lock.json` records the installed versions; the skill copies under `.claude/skills/bmad*` and the generated `_bmad/` folder are gitignored. Install once per machine (needs internet and [`uv`](https://docs.astral.sh/uv/)):
+The talk uses the [BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD) skills in Claude Code. Nobody installs them by hand, the presenter included: step 1 of the [participant guide](docs/participant-guide.md) is one sentence to Claude, and Claude checks the tools, installs `uv` if missing and the BMAD skills, and runs the BMAD setup.
 
-```sh
-npx skills add bmad-code-org/BMAD-METHOD -a claude-code -y --copy -s bmad -s bmod-core-tools -s bmod-method -s bmad-party-mode -s bmad-agent-analyst -s bmad-agent-pm -s bmad-agent-po -s bmad-agent-architect -s bmad-agent-ux-designer -s bmad-agent-dev -s bmad-build -s bmad-code-review -s bmad-review
+```text
+Read https://raw.githubusercontent.com/Guldred/Putting-AI-Code-to-the-Test/main/docs/participant-guide.md and do step 1. Stop at the first STOP.
 ```
 
-Then, in Claude Code from the repository root, run `/bmad` and ask it to set up BMad with the defaults; it creates `_bmad/`. Party Mode is `/bmad-party-mode`. Its output differs on every run, so the runbook asks for one rehearsed transcript under `evidence/agent-runs/` as the fallback.
-
-Participants can do the same in their own repository: the [participant guide](docs/participant-guide.md) has the setup as step 1 and one agent instruction per stage, with Party Mode for the spec and for a closing retrospective. Step 1 runs at the start of the session: the participant's Claude fetches the guide from `main`, installs `uv` and the BMAD skills and runs the BMAD setup, so the guide must be on `main` before the session.
+The presenter pastes it in the opening into the author session, the participants into their own Claude. Use the permission mode Ask permissions: in Auto mode Claude's safety check can refuse the installs. The skill copies, `skills-lock.json` and the generated `_bmad/` stay out of Git. Party Mode is `/bmad-party-mode`; its output differs on every run, so the runbook asks for one rehearsed transcript under `evidence/agent-runs/` as the fallback. Step 1 fetches the guide from `main`, so guide changes must be on `main` before the session.
 
 ### Claude Desktop app (stage 1 design, stage 2 agent session, stage 4 reviewer session)
 

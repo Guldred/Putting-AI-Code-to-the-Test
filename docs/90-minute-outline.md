@@ -24,8 +24,8 @@ Party Mode in stage 1 has a 4-minute budget: two or three turns, one steering qu
 
 If five minutes behind: drop the F-2 check in stage 4, show the saved mutation after-report instead of the second run, use the stage 2 fallback diffs instead of the live agent. Shorten Party Mode to one round rather than skipping it. Keep the six “Ship it?” polls, the lock failure, the release refusal and the two closing slides.
 
-The fallback path needs no network access, account, external service or attendee setup. Dependency, browser and BMAD installation happens before the session; see the runbook's preflight.
+The fallback path needs no network access, account, external service or attendee setup. Dependency and browser installation happens before the session; see the runbook's preflight. BMAD is set up live in the opening, by the same step-1 sentence the participants use; if that fails, stage 1 uses the rehearsed Party Mode transcript.
 
 ## Optional follow-along
 
-Participants who bring Claude Code paste one sentence in the opening (cue F1); their Claude installs `uv` and the BMAD skills, sets BMAD up and reports back during stage 0 (5 to 8 minutes, in parallel). After each stage slide the co-moderator posts a one-line cue (F2–F7) and their Claude builds the same layer in a repository of their choice. The agents run in parallel, so the schedule above does not change. Their results feed the questions segment.
+The presenter pastes the same sentence into the author session on screen. Participants who bring Claude Code paste it in the opening too (cue F1); their Claude installs `uv` and the BMAD skills, sets BMAD up and reports back during stage 0 (5 to 8 minutes, in parallel). After each stage slide the co-moderator posts a one-line cue (F2–F7) and their Claude builds the same layer in a repository of their choice. The agents run in parallel, so the schedule above does not change. Their results feed the questions segment.

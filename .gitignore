@@ -12,9 +12,10 @@ playwright-report/
 .DS_Store
 evidence/agent-runs/*/transcript.jsonl
 
-# BMAD Method skill copies (restore with the preflight command in README.md)
+# BMAD Method skill copies and setup, created by step 1 of docs/participant-guide.md
 .claude/skills/bmad*/
 .claude/skills/bmod*/
 _bmad/
 _bmad-output/
 .bmad-help-setup-modules.toml
+skills-lock.json
