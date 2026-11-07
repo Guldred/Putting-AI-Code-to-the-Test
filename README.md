@@ -2,16 +2,18 @@
 
 Repository “Putting AI Code to the Test”: a small checkout and seven reproducible scenes for a 90-minute online workshop (Microsoft Teams) about accepting software produced by coding agents.
 
-Central question: **why spec-driven development instead of vibe coding, and how do we accept agent-written code safely without reviewing it line by line?** The talk starts with the rawest process (prompt → implement → ship) and improves it in five stages: a spec written with a team of agents ([BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD), including a live Party Mode), test first, mutation testing plus a test lock, browser test plus an independent review, and a release gate. Every stage shows what it catches and what still slips through. The seven technical scenes below are the demo states behind those stages.
+Central question: **why spec-driven development instead of vibe coding, and how do we accept agent-written code safely without reviewing it line by line?**
 
-Learn how to challenge AI-generated code and decide whether it is ready to ship. The demo covers spec-driven development, TDD, mutation testing, independent reviews and quality gates. Prerequisites: basic programming knowledge. **Watching needs no setup; following along needs only Claude Code, which sets itself up in step 1 of the participant guide.**
+The workshop has two parts. **Part 1:** every participant's Claude installs a spec-driven development system into their own repository, one piece per step of the [participant guide](docs/participant-guide.md): a stack profile, a spec template tailored with the [BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD)'s Party Mode, a test lock, mutation testing for their stack, three independent Claude subagents (test writer, implementer, reviewer), a gate in their CI pipeline, and one skill that chains it all. **Part 2:** they use it to build one small feature of their own. The presenter does the same steps in their own folder and explains each piece with the checkout example in this repository, whose seven scenes and preserved evidence are the illustrations.
+
+Prerequisites: basic programming knowledge. **Watching needs no setup; following along needs Claude Code, which sets itself up in step 1 of the participant guide.**
 
 ## Start here
 
 - [Talk brief](docs/talk-brief.md) and [timed 90-minute outline](docs/90-minute-outline.md)
-- [English presenter runbook: step by step, with every slide, command, poll and fallback](docs/presenter-script.md)
+- [English presenter runbook: step by step, with every slide, cue, poll and fallback](docs/presenter-script.md)
 - [Slide outline linked to demo scenes](docs/slide-outline.md), the [slide deck](https://claude.ai/artifact/NCdrVbdps2PhKMukZHdMJT) (private until shared) and [Teams polls and chat prompts](docs/teams-interaction.md)
-- [Participant guide: follow along in your own repository](docs/participant-guide.md), optional, one sentence per stage to your coding agent
+- [Participant guide: install the SDD system in your repository (part 1), then build a feature with it (part 2)](docs/participant-guide.md), one sentence per step to Claude
 - [Deliberately ambiguous initial brief](docs/initial-brief.md), [clarified specification](docs/specification.md), [later cap requirement](docs/discount-cap-change.md)
 - [Acceptance criteria → actual verification evidence](docs/acceptance-evidence.md)
 - [Latest rehearsal](evidence/latest.md), [provenance](evidence/README.md), [scoped release decision](docs/release-decision.md)
@@ -32,19 +34,9 @@ Open the printed local URL. The canonical application is the final corrected ver
 
 The npm cache and Playwright browser binaries stay inside this checkout. Do not run installation commands in generated scene workspaces, whose `node_modules` is a shared symlink. Linux presenters may need Playwright's documented OS browser dependencies before traveling.
 
-### BMAD Method (stage 1 Party Mode, stage 4 review)
+### The workshop itself needs nothing from this checkout
 
-The talk uses the [BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD) skills in Claude Code. Nobody installs them by hand, the presenter included: step 1 of the [participant guide](docs/participant-guide.md) is one sentence to Claude, and Claude checks the tools, installs `uv` if missing and the BMAD skills, and runs the BMAD setup.
-
-```text
-Read https://raw.githubusercontent.com/Guldred/Putting-AI-Code-to-the-Test/main/docs/participant-guide.md and do step 1. Stop at the first STOP.
-```
-
-The presenter pastes it in the opening into a live session in an empty folder and does every later step there too; the participants paste it into their own Claude. Use the permission mode Ask permissions: in Auto mode Claude's safety check can refuse the installs. The skill copies, `skills-lock.json` and the generated `_bmad/` stay out of Git. Party Mode is `/bmad-party-mode`; its output differs on every run, so the runbook asks for one rehearsed transcript under `evidence/agent-runs/` as the fallback. Step 1 fetches the guide from `main`, so guide changes must be on `main` before the session.
-
-### Claude Desktop app (stage 1 design, stage 2 agent session, stage 4 reviewer session)
-
-The presenter runs the talk from the Claude Desktop app's Code tab with this repository open as the author session. Three moments use the app: a [design canvas generated from the spec](https://claude.ai/artifact/GQRqDvLH2crGaSjhTabeQL) (private until shared; four screens, one per acceptance criterion, pre-generated), the coding agent started as a separate session in the scene folder (a row in the sidebar, accepted from the main terminal), and the fresh-context reviewer started as a session in its own worktree that reports back as a note. The runbook has the exact sentences; a second terminal with `claude` is the fallback for every one of them.
+During the talk nothing runs in this repository: the presenter pastes the guide's sentences into a Claude Desktop session in an empty folder, exactly like the participants, and the scenes below appear as slides. The setup above is for preparing and checking the illustrations (`npm run rehearse`). Step 1 of the guide fetches it from `main`, so guide changes must be on `main` before the session. Use the permission mode Ask permissions for step 1: in Auto mode Claude's safety check can refuse the installs.
 
 ## Open a scene without discarding work
 

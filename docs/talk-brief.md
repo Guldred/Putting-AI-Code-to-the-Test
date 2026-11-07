@@ -2,21 +2,21 @@
 
 ## Description
 
-Published description: learn how to challenge AI-generated code and decide whether it is ready to ship. A practical demo covers spec-driven development, TDD, mutation testing, independent reviews and quality gates. Prerequisites: basic programming and testing knowledge. No local setup required.
+Published description (short): learn how to challenge AI-generated code and decide whether it is ready to ship, and take the process home in your own repository. Spec-driven development, test first, mutation testing, independent agents and a quality gate, installed step by step with Claude and then used on a feature of your own. Prerequisites: basic programming and testing knowledge. Watching needs no setup; following along needs Claude Code.
 
 Title: **Fully Agentic Development with Claude: How Do We Trust the Agentic Process?**
 
-Description: Claude writes the code; nobody reads it all line by line. So how do we trust what ships? In 90 minutes we build a Claude-focused, fully agentic workflow step by step: a spec written by a team of agents with the BMAD Method (live Party Mode), test-first, mutation testing, an independent reviewer in its own session, and a release gate without a skip flag. At every step we look at what it catches and what still slips through. Optionally, you build the same steps in your own repository with Claude; watching is fine too.
+Description: Claude writes the code; nobody reads it all line by line. So how do we trust what ships? In part 1 your Claude builds a spec-driven development process into your own repository, one piece per step, while we look at what each piece catches and what still slips through: a spec template tailored by a team of agents with the BMAD Method (Party Mode), a test lock, mutation testing for your stack, independent Claude subagents for tests, implementation and review, and a gate in your CI pipeline. In part 2 you use it: Claude builds one small feature of yours with the full process, from Party Mode spec to retrospective. Watching is fine too.
 
 Requirements:
 
-- Watching only: nothing. Following along: Claude Code with an active plan, signed in. The Claude Desktop app (Code tab) is recommended; the CLI works too.
-- Git and Node.js 22 or newer, and internet access during the session: Claude installs the BMAD Method and `uv` in the first step and asks before each install.
-- A repository to work in: a small project of your own, or a customer project on a throwaway branch. No repository? Claude creates a minimal one.
+- Watching only: nothing.
+- Following along: Claude Code with an active plan, signed in. The Claude Desktop app (Code tab) is recommended; the CLI works too.
+- Git and Node.js 22 or newer (for the BMAD installer, whatever your project's language), and internet access: Claude installs the BMAD Method, `uv` and a mutation tool for your stack, and asks before each install.
+- A repository to work in: a project of your own, or a customer project on a throwaway branch (Java, PHP, JavaScript, TypeScript, Python, .NET and others; Claude adapts the tools). No repository? Claude creates a minimal one.
 - A different coding agent can follow most steps, but we have not tested that and cannot support it during the session.
-- Basic programming knowledge.
 
-The session runs online in Microsoft Teams; the presenter runs everything on one machine, participants take part through polls, chat and their own Claude.
+The session runs online in Microsoft Teams. Participants take part through polls, chat and their own Claude; the presenter does every step in their own folder with the same sentences.
 
 ## Central question
 
@@ -26,15 +26,19 @@ Coding agents write more code than anyone can read carefully. Vibe coding accept
 
 ## Promise
 
-By the end, participants can explain why spec-driven development is an alternative to vibe coding, name where human attention is still needed when they stop reading every line, state what evidence they need to accept an agent-produced change, identify what passing tests leave unproven, challenge weak or edited test oracles, and distinguish a runnable check from an enforced release gate.
+By the end, participants have a spec-driven process installed and tried in their own repository, and can explain why spec-driven development is an alternative to vibe coding, name where human attention is still needed when they stop reading every line, state what evidence they need to accept an agent-produced change, identify what passing tests leave unproven, challenge weak or edited test oracles, and distinguish a runnable check from an enforced release gate.
 
 ## Scope
 
-Participants choose one session in this slot, so the session is self-contained: it explains what vibe coding and spec-driven development are before showing how each evidence layer works. It starts with an available repository. Node and browser installation are presenter preparation; the BMAD setup is not: in the opening the presenter gives Claude the same one sentence as the participants, in an empty folder, and Claude creates a small project and installs and configures BMAD on screen. The presenter does every later guide step in that folder too and shows each step's diff. The [BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD) is the example framework for the human-facing parts: its role agents (analyst, PM, PO, UX, architect, developer), Party Mode (all agents in one discussion, live) and its independent code review. It is presented as what it is: one model in several roles, which widens the view but proves nothing. The hard evidence comes from the checks in this repository. The host is Claude Code in the Claude Desktop app, used for three moments that each carry a stage: a design canvas generated from the spec (stage 1), the coding agent as a separate session in the scene folder (stage 2), and the fresh-context reviewer as a session in its own worktree (stage 4). Everything else is tool-agnostic.
+Participants choose one session in this slot, so the session is self-contained: it explains what vibe coding and spec-driven development are before installing anything.
 
-This is not a claim that code is never read. Targeted reading stays necessary where the evidence points (a failing check, a review finding, a changed test) and for areas the checks do not cover, such as security-sensitive code.
+**Part 1 (50 minutes)** installs the system. The [participant guide](participant-guide.md) has one step per piece, each launched by one sentence to Claude and each ending with a self-test: setup and a stack profile (language, test command, CI, mutation tool), the spec template plus rules in `CLAUDE.md` (tailored by a short BMAD Party Mode), the test lock, mutation testing for the detected stack, three Claude subagents (test writer, implementer, reviewer), the gate locally and in the existing CI pipeline, and the `sdd-feature` skill that chains it all. While the agents work, the presenter explains each piece with the checkout example of this repository: the scenes are the illustrations, shown from slides and preserved evidence, and are not run live.
 
-The talk is told as a pipeline that grows in five stages. It starts with the rawest process: prompt → implement → ship. In each stage something goes wrong live with the same small EUR checkout, and the pipeline gains the layer that would have caught it: a spec written with a team of agents (stage 1), test first (stage 2), mutation testing and a test lock (stage 3), browser test plus a fresh-context review (stage 4), and a release gate (stage 5). Every stage ends with the same two cards: *what it catches* and *what still slips through*; the second card is the problem that opens the next stage. A coding agent is the author throughout; the presenter and audience accept its work. The repeated question is **“Ship it?”**, followed by **“What would have caught it?”**
+**Part 2 (30 minutes)** uses it: a feature branch from `sdd-setup`, one small feature, and the workflow's stages with a STOP after each: Party Mode spec, tests by one subagent, implementation by another, mutation on the changed files, review by a fresh-context subagent, gate, Party Mode retrospective. The presenter runs the same workflow in their own folder (the minimal SAVE10 project from step 1, feature: the €15 cap) and narrates each stage.
+
+The [BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD) is presented as what it is: one model in several roles, which widens the view but proves nothing. The hard evidence comes from tests, mutants, the lock and the gate. Claude-specific strengths carry their own moments: Party Mode, subagents with a fresh context, a separate session in the sidebar, and a skill as the entry point.
+
+This is not a claim that code is never read. Targeted reading stays necessary where the evidence points (a failing check, a surviving mutant, a review finding, a changed test) and for areas the checks do not cover, such as security-sensitive code.
 
 ## Teaching contract
 
@@ -48,8 +52,6 @@ The talk is told as a pipeline that grows in five stages. It starts with the raw
 
 ## Audience interaction
 
-Every stage opens with the Teams poll **“Ship it?”** (**Ship it**, **Don't ship**, **Need more evidence**; see [Teams interaction](teams-interaction.md)) at the moment things look green. Ask for the missing observation, not confidence in an agent or tool. Return to the €100 SAVE10 order throughout; use the €200 order only to introduce the cap, and the €50 order to expose the exact minimum.
-
-Optionally, participants follow along in a repository of their own with the [participant guide](participant-guide.md): one sentence per stage to their coding agent, BMAD Party Mode for the spec and for a closing retrospective, and STOP points where they look before the agent continues. Step 1 is the setup, done by the participant's Claude during the opening; nothing in the talk depends on it.
+Each part-1 segment has a Teams poll **“Ship it?”** (**Ship it**, **Don't ship**, **Need more evidence**; see [Teams interaction](teams-interaction.md)) at the moment the illustration looks green, and a follow-along cue (F1–F8) that the co-moderator posts as the presenter pastes the same sentence. Part 2 is hands-on; the co-moderator reads one chat line per stage aloud. Nothing in the talk depends on a participant's setup.
 
 See the [90-minute schedule](90-minute-outline.md), [Teams interaction](teams-interaction.md), [presenter script](presenter-script.md), [evidence map](acceptance-evidence.md) and [slide outline](slide-outline.md).
