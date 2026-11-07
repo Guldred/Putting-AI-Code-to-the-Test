@@ -62,7 +62,7 @@ Other hosts: Claude Code is the supported path. An agent that runs Agent Skills 
    ```sh
    npx skills add bmad-code-org/BMAD-METHOD -a claude-code -y --copy -s bmad -s bmod-core-tools -s bmod-method -s bmad-party-mode -s bmad-facilitate -s bmad-agent-analyst -s bmad-agent-pm -s bmad-agent-po -s bmad-agent-architect -s bmad-agent-ux-designer -s bmad-agent-dev -s bmad-code-review -s bmad-review
    ```
-   Then make sure `.gitignore` contains these five lines, adding the missing ones:
+   `skills-lock.json` stays tracked on purpose: it records which skills are installed, so teammates can reinstall them. Then make sure `.gitignore` contains these five lines, adding the missing ones:
    ```
    .claude/skills/bmad*/
    .claude/skills/bmod*/
@@ -116,7 +116,7 @@ Other hosts: Claude Code is the supported path. An agent that runs Agent Skills 
    ## Open questions
    - <question> (owner: <name>)
    ```
-2. **Ask the team what every spec in this repository must pin down.** Start Party Mode (the `bmad-party-mode` skill) on this topic:
+2. **Ask the team what every spec in this repository must pin down.** Party Mode needs the BMAD setup: if `_bmad/scripts/resolve_config.py` is missing, run step 1, item 5 again first, or use the three-role fallback below. Start Party Mode (the `bmad-party-mode` skill) on this topic:
    > This repository (read docs/sdd/stack.md and skim the code). We are adding a spec template that every feature must fill in before any code is written: docs/sdd/spec-template.md. What must a spec here always state so that tests can be written from it without asking? Which boundaries, units, error cases or compatibility questions keep coming back in this kind of code? Two rounds, concrete, disagree where you do.
 
    If Party Mode asks about an initiative or a project to attach the discussion to, answer that this is a loose discussion without one. Let the room run two rounds; the user may steer. Party Mode keeps going until told to stop, so after two rounds ask it to wrap up. Then ask the room to wrap up with at most five additions to the template.
@@ -169,10 +169,10 @@ If the `bmad-party-mode` skill is not found although step 1 installed it, this s
 1. **Install the mutation tool** from the profile, after asking. Follow its current documentation for this build tool and test runner. Configure it so that:
    - it runs the project's normal test command or runner;
    - it mutates only the files it is given (the tool's own option for limiting files or classes), with the profile's source folder as the default;
-   - the whole run has a time limit (about ten minutes), so a large codebase cannot block the session; if the tool only limits single mutants, the wrapper enforces it (macOS has no `timeout` command);
+   - the whole run has a time limit (about ten minutes), so a large codebase cannot block the session; if the tool only limits single mutants, the wrapper enforces it. macOS has no `timeout` command; a pattern that works on macOS and Linux is `perl -e 'alarm shift; exec @ARGV' 600 <tool command>`. Never leave a background `sleep` watchdog running: it keeps the gate's output open after the tool has finished;
    - its reports go to a folder that `.gitignore` excludes.
    - a run that finds no mutants (for example only test files changed) does not fail;
-   - it fails below `mutation-min-score` from the profile, using the tool's own threshold option where it has one.
+   - the wrapper compares the report's score with `mutation-min-score` from the profile and fails below it; leave the tool's own break threshold unset, so the profile stays the only place for that number.
    Known pitfalls: **PIT** needs the JUnit 5 plugin for JUnit 5 tests, takes class names instead of files (map each file to its class and include nested classes, `Class$*`), needs the tests compiled first, and limits time only per mutant, so the wrapper needs its own time limit (macOS has no `timeout` command). **Infection** needs a coverage driver. **StrykerJS** needs the runner plugin for the project's test runner and may not support TypeScript 7 yet; if it crashes on the TypeScript version, say so and use the manual procedure instead of inventing a workaround. **mutmut** works on paths and can be slow on large suites.
    If the tool needs something the user must install system-wide (for example a PHP coverage driver), **STOP** and say exactly what. If there is no usable tool for this stack, ask the user for a one-line reason, write `mutation: none (<reason>)` in the profile and use the manual procedure in item 4.
 2. **Write the wrapper** `scripts/sdd/mutate` in the profile's script language: it takes source files as arguments, runs the tool on exactly those, and prints the score plus every surviving mutant with file, line and the change. Record `mutate: <command>` in the profile.
@@ -283,7 +283,7 @@ Stronger independence, optional: in the Claude Desktop app, ask Claude to start 
    Read CLAUDE.md (section Spec-driven development) and docs/sdd/stack.md first. Choose a short kebab-case <feature> name and work in docs/sdd/features/<feature>/.
    Each stage ends with a STOP: show what the stage produced and wait. When the user says continue, first commit the stage's changes as "<feature>: <stage>" (if a stage changed no files, say so and go on), then go on. Never skip a stage; if one cannot run, say why and ask.
 
-   1. **Spec.** Start Party Mode (the bmad-party-mode skill) on the feature: what is unclear, what would each role decide differently, which concrete inputs and boundaries must the spec state? Two rounds, then decisions and open questions. STOP: the user answers the open questions. Write spec.md from docs/sdd/spec-template.md with the user's decisions. Search the existing tests for behaviour this feature changes and list it under Existing behaviour this changes, so the user decides it now and not in stage 3. STOP: the user approves; set `Status: approved by <name>, <date>`.
+   1. **Spec.** Start Party Mode (the bmad-party-mode skill) on the feature: what is unclear, what would each role decide differently, which concrete inputs and boundaries must the spec state? Two rounds, then decisions and open questions. STOP: the user answers the open questions. Write spec.md from docs/sdd/spec-template.md with the user's decisions. Search the existing tests, and the code the feature touches, for behaviour it changes, including behaviour no test pins (a rounding step, the order of operations), and list it under Existing behaviour this changes, so the user decides it now and not in stage 3. STOP: the user approves; set `Status: approved by <name>, <date>`.
    2. **Tests first.** Run the sdd-test-writer agent with the spec path. Show its red output and acceptance.sha256. STOP.
    3. **Implementation.** Run the sdd-implementer agent with the spec and fingerprint paths. Then run the lock and the whole suite yourself. Show green, the lock result and the diff stat. If the lock fails only on existing tests the spec names under Existing behaviour this changes, show their diff: the user approves, then refresh exactly those lines in docs/sdd/baseline.sha256. STOP.
    4. **Mutation.** Run the mutate command on the production files changed in stage 3. For each survivor name the input that would kill it. STOP: for each survivor the user decides: add a test (then add it in the feature's test file, update acceptance.sha256 and say that a human approved the change), or accept it with a reason written to docs/sdd/features/<feature>/mutation.md. If accepted survivors keep the score below `mutation-min-score`, only the user may lower that value in the profile, with the reason in mutation.md.
