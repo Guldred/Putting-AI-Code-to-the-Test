@@ -71,7 +71,7 @@ Keep screenshots of each STOP and the final `git log --oneline --all` as the fal
 1. **Teams F3.** **Your session:** `… do step 3 …`
 2. **Slides `s2`, `s2-red`:** red for the right reason, then green with the test files unchanged. **Say:** “A test that has never failed proves nothing.”
 3. **Slide `s5-diff`** and **Teams P4:** “The agent refactored: all 28 tests pass. Ship it?” **Teams C5** (60 s): “Read the diff, not the summary.” Two expected values moved to match the code. **Say:** “That is why approved tests are fingerprinted. Your lock script is that tripwire. It is not access control: whoever can edit the tests can edit the lock. In a real repository, make these paths require a human review.”
-4. **Your session:** STOP: the lock's three runs. **Diff:** one script, one line in the profile.
+4. **Your session:** STOP: the lock's three runs. **Diff:** one script, the baseline fingerprints of the existing tests, one line in the profile. **Say:** “Old tests are locked too. Changing one later needs a human.”
 
 ### Step 4 — Test the tests — 25:00–32:00
 
@@ -105,9 +105,9 @@ Keep screenshots of each STOP and the final `git log --oneline --all` as the fal
 1. **Teams F8.** **Your session:** start a **new** session in `~/workshop-live` (new agents and the skill load, nothing of part 1 carries over), then `Read docs/participant-guide.md and do step 8. Stop at the first STOP.` Pick the €15 cap: “SAVE10 gives at most €15 discount per order.”
 2. **Say:** “Now it is yours. Pick something small and real. Your Claude stops after every stage; look at it before you say continue. I'll walk through mine and you'll be at different stages, and that is fine.”
 3. Narrate your run at each STOP, one or two sentences, then go on:
-   - **Spec:** the room's questions. Decide like the checkout spec: the cap applies after rounding, €15 is exactly allowed. Approve.
+   - **Spec:** the room's questions. Decide like the checkout spec: the cap applies after rounding, €15 is exactly allowed. Point at *Existing behaviour this changes*: the vibe-coded test from step 1 expects €180 for a €200 cart, the cap makes it €185. **Say:** “The old test contradicts the new rule. A human decides that here, in the spec, not an agent quietly in the code.” Approve.
    - **Tests first:** the test writer's run is its own subagent; red with a value mismatch.
-   - **Implementation:** another subagent; green; `lock ok`.
+   - **Implementation:** another subagent; green. The lock fails on exactly the old test the spec named; approve its new fingerprint. Then `lock ok`.
    - **Mutation:** on the changed file only. If a survivor appears, decide aloud: add a test, or accept with a reason.
    - **Review:** the reviewer subagent with only the spec and the range; read its recommendation.
    - **Gate:** green.
