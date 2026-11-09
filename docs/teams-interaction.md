@@ -8,54 +8,53 @@ IDs below match the cues in the [presenter runbook](presenter-script.md).
 
 The running poll is **“Ship it?”**: single choice with **Ship it**, **Don't ship**, **Need more evidence**, results shown to everyone after voting. Launch it at the moment things look green, before the problem appears.
 
-| ID | Stage | Question |
+| ID | Segment | Question |
 | --- | --- | --- |
-| P-how | Opening and wrap-up | “How do you accept agent-written code today?” Options: **I read every line**, **I run it and look**, **Tests in CI decide**, **Spec plus automated checks**. Multiple choice. Launch it again in the wrap-up. |
-| P1 | 0 | “Five tests pass. Ship it?” |
-| P2 | 1 (bridge) | “The agent says: cap done, tests green. Ship it?” |
-| P3 | 2 (bridge) | “100% coverage. Ship it?” |
-| P4 | 3 | “The agent refactored to integer cents: all 28 tests pass. Ship it?” |
-| P5 | 3 (bridge) | “28 unit tests pass. Ship it?” |
-| P6 | 4 (bridge) | “Every check passed on my machine. Ship it?” |
-| P7 | Wrap-up | “The gate packaged it. Ship it, for the local demo scope?” |
+| P-how | Opening and close | “How do you accept agent-written code today?” Options: **I read every line**, **I run it and look**, **Tests in CI decide**, **Spec plus automated checks**. Multiple choice. Launch it again in the close. |
+| P1 | Opening (optional) | “Five tests pass. Ship it?” |
+| P4 | Step 3, lock | “The agent refactored: all 28 tests pass. Ship it?” |
+| P3 | Step 4, mutation | “100% coverage. Ship it?” |
+| P5 | Step 5, agents | “28 unit tests pass. Ship it?” |
+| P6 | Step 6, gate | “Every check passed on my machine. Ship it?” |
+
+IDs are kept from the earlier five-stage version so the slides' speaker notes still match.
 
 ## Chat prompts
 
-| ID | Stage | Prompt | Time |
+| ID | Segment | Prompt | Time |
 | --- | --- | --- | --- |
-| C1 | 0 | “€100 cart, SAVE10. What total do you expect?” | 30 s |
-| C2 | 1 | “Read the brief on screen. What is unclear or missing before we write the spec?” Compare the answers with what Party Mode finds. | 60 s |
-| C3 | 1 | “New rule: max €15 discount. For a €200 cart with SAVE10, which values change?” | 30 s |
-| C4 | 3 | “The mutant turns `<` into `<=`. Which input tells them apart?” | 60 s |
-| C5 | 3 | “Read the diff, not the summary. What did the two test edits change?” | 60 s |
-| C6 | 4 | Optional bug hunt (link to a hosted copy of the `06/start` build): “Apply SAVE10 and post what looks wrong.” | 60 s |
-| C7 | 4 | “What would you give a reviewer so they can challenge this change without our explanation?” | 60 s |
+| C1 | Opening | “€100 cart, SAVE10. What total do you expect?” | 30 s |
+| C2 | Step 2, spec | “What is unclear in the SAVE10 brief before anyone writes code?” Compare with what Party Mode finds. | 60 s |
+| C5 | Step 3, lock | “Read the diff, not the summary. What did the two test edits change?” | 60 s |
+| C4 | Step 4, mutation | “The mutant turns `<` into `<=`. Which input tells them apart?” | 60 s |
+| C-surv | Step 4, mutation | “How many mutants survived in your repository?” | 30 s |
+| C-part2 | Part 2 | “Which stage are you at, and what surprised you?” | open |
 
-Every stage also has the same unnumbered chat question after the problem appears: **“What would have caught it?”**
+Every illustration also has the same unnumbered chat question after the problem appears: **“What would have caught it?”**
 
-## Follow-along cues (optional)
+## Follow-along cues
 
-Participants who bring Claude Code let it set itself up in step 1 of the [participant guide](participant-guide.md) during the opening, then build the same layers in a repository of their choice. The co-moderator posts each cue at the start of its stage, at the moment the presenter pastes the same sentence into their own live session (an empty folder, so the audience sees every step done by Claude from one sentence). Their agents run while the talk continues, and nothing in the talk depends on their results. Pin the first message.
+Participants who bring Claude Code install the SDD system in part 1 (steps 1 to 7 of the [participant guide](participant-guide.md)) and use it in part 2 (step 8). The co-moderator posts each cue at the moment the presenter pastes the same sentence into their own session. Agents run while the talk continues; participants who only watch lose nothing. Pin the first message.
 
 | ID | When | Co-moderator posts |
 | --- | --- | --- |
-| F1 | Opening | “Following along? Open Claude Code in the folder you want to work in (your project, a customer repo, or an empty folder) and paste: `Read https://raw.githubusercontent.com/Guldred/Putting-AI-Code-to-the-Test/main/docs/participant-guide.md and do step 1. Stop at the first STOP.` Keep the permission mode on Ask permissions (not Auto): it installs what it needs and you approve each install with a click. When it stops, post its last line here: Step 1 done, or Step 1 blocked. Every later cue is one sentence for Claude.” |
-| F2 | Stage 1, when Party Mode starts | “Step 2 now. Paste to your agent: `Read docs/participant-guide.md and do step 2. Stop at the first STOP.` Then post: Step 2: N open questions, N acceptance criteria.” |
-| F3 | Start of stage 2 | “Step 3. Paste: `Read docs/participant-guide.md and do step 3. Stop at the first STOP.` Post: Step 3: red N, green N, tests unchanged.” |
-| F4 | Start of stage 3 | “Step 4. Paste: `Read docs/participant-guide.md and do step 4. Stop at the first STOP.` Post: Step 4: mutant killed or survived, lock blocks edits.” |
-| F5 | Start of stage 4 | “Step 5 needs a **fresh** session. First tell your author session: `Read docs/participant-guide.md and do item 0 of step 5.` Then: `Start a separate session in this folder, sharing this checkout, with exactly this brief: Read docs/participant-guide.md and do step 5 as the reviewer.` (Terminal: second `claude`, paste the brief.) Post: Step 5: N findings, recommendation.” |
-| F6 | Start of stage 5 | “Step 6, back in the author session. Paste: `Read docs/participant-guide.md and do step 6. Stop at the first STOP.` Post: Step 6: gate passes, blocks, passes.” |
-| F7 | Slide `cheese` | “Step 7, the retrospective. Paste: `Read docs/participant-guide.md and do step 7. Stop at the first STOP.` Post your first action item during the questions.” |
+| F1 | Opening, minute 2 | “Open Claude Code in the folder you want to work in (your project, a customer repo on a branch, or an empty folder) and paste: `Read https://raw.githubusercontent.com/Guldred/Putting-AI-Code-to-the-Test/main/docs/participant-guide.md and do step 1. Stop at the first STOP.` Keep the permission mode on Ask permissions (not Auto) and approve each install with a click. When it stops, post its last line here, for example: Step 1 done: TypeScript, StrykerJS, GitHub Actions. Every later cue is one sentence for Claude.” |
+| F2 | Spec segment | “Step 2: the spec stage. Paste: `Read docs/participant-guide.md and do step 2. Stop at the first STOP.` When Party Mode stops, pick the additions you like. Post: Step 2: template plus N additions.” |
+| F3 | Test lock segment | “Step 3: the test lock. Paste: `Read docs/participant-guide.md and do step 3. Stop at the first STOP.` Post: Step 3: lock passes, catches an edit.” |
+| F4 | Mutation segment | “Step 4: mutation testing for your stack. Paste: `Read docs/participant-guide.md and do step 4. Stop at the first STOP.` It asks before installing the tool. Post: Step 4: N mutants, N survived.” |
+| F5 | Independent agents segment | “Step 5: three independent agents. Paste: `Read docs/participant-guide.md and do step 5. Stop at the first STOP.` Watch the reviewer run as its own subagent. Post: Step 5: reviewer says …” |
+| F6 | Gate segment | “Step 6: gate and CI. Paste: `Read docs/participant-guide.md and do step 6. Stop at the first STOP.` Post: Step 6: gate passes, blocks, passes; CI job added.” |
+| F7 | Workflow segment | “Step 7: the workflow. Paste: `Read docs/participant-guide.md and do step 7. Stop at the first STOP.` Post: Step 7: system complete.” |
+| F8 | Start of part 2 | “Part 2. Start a **new** Claude session in the same folder, then paste: `Read docs/participant-guide.md and do step 8. Stop at the first STOP.` Pick a small feature, or take one of Claude's three proposals. Post the stage you reached and one surprise, for example: Stage 4: 2 survivors, one was a real gap.” |
 
-Canned reply for a blocked step 1 (co-moderator only, never the presenter): “Thanks. Follow the line Claude gave you after the session; for now just watch, nothing today depends on it.” Never debug a participant's machine in the chat.
+Canned reply for a blocked step (co-moderator only, never the presenter): “Thanks. Follow the line Claude gave you after the session; for now just watch, nothing today depends on it.” Never debug a participant's machine in the chat.
 
-During the questions the presenter asks: “What did your fresh reviewer find that the author session never mentioned? What did your gate block?”
+During part 2 the co-moderator reads one chat line per stage aloud. In the questions the presenter asks: “What did Party Mode ask that you never would have? What did your reviewer find? Which survivor was a real gap?”
 
 ## Online delivery notes
 
-- Share the whole screen, not one window, so switches between deck, terminal, browser and Claude Code stay visible.
-- Terminal font at least 20 pt; prefer short outputs over scrolling. Party Mode output is long: scroll slowly and read the best lines aloud.
+- Share the whole screen, not one window, so switches between the deck and Claude Code stay visible.
+- Claude Code font large; prefer short outputs over scrolling. Party Mode output is long: scroll slowly and read the best lines aloud.
 - There is a short streaming delay: pause after a failing command before commenting on it.
 - Breakout rooms are not used; the exercises are short enough for the chat.
-- The bug hunt needs a public copy of the seeded `06/start` build (for example on GitHub Pages). Without it, skip C6; nothing else depends on it.
 - The follow-along cues are the co-moderator's job. Participants post outcomes only, never code or customer data; remind them once at F1.

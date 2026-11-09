@@ -1,36 +1,39 @@
 # Slide outline — Putting AI Code to the Test
 
-Outline of the [slide deck](https://claude.ai/artifact/NCdrVbdps2PhKMukZHdMJT). The main flow has 21 slides: 12 that carry the story, and after each stage slide one or two slides with what that stage brings; most of the talk happens in the terminal, the browser and Claude Code. Poll and chat IDs refer to [Teams interaction](teams-interaction.md).
+Outline of the [slide deck](https://claude.ai/artifact/NCdrVbdps2PhKMukZHdMJT). The deck follows the two parts of the workshop. In part 1 each guide step has one stage slide (a row of stations, a green card **what it catches**, a purple card **what still slips through**, a counter “Code lines read by a human”) and one to three illustration slides from the checkout example. Part 2 has one slide; the rest happens in the presenter's Claude session. Poll, chat and cue IDs refer to [Teams interaction](teams-interaction.md); the [presenter runbook](presenter-script.md) says what happens at each slide.
 
 ## Main flow
 
-The six stage slides `s0`–`s5` share one layout: a row of stations, a green card **what it catches**, a purple card **what still slips through**, and two footer counters (“We read instead: …” and “Code lines read by a human: N”). The new station is highlighted; a magic-move transition slides it into the row. A stage slide is shown *after* its live moment, as the summary of what just happened. The slides after it (header “What stage N brings”) show the concrete artifact the stage added, compared with the stage before: the prompt, the grill questions and the spec, the red run, the survivor and the moved oracle, the screen and the review, the gate. The purple card is the bridge to the next stage.
+| # | Slide | Segment | Content | Cue |
+| --- | --- | --- | --- | --- |
+| 1 | `cover` | Opening | title, the two parts | F1 |
+| 2 | `parts` | Opening | part 1: seven pieces, one per step; part 2: one feature through the process | |
+| — | *story slides* | Opening | the presenter's path from vibe coding to SDD (to come) | |
+| 3 | `problem` | Opening | agents write more code than we can read; P-how | |
+| 4 | `s0` | Opening | Prompt → Implement → Ship; €90 or €95? | C1 |
+| 5 | `s0-prompt` | Opening | the prompt, five green tests, five undecided points | |
+| 6 | `bmad` | Step 2 | six roles; Party Mode | F2, C2 |
+| 7 | `s1` | Step 2 | + spec | |
+| 8 | `s1-grill` | Step 2 | the room's questions | |
+| 9 | `s1-spec` | Step 2 | prompt sentence vs rule 5; AC table | |
+| 10 | `s2` | Step 3 | + test first + test lock | F3 |
+| 11 | `s2-red` | Step 3 | red, fingerprint, green (rehearsal run) | |
+| 12 | `s5-diff` | Step 3 | two edited expected values; the lock catches them | P4, C5 |
+| 13 | `s3` | Step 4 | + mutants | F4, P3 |
+| 14 | `s4-mutant` | Step 4 | survivor `<` → `<=`, 11/12 → 12/12 | C4 |
+| 15 | `s4` | Step 5 | + independent agents; counter 1 | F5, P5 |
+| 16 | `s6-screen` | Step 5 | €105 on screen, every unit test green | |
+| 17 | `s6-review` | Step 5 | the performed fresh-context review, F-1 | |
+| 18 | `agents` | Step 5 | test writer, implementer, reviewer: three fresh contexts | |
+| 19 | `s5` | Step 6 | + gate | F6, P6 |
+| 20 | `s7-gate` | Step 6 | release blocked, then packaged | |
+| 21 | `workflow` | Step 7 | `/sdd-feature`: seven stages, a STOP after each | F7 |
+| 22 | `cheese` | Step 7 | every layer has holes | |
+| 23 | `part2` | Part 2 | the step-8 sentence; the presenter's feature | F8 |
+| 24 | `attention` | Close | where human attention goes; P-how again | |
+| 25 | `questions` | Close | | |
 
-| # | Slide | Stations | Catches | Still slips through | Counter |
-| --- | --- | --- | --- | --- | ---: |
-| 1 | `cover` | | | | |
-| 2 | `problem` — agents write more code than we can read; poll P-how | | | | |
-| 3 | `s0` Prompt in, code out, ship | prompt → implement → ship | Fast, green, confident | Nobody decided: €90 or €95 | 0 |
-| 4 | `s0-prompt` What stage 0 brings: one prompt | | the prompt, 5/5 green, €90 | five undecided points | |
-| 5 | `bmad` A team writes the spec: the BMAD Method | | six roles; Party Mode; chat C2 | perspective, not proof | |
-| 6 | `s1` Say what correct means | spec → implement → ship | Ambiguity before code; AC-06 red then green | A spec on paper proves nothing | 0 |
-| 7 | `s1-grill` What stage 1 brings: the grill session | | prompt phrases → the room's questions | | |
-| 8 | `s1-spec` What stage 1 brings: the spec | | prompt sentence vs rule 5; AC-05a/b, AC-06, AC-07a | | |
-| 9 | `s2` A test must fail first | + test first | Red for the right reason, green with tests unchanged | Weak tests; the agent edits the expected value | 0 |
-| 10 | `s2-red` What stage 2 brings: a test that failed first | | red, fingerprint, green (rehearsal run) | | |
-| 11 | `s3` Test the tests | + mutants + lock | 12/12 killed; a two-line diff for a human | All unit tests pass, the screen says €105 | 0 |
-| 12 | `s4-mutant` What stage 3 brings: mutation testing | | survivor `<` → `<=`, 11/12 → 12/12 | | |
-| 13 | `s5-diff` What stage 3 brings: the test lock | | two edited expected values | | |
-| 14 | `s4` A second pair of eyes | + browser + review | What users see; a fresh reader points at one line | Opinion, not proof; who runs it all every time? | 1 |
-| 15 | `s6-screen` What stage 4 brings: the browser test | | €105 screenshot from a real failure | | |
-| 16 | `s6-review` What stage 4 brings: an independent review | | F-1 and F-2 of the performed review | | |
-| 17 | `s5` No check is optional | + gate | No skipped check, no skip flag | Only what somebody wrote down | 1 |
-| 18 | `s7-gate` What stage 5 brings: the gate | | release blocked, then packaged | | |
-| 19 | `cheese` Every layer has holes | six layers: catches / misses | | | |
-| 20 | `attention` Where human attention goes | | humans review / machines check / read code when | | |
-| 21 | `questions` | | | | |
-
-Each slide's speaker notes say what happens before it (the live moment) and after it (the bridge). The [presenter runbook](presenter-script.md) has every command.
+Station order on the stage slides: Spec → Test first → Test lock → Implement → Mutants → Review agent → Gate → Ship, the order in which the `sdd-feature` workflow uses them.
 
 ## Backup
 

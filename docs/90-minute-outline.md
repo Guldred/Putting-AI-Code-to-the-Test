@@ -1,31 +1,40 @@
 # 90-minute outline
 
-The session runs online in Microsoft Teams. Participants sit at their own PCs and take part through Teams polls and chat; nobody installs anything. See [Teams interaction](teams-interaction.md).
+The session runs online in Microsoft Teams, in two parts. **Part 1** installs a spec-driven development (SDD) system into the participants' own repositories, one piece per step, while the presenter explains each piece with the workshop's checkout example. **Part 2** uses it: every participant builds one small feature with the full process in their own repository. The presenter does every step too, in their own folder, with the same sentences, and shows what changed. The single source for the steps is the [participant guide](participant-guide.md).
 
-Central question: **why spec-driven, and how do we accept agent-written code safely without reviewing it line by line?** The talk starts with the rawest process (prompt → implement → ship) and improves it in five stages. Each stage has the same two beats: *what it catches* and *what still slips through*; the thing that slips through opens the next stage. The BMAD Method is the example framework for the spec work (roles, Party Mode) and the independent review; the hard checks come from this repository.
+Central question: **why spec-driven, and how do we accept agent-written code safely without reviewing it line by line?** Each piece answers one failure of the rawest process (prompt → implement → ship): *what it catches*, and *what still slips through*, which opens the next piece. The checkout scenes in this repository are the illustrations, shown from slides and preserved evidence; nothing is run live in this repository.
 
-| Time | Duration | Segment | Layer added | Technical scenes |
+## Part 1 — Install the system (50 minutes)
+
+| Time | Duration | Segment | Guide step (participants and presenter) | Illustration |
 | --- | ---: | --- | --- | --- |
-| 00:00–05:00 | 5 min | Opening: agents write more than we can read; poll P-how | — | — |
-| 05:00–14:00 | 9 min | Stage 0 — Vibe coding: €90 or €95? | — | `01` |
-| 14:00–32:00 | 18 min | Stage 1 — Say what correct means: BMAD roles, live Party Mode, the spec, the design canvas generated from it | spec | `02` |
-| 32:00–43:00 | 11 min | Stage 2 — A test must fail first (live agent in its own Desktop session) | test first | `03` |
-| 43:00–55:00 | 12 min | Stage 3 — Test the tests: mutants and the test lock | mutation, lock | `04`, `05` |
-| 55:00–68:00 | 13 min | Stage 4 — A second pair of eyes: browser test, preserved fresh-context review, live reviewer session in its own worktree | browser, review | `06` |
-| 68:00–75:00 | 7 min | Stage 5 — No check is optional: the gate | gate | `07` |
-| 75:00–81:00 | 6 min | Wrap-up: every layer has holes; where human attention goes (the Desktop sidebar); P-how again; P7 | — | — |
-| 81:00–90:00 | 9 min | Questions (7 min) plus buffer (2 min) | — | — |
+| 00:00–10:00 | 10 min | Opening: from vibe coding to SDD, the presenter's own story; poll P-how; cue F1 at minute 2 | 1 Setup and stack profile (runs during the story) | stage 0: €90 or €95? (`01`) |
+| 10:00–19:00 | 9 min | Say what correct means: BMAD roles, Party Mode, the spec | 2 Spec template, Party Mode tailors it, rules in `CLAUDE.md` | stage 1 (`02`), grill questions, design canvas |
+| 19:00–25:00 | 6 min | A test must fail first; the test lock | 3 Lock script and self-test | stage 2 (`03`), stage 3 lock (`05`) |
+| 25:00–32:00 | 7 min | Test the tests: mutation testing | 4 Stack-specific mutation tool, scoped wrapper, first run on existing code | stage 3 survivor (`04`) |
+| 32:00–40:00 | 8 min | Independent agents: Claude subagents, fresh context | 5 Test writer, implementer, reviewer; reviewer self-test | stage 4 review (`06`) |
+| 40:00–46:00 | 6 min | No check is optional: gate and pipeline | 6 Gate locally and as a CI job | stage 5 gate (`07`) |
+| 46:00–50:00 | 4 min | One entry point: the feature workflow; every layer has holes | 7 `sdd-feature` skill, system check | `cheese` |
+
+## Part 2 — Use it (30 minutes) and close (10 minutes)
+
+| Time | Duration | Segment | What happens |
+| --- | ---: | --- | --- |
+| 50:00–52:00 | 2 min | Hand-over: new session, feature branch, pick a feature | cue F8; the presenter picks the €15 cap |
+| 52:00–78:00 | 26 min | Feature run, stage by stage | Participants answer their own STOPs; the presenter runs the same workflow and narrates each stage at its STOP: Party Mode questions, red tests, subagent implementation, survivors, review, gate, retrospective. Co-moderator collects chat lines. |
+| 78:00–83:00 | 5 min | Wrap-up: where human attention goes; P-how again | `attention` slide |
+| 83:00–90:00 | 7 min | Questions | |
 
 Total: **90 minutes**.
 
 ## Time controls
 
-Party Mode in stage 1 has a 4-minute budget: two or three turns, one steering question, then wrap up. The design canvas in stage 1 is pre-generated and gets two minutes. Each live coding-agent phase in stage 2 has a 2-minute observation budget. Mutation runs have a 60-second budget. The stage 4 review is shown from its preserved real run; the live reviewer session is started in 40 seconds and reports back whenever it finishes. Never imply a fallback was a live run's output.
+- Agent runs take two to six minutes and run while the presenter explains; the presenter never waits for a participant.
+- Party Mode in step 2 has a 3-minute budget on screen: two rounds, then wrap up. In part 2 it gets the same.
+- If behind after step 4: merge steps 6 and 7 on screen (one cue after the other), and shorten the step-5 explanation to the reviewer self-test.
+- Part 2 stages differ per participant. At minute 78 the presenter stops narrating wherever their own run is; participants finish at home. The retrospective is the first thing to drop on screen, never the review or the gate.
+- Fallbacks need no network: slides with the preserved checkout evidence carry every explanation, and a rehearsed run of the presenter's folder (both parts) is kept as screenshots and diffs.
 
-If five minutes behind: drop the F-2 check in stage 4, show the saved mutation after-report instead of the second run, use the stage 2 fallback diffs instead of the live agent. Shorten Party Mode to one round rather than skipping it. Keep the six “Ship it?” polls, the lock failure, the release refusal and the two closing slides.
+## The presenter's folder
 
-The fallback path needs no network access, account, external service or attendee setup. Dependency and browser installation happens before the session; see the runbook's preflight. BMAD is set up live in the opening, by the same step-1 sentence the participants use; if that fails, stage 1 uses the rehearsed Party Mode transcript.
-
-## Optional follow-along
-
-The presenter pastes the same sentence on screen into a live session in an empty folder and does every later step there too, showing each step's diff at the end of its stage. Participants who bring Claude Code paste it in the opening too (cue F1); their Claude installs `uv` and the BMAD skills, sets BMAD up and reports back during stage 0 (5 to 8 minutes, in parallel). At the start of each stage the co-moderator posts a one-line cue (F2–F7), the presenter pastes it too, and their Claude builds the same layer in a repository of their choice. The agents run in parallel. The slides after each stage slide and the presenter's live diffs add about seven minutes; the runbook's time-saving section says what to cut first. Their results feed the questions segment.
+An empty folder, opened as a second Desktop session in permission mode Ask permissions. Step 1 creates the minimal SAVE10 project there, the same vibe-coded starting point as the checkout story; part 2's feature is the €15 cap. Rehearse both parts once in another empty folder the day before (about 60 minutes) and keep its screenshots as the fallback.
